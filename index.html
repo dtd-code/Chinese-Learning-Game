@@ -1,0 +1,225 @@
+HTML
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>华文阅读大挑战</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+  background: #eaf4ff;
+  color: #25344b;
+}
+main {
+  max-width: 720px;
+  margin: 30px auto;
+  padding: 24px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 6px 25px #b5cfe850;
+}
+h1 { text-align: center; color: #2765b0; }
+h2 { color: #2765b0; }
+.story {
+  background: #f2f8ff;
+  padding: 20px;
+  border-radius: 14px;
+  font-size: 21px;
+  line-height: 2;
+}
+button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  background: #e4efff;
+  color: #203c61;
+}
+button:hover { background: #c7dfff; }
+.primary {
+  background: #2775d0;
+  color: white;
+}
+.primary:hover { background: #185aa5; }
+button:disabled {
+  opacity: .7;
+  cursor: default;
+}
+.correct { background: #b5ecc4 !important; }
+.wrong { background: #ffd0d0 !important; }
+#quiz, #result { display: none; }
+#feedback { min-height: 24px; font-weight: bold; }
+.score { font-size: 48px; text-align: center; }
+.notice { color: #63748b; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+<h1>🌟 华文阅读大挑战 🌟</h1>
+<p style="text-align:center">第一关：小明的星期天</p>
+
+<section id="reading">
+  <h2>📖 阅读短文</h2>
+  <div class="story">
+    星期天早上，小明和妈妈一起到社区花园种花。
+    小明发现一位老奶奶正在搬一盆很重的花。
+    他马上跑过去帮忙。
+    老奶奶高兴地向他道谢。
+    小明虽然满头大汗，心里却十分开心。
+  </div>
+  <p class="notice">请先认真阅读短文，再开始答题。</p>
+  <button class="primary" onclick="startQuiz()">
+    我读完了，开始答题
+  </button>
+</section>
+
+<section id="quiz">
+  <h2 id="progress"></h2>
+  <h3 id="question"></h3>
+  <div id="answers"></div>
+  <p id="feedback" aria-live="polite"></p>
+  <button id="next" class="primary"
+          onclick="nextQuestion()" hidden>
+    下一题
+  </button>
+</section>
+
+<section id="result">
+  <h2 style="text-align:center">🏆 挑战完成！</h2>
+  <div id="finalScore" class="score"></div>
+  <p id="reward" style="text-align:center"></p>
+  <button class="primary" onclick="restart()">
+    再玩一次
+  </button>
+</section>
+
+<p class="notice">
+  示范版本：阅读理解满分10分。
+  朗读评分和正式词语关卡将在后续加入。
+</p>
+</main>
+
+<script>
+const questions = [
+  {
+    q: "小明星期天去了哪里？",
+    options: ["学校", "社区花园", "图书馆"],
+    answer: 1
+  },
+  {
+    q: "小明和谁一起种花？",
+    options: ["妈妈", "老师", "哥哥"],
+    answer: 0
+  },
+  {
+    q: "老奶奶遇到了什么困难？",
+    options: ["找不到路", "忘记带水", "花盆太重"],
+    answer: 2
+  },
+  {
+    q: "小明怎样帮助老奶奶？",
+    options: ["帮她搬花盆", "送她一本书", "买早餐"],
+    answer: 0
+  },
+  {
+    q: "帮助老奶奶后，小明有什么感受？",
+    options: ["生气", "开心", "害怕"],
+    answer: 1
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function show(section) {
+  ["reading", "quiz", "result"].forEach(id => {
+    document.getElementById(id).style.display =
+      id === section ? "block" : "none";
+  });
+}
+
+function startQuiz() {
+  show("quiz");
+  displayQuestion();
+}
+
+function displayQuestion() {
+  answered = false;
+  const item = questions[current];
+  document.getElementById("progress").textContent =
+    `第 ${current + 1} / ${questions.length} 题`;
+  document.getElementById("question").textContent = item.q;
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("next").hidden = true;
+
+  const area = document.getElementById("answers");
+  area.innerHTML = "";
+
+  item.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = `${"ABC"[index]}. ${option}`;
+    button.onclick = () => checkAnswer(index);
+    area.appendChild(button);
+  });
+}
+
+function checkAnswer(choice) {
+  if (answered) return;
+  answered = true;
+
+  const item = questions[current];
+  const buttons = document.querySelectorAll("#answers button");
+
+  buttons.forEach(button => button.disabled = true);
+  buttons[item.answer].classList.add("correct");
+
+  if (choice === item.answer) {
+    score += 2;
+    document.getElementById("feedback").textContent =
+      "✅ 答对了！获得2分！";
+  } else {
+    buttons[choice].classList.add("wrong");
+    document.getElementById("feedback").textContent =
+      "💪 继续加油！正确答案已标成绿色。";
+  }
+
+  const next = document.getElementById("next");
+  next.textContent =
+    current === questions.length - 1 ? "查看成绩" : "下一题";
+  next.hidden = false;
+}
+
+function nextQuestion() {
+  current++;
+  if (current < questions.length) {
+    displayQuestion();
+  } else {
+    show("result");
+    document.getElementById("finalScore").textContent =
+      `${score} / 10`;
+    document.getElementById("reward").textContent =
+      score === 10 ? "🥇 金牌！全部答对！" :
+      score >= 8 ? "🥈 银牌！表现优秀！" :
+      score >= 6 ? "🥉 铜牌！继续努力！" :
+      "🌱 再试一次，你一定会进步！";
+  }
+}
+
+function restart() {
+  current = 0;
+  score = 0;
+  answered = false;
+  show("reading");
+}
+</script>
+</body>
+</html>
