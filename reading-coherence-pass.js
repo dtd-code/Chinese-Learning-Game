@@ -49,6 +49,9 @@ window.repairReadingContinuity=function(data,ctx){
    ])if(x.story[i].includes(oldText)&&safe(newText,a))x.story[i]=x.story[i].split(oldText).join(newText);
    x.story[i]=x.story[i].replace(/。{2,}/g,"。").replace(/，。/g,"。");
   }
+  x.story[2]=x.story[2].replace(/没有一直难过，决定/g,"想了想，决定")
+   .replace(/最后，最后/g,"最后").replace(/后来，后来/g,"后来")
+   .replace(/做完了完成/g,"做完了");
   if(x.story.join("")!==before){report.updated++;report.fixed.push(x.id);}
   if(GENERIC.test(x.story[1]))report.genericRemaining.push(x.id);
   if(x.story.some(p=>!safe(p,a)))throw Error("Out-of-grade edited passage: "+x.id);
