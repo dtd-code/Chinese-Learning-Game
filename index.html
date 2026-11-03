@@ -127,6 +127,77 @@ select{padding:11px 12px;border:2px solid #dadcf2;border-radius:12px;background:
 @media(max-width:860px){.player-stats{grid-template-columns:1fr 1fr}.player-form{grid-column:1/-1}.lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-art{font-size:5.5rem;right:25px}.hero-note{max-width:76%}.howto-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:580px){main{padding:10px 11px 32px}.hero{border-radius:0 0 25px 25px;margin:0;padding:24px 18px 27px}.hero-art{font-size:3.3rem;right:17px;top:38px}.hero-note{max-width:100%}.hero .subline{font-size:.82rem;padding:8px 11px}.hero .english{max-width:83%}.hero .eyebrow{font-size:.78rem}.panel{padding:16px;border-radius:20px}.lesson-grid,.rubric-grid,.howto-grid{grid-template-columns:1fr}.grade-tabs{gap:7px}.grade-tabs button{flex:1;min-width:0;padding:11px 6px;font-size:.88rem}.player-stats{gap:9px}.score-tile{padding:12px 5px}.story{font-size:1.05rem;padding:15px}.control-row .action{min-width:100%}.quest-section{padding:14px}.breakdown{grid-template-columns:1fr}.is-playing .hero{border-radius:0 0 18px 18px;padding:19px 15px}.is-playing .hero .hero-art{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+
+/* Compact, clear bilingual learning interface */
+.hero{padding:19px 26px 21px;margin-top:9px;border-radius:22px}
+.hero h1{font-size:clamp(1.9rem,4.2vw,2.9rem);margin:3px 0}
+.hero .eyebrow{display:none}
+.hero .kicker{font-size:1rem;margin:5px 0}
+.hero .subline{padding:5px 10px;margin-top:3px;font-size:.87rem}
+.hero .english{margin:5px 0 0;font-size:.76rem}
+.hero-art{font-size:4.7rem;right:30px;top:18px}
+main{padding:10px 16px 26px}
+.panel{padding:15px 18px;margin:10px 0;border-radius:20px}
+.section-title{font-size:1.35rem}
+.panel-head{margin-bottom:9px}
+.player-stats{grid-template-columns:minmax(0,2fr) minmax(110px,.65fr) minmax(110px,.65fr);gap:9px;margin-top:10px}
+.player-form,.score-tile{padding:9px 12px;border-radius:16px}
+.player-form label{font-size:.93rem}
+.player-form label .en{display:inline;margin:0 0 0 3px}
+.player-form input{margin-top:4px;padding:7px 10px;max-width:none}
+.mini-hint{margin:6px 0 0;font-size:.77rem;line-height:1.32}
+.mini-hint span,.mini-hint strong{display:block}
+.mini-hint strong{font-weight:750}
+.name-error{font-size:.79rem;color:#bd263d;margin:4px 0 0}
+.grade-tabs{gap:8px;margin:9px 0 12px}
+.grade-tabs button{padding:8px 16px;min-width:110px}
+.level-card{padding:13px;gap:6px}
+.level-card .art{font-size:1.95rem}
+.level-card h3{font-size:1.12rem}
+.level-card .focus{font-size:.83rem}
+.action{padding:10px 15px;border-radius:12px}
+.mini-help{padding:10px 14px}
+.wide-help summary{font-size:.99rem}
+.howto-grid{gap:6px;margin:9px 0 7px}
+.howstep{padding:7px;font-size:.85rem}
+.howstep .en{font-size:.78rem;margin:0}
+.wide-help p.small{margin:7px 0}
+.small{font-size:.83rem;line-height:1.45}
+.quest-nav{margin-bottom:8px}
+.quest-head{padding:9px 13px;margin-bottom:9px}
+.quest-head h2{font-size:1.4rem}
+.quest-section{margin:10px 0;padding:13px}
+.quest-section h3{font-size:1.15rem;margin:0 0 9px}
+.word-cloud{margin:4px 0 6px}
+.sound-card{padding:12px;margin-top:9px}
+.sound-card h3{font-size:1.04rem}
+.control-row{gap:7px;margin:8px 0}
+.control-row .action{min-width:125px;padding:9px 12px}
+.field-label{margin:7px 0 4px}
+.rubric-grid{gap:9px}
+.rubric-card{padding:10px}
+.rubric-desc{padding:8px;margin-top:7px;min-height:0;font-size:.84rem}
+.rubric-desc:empty,#ttsStatus:empty,#selfNotice:empty{display:none}
+.self-total{padding:9px 12px;margin:9px 0}
+.notice{padding:8px 11px;margin:8px 0}
+.self-hint{margin:2px 0 9px}
+.quiz-active .quest-head,.quiz-active #readingSection,.quiz-active #selfSection{display:none}
+.quiz-active #quizSection{margin-top:0;padding:12px}
+.quiz-active #quizSection>h3{margin-bottom:5px}
+.quiz-active .quiz-area{margin-top:4px}
+.quiz-layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:13px;align-items:start}
+.quiz-reference{position:sticky;top:10px;max-height:calc(100vh - 30px);overflow:auto;overscroll-behavior:contain;border:2px solid #d8e7ff;background:#f5faff;border-radius:15px;padding:10px}
+.quiz-reference h4{margin:0 0 5px;font-size:.99rem;color:#31508a}
+.quiz-reference .story{padding:6px 8px;border:0;background:transparent;font-size:1rem;line-height:1.86}
+.quiz-reference .story p{margin:0 0 8px}
+.quiz-questions{min-width:0}
+.quiz-questions .bar{height:8px;margin:6px 0 10px}
+.quiz-questions .answer{padding:10px 12px;margin:7px 0;border-radius:11px}
+.quiz-questions .question{font-size:1.18rem;margin:10px 0}
+.quiz-questions .feedback{min-height:0;margin:8px 0;font-size:.9rem}
+@media(max-width:800px){.quiz-layout{grid-template-columns:1fr;display:block}.quiz-reference{position:sticky;top:0;z-index:2;max-height:33vh;padding:7px 9px;box-shadow:0 5px 12px #395d9521}.quiz-reference h4{margin-bottom:2px}.quiz-reference .story{font-size:.97rem;line-height:1.58;padding:4px 6px}.quiz-reference .story p{margin-bottom:4px}.quiz-questions{margin-top:10px}}
+@media(max-width:580px){main{padding:8px 10px 23px}.hero{padding:15px 14px 17px;border-radius:0 0 19px 19px}.hero h1{font-size:1.83rem}.hero-art{font-size:2.6rem;top:23px;right:12px}.panel{padding:11px;border-radius:15px}.player-stats{grid-template-columns:1fr 1fr;gap:7px}.player-form{grid-column:1/-1}.score-tile{padding:8px}.grade-tabs button{padding:8px 5px;min-width:0}.lesson-grid{grid-template-columns:1fr}.howto-grid{grid-template-columns:repeat(2,1fr)}.quest-section{padding:9px}.control-row .action{min-width:calc(50% - 5px);flex:1}.quiz-active .hero{display:none}.quiz-reference{max-height:32vh}}
+
 </style>
 </head>
 <body>
@@ -143,37 +214,37 @@ select{padding:11px 12px;border:2px solid #dadcf2;border-radius:12px;background:
 <main>
 <section id="homeView">
  <section class="player-stats" aria-label="用户名和积分 Username and scores">
-  <div class="player-form"><label for="playerInput">👤 用户名 <span class="en" lang="en">Username</span></label><input id="playerInput" maxlength="24" type="text" autocomplete="off" placeholder="例如：快乐小熊 / e.g. HappyPanda"><p class="mini-hint" id="profileNotice">用自己喜欢的名字，不要用真名。积分存在这台设备的浏览器里，换电脑就看不到旧积分。<span class="en" lang="en">Use a nickname, not your real name. Your points stay in this browser on this device. They won't move to another device.</span></p></div>
+  <div class="player-form"><label for="playerInput">👤 用户名 <span class="en" lang="en">Username</span></label><input id="playerInput" maxlength="24" type="text" autocomplete="off" aria-describedby="profileNotice"><p class="mini-hint" id="profileNotice"><span>用自己喜欢的名字，不要用真名。</span><strong lang="en">Use a nickname, not your real name.</strong><span>积分存在这台设备的浏览器里，换电脑就看不到旧积分。</span><strong lang="en">Your points stay in this browser on this device. They won't move to another device.</strong></p><p id="nameError" class="name-error hide" role="alert"></p></div>
   <div class="score-tile first"><div aria-hidden="true">🏅</div><strong id="totalPoints">0</strong><span>我的总积分</span><small lang="en">My total points</small></div>
   <div class="score-tile second"><div aria-hidden="true">🎯</div><strong id="runCount">0</strong><span>已计分关卡</span><small lang="en">Levels counted</small></div>
  </section>
  <section class="panel" aria-labelledby="levelsTitle">
-  <div class="panel-head"><div><h2 id="levelsTitle" class="section-title">🗺️ 选年级，开始闯关！<span class="en" lang="en">Pick your level and start playing!</span></h2><p class="small">这些短文是用《欢乐伙伴》的字词写的新故事，不是课文原文。<span class="en" lang="en">These are new stories using words from the textbook, not copies of the textbook stories.</span></p></div><span class="pill">⭐ 20分 / 20 pts</span></div>
+  <div class="panel-head"><h2 id="levelsTitle" class="section-title">🗺️ 选年级 / Choose grade</h2></div>
   <div class="grade-tabs" id="gradeTabs" role="group" aria-label="选择年级 Choose a level"><button type="button" data-grade="4" aria-pressed="true">小四 <span class="en" lang="en">P4</span></button><button type="button" data-grade="5" aria-pressed="false">小五 <span class="en" lang="en">P5</span></button><button type="button" data-grade="6" aria-pressed="false">小六 <span class="en" lang="en">P6</span></button></div>
   <div id="lessonList" class="lesson-grid"></div><p id="notify" class="small" role="status" aria-live="polite"></p>
  </section>
- <section class="panel"><details class="wide-help"><summary>🎒 怎么玩？ / How to play</summary><div class="howto-grid"><div class="howstep">📖 <b>1. 读短文</b><span class="en" lang="en">Read the story.</span></div><div class="howstep">🔊 <b>2. 想听就听</b><span class="en" lang="en">Listen if you need help.</span></div><div class="howstep">✍️ <b>3. 给自己打分</b><span class="en" lang="en">Give yourself a reading score.</span></div><div class="howstep">🎯 <b>4. 答5道题</b><span class="en" lang="en">Answer 5 questions.</span></div></div><p class="small">每关满分20分：朗读自评10分，答题10分。同一篇短文只算第一次完成的分数，重玩不加分。<span class="en" lang="en">Each level is worth up to 20 points: 10 for reading self-check and 10 for the quiz. Only your first completed attempt for each story counts. Replays earn no extra points.</span></p><p class="small">不用麦克风，也不会录音。自评不是老师给的正式成绩。<span class="en" lang="en">No microphone or recording is needed. Your self-check is not an official teacher grade.</span></p><p class="small">要看以前的积分，请在同一台设备、同一个浏览器输入一样的用户名。<span class="en" lang="en">To see old points, use the same username in the same browser on the same device.</span></p><button class="action soft" id="resetBtn" type="button">清除我的成绩 / Clear my scores</button></details></section>
- <section class="panel" aria-labelledby="historyTitle"><div class="panel-head"><div><h2 id="historyTitle" class="section-title">📘 首次挑战成绩<span class="en" lang="en">First attempt scores</span></h2><p class="small">每篇只记录第一次成绩，显示最近8篇。<span class="en" lang="en">Only the first score for each story is saved. Showing up to 8 latest stories.</span></p></div><button class="action alt" id="exportBtn" type="button">📥 保存成绩 / Save scores (CSV)</button></div><div id="historyList" class="history-list"></div></section>
+ <section class="panel mini-help"><details class="wide-help"><summary>🎒 怎么玩？ / How to play</summary><div class="howto-grid"><div class="howstep">📖 读短文 <span class="en" lang="en">Read</span></div><div class="howstep">🔊 可听范读 <span class="en" lang="en">Listen (optional)</span></div><div class="howstep">✍️ 自己打分 <span class="en" lang="en">Self-check</span></div><div class="howstep">🎯 回答5题 <span class="en" lang="en">Answer 5 questions</span></div></div><p class="small">每篇只计第一次成绩。<span class="en" lang="en">Only your first score counts.</span></p><button class="action soft" id="resetBtn" type="button">清除成绩 / Clear scores</button></details></section>
+ <section class="panel" aria-labelledby="historyTitle"><div class="panel-head"><h2 id="historyTitle" class="section-title">📘 我的成绩 <span class="en" lang="en">My scores</span></h2><button class="action alt" id="exportBtn" type="button">📥 保存 / Save CSV</button></div><div id="historyList" class="history-list"></div></section>
 </section>
 <section id="playView" class="panel hide" aria-label="挑战页面 Game level">
  <div class="quest-nav"><button id="backBtn" class="action soft" type="button">← 选关 / Back to levels</button></div>
- <div class="quest-head"><span id="lessonUnit" class="pill"></span><h2 id="lessonTitle"></h2><div class="stepper" aria-label="游戏步骤 Game steps"><span>1 📖 读 / Read</span><span>2 ✍️ 自评 / Self-check</span><span>3 🎯 答题 / Quiz</span></div></div>
- <section class="quest-section"><h3>📖 第一站：读短文 <span class="en" lang="en">Part 1: Read the story</span></h3><div id="storyBox" class="story"></div><p><strong>🌱 重点词语 <span class="en" lang="en">Words to learn</span></strong></p><div id="focusWords" class="word-cloud"></div>
-  <div class="sound-card"><h3>🔊 想听就听 <span class="en" lang="en">Listen if you need help</span></h3><p class="small">会读就自己读，不用先听。不会读可以听全文或一段。<span class="en" lang="en">If you can read it, go ahead! If you need help, listen to the whole story or one paragraph.</span></p><p class="pill">🇨🇳 普通话（中国） · 正常速度（1倍） / Mandarin (China) · Normal speed (1×)</p>
+ <div class="quest-head"><span id="lessonUnit" class="pill"></span><h2 id="lessonTitle"></h2></div>
+ <section class="quest-section" id="readingSection"><h3>📖 读短文 / Read</h3><div id="storyBox" class="story"></div><p><strong>🌱 重点词语 <span class="en" lang="en">Words to learn</span></strong></p><div id="focusWords" class="word-cloud"></div>
+  <div class="sound-card"><h3>🔊 听范读（可选） / Listen (optional)</h3>
     <label class="field-label" for="listenPartSelect">选要听的段落 <span class="en" lang="en">Choose a paragraph</span></label><select id="listenPartSelect"></select>
     <div class="control-row"><button id="readAllBtn" class="action" type="button">▶ 听全文 / Play all</button><button id="readPartBtn" class="action green" type="button">▶ 听这一段 / Play paragraph</button><button id="pauseReadBtn" class="action alt" type="button">⏸ 暂停 / 继续 · Pause / Resume</button><button id="stopReadBtn" class="action soft" type="button">■ 停止 / Stop</button></div>
-    <p class="small" id="ttsStatus" role="status" aria-live="polite">准备好了。想听就按播放。<span class="en" lang="en">Ready. Press play if you want to listen.</span></p>
+    <p class="small" id="ttsStatus" role="status" aria-live="polite"></p>
   </div>
  </section>
- <section class="quest-section" aria-label="朗读自评 Reading self-check"><h3>✍️ 第二站：朗读自评 <span class="en" lang="en">Part 2: Reading self-check</span></h3><div class="notice">先自己朗读，再选两项分数。每项最多5分。没朗读就两项都选0分。<span class="en" lang="en">Read aloud by yourself, then choose two scores. Each is out of 5. If you did not read, choose 0 for both.</span></div>
-  <div class="rubric-grid"><div class="rubric-card"><label class="field-label" for="selfPron">① 语音和清晰度 <span class="en" lang="en">Pronunciation and clarity (0–5)</span></label><select id="selfPron" required><option value="">请选择 / Choose a score</option><option value="5">5分 · 非常准确清晰 / Excellent</option><option value="4">4分 · 相当准确清晰 / Good</option><option value="3">3分 · 还算准确 / Fair</option><option value="2">2分 · 不太准确 / Needs practice</option><option value="1">1分 · 不准确 / Difficult</option><option value="0">0分 · 没有朗读 / Did not read</option></select><div id="selfPronDescription" class="rubric-desc" aria-live="polite">选分后可以看说明。<span class="en" lang="en">Choose a score to see what it means.</span></div></div>
-  <div class="rubric-card"><label class="field-label" for="selfFlow">② 语调和流利程度 <span class="en" lang="en">Intonation and fluency (0–5)</span></label><select id="selfFlow" required><option value="">请选择 / Choose a score</option><option value="5">5分 · 非常流利 / Excellent</option><option value="4">4分 · 相当流利 / Good</option><option value="3">3分 · 还算流利 / Fair</option><option value="2">2分 · 不太流利 / Needs practice</option><option value="1">1分 · 不流利 / Difficult</option><option value="0">0分 · 没有朗读 / Did not read</option></select><div id="selfFlowDescription" class="rubric-desc" aria-live="polite">选分后可以看说明。<span class="en" lang="en">Choose a score to see what it means.</span></div></div></div>
-  <div class="self-total"><span>我的朗读分数 <span class="en" lang="en">My reading score</span></span><strong id="selfOralTotal">— / 10</strong></div><p id="selfNotice" class="small" aria-live="polite">选好两个分数，再开始答题。<span class="en" lang="en">Choose both scores before starting the quiz.</span></p>
+ <section class="quest-section" id="selfSection" aria-label="朗读自评 Reading self-check"><h3>✍️ 朗读自评 / Self-check</h3><p class="small self-hint">每项选0–5分，没朗读则两项都选0。 <span lang="en">Score each part 0–5. If you did not read, choose 0 for both.</span></p>
+  <div class="rubric-grid"><div class="rubric-card"><label class="field-label" for="selfPron">① 语音和清晰度 <span class="en" lang="en">Pronunciation and clarity (0–5)</span></label><select id="selfPron" required><option value="">请选择 / Choose a score</option><option value="5">5分 · 非常准确清晰 / Excellent</option><option value="4">4分 · 相当准确清晰 / Good</option><option value="3">3分 · 还算准确 / Fair</option><option value="2">2分 · 不太准确 / Needs practice</option><option value="1">1分 · 不准确 / Difficult</option><option value="0">0分 · 没有朗读 / Did not read</option></select><div id="selfPronDescription" class="rubric-desc" aria-live="polite"></div></div>
+  <div class="rubric-card"><label class="field-label" for="selfFlow">② 语调和流利程度 <span class="en" lang="en">Intonation and fluency (0–5)</span></label><select id="selfFlow" required><option value="">请选择 / Choose a score</option><option value="5">5分 · 非常流利 / Excellent</option><option value="4">4分 · 相当流利 / Good</option><option value="3">3分 · 还算流利 / Fair</option><option value="2">2分 · 不太流利 / Needs practice</option><option value="1">1分 · 不流利 / Difficult</option><option value="0">0分 · 没有朗读 / Did not read</option></select><div id="selfFlowDescription" class="rubric-desc" aria-live="polite"></div></div></div>
+  <div class="self-total"><span>我的朗读分数 <span class="en" lang="en">My reading score</span></span><strong id="selfOralTotal">— / 10</strong></div><p id="selfNotice" class="small" aria-live="polite"></p>
   <details class="rubric-full"><summary>📋 看完整评分表 / See the full scoring guide</summary><div id="fullRubric"></div></details>
  </section>
- <section class="quest-section"><h3>🎯 第三站：阅读理解 <span class="en" lang="en">Part 3: Reading quiz · 5 questions × 2 points</span></h3><button id="startQuizBtn" class="action orange" type="button">我评好了，开始答题！ / Start quiz!</button><p class="small">每题选一个答案。选了就不能改。<span class="en" lang="en">Choose one answer per question. You cannot change it after tapping.</span></p>
-  <div id="quizArea" class="quiz-area hide"><div class="bar" aria-label="答题进度 Quiz progress"><div id="progressFill" class="fill"></div></div><p class="pill" id="questionNum"></p><p id="questionText" class="question"></p><div id="answerButtons"></div><p id="feedback" class="feedback" role="status" aria-live="polite"></p><button id="nextBtn" class="action hide" type="button">下一题 / Next question →</button></div>
-  <div id="finishArea" class="result hide"><h3>🎉 闯关完成！ <span class="en" lang="en">Level complete!</span></h3><div id="finalStars" class="stars" aria-hidden="true">⭐</div><div id="finalScore" class="result-number">0 / 20</div><div id="resultBreakdown" class="breakdown"></div><p id="resultMessage" class="small"></p><p id="awardMessage" class="achievement hide"></p><p id="saveScoreLabel" class="pill"></p><p id="saveStatus" class="small"></p><div class="control-row"><button id="tryAgainBtn" class="action orange" type="button">再玩一次 / Play again</button><button id="finishBackBtn" class="action alt" type="button">选其他关 / Other levels</button></div></div>
+ <section class="quest-section" id="quizSection"><h3>🎯 阅读理解 / Quiz</h3><button id="startQuizBtn" class="action orange" type="button">开始答题 / Start quiz</button>
+  <div id="quizArea" class="quiz-area hide"><div class="quiz-layout"><aside class="quiz-reference" aria-label="阅读短文 Story"><h4>📖 短文 / Story</h4><div id="quizStoryBox" class="story"></div></aside><div class="quiz-questions"><div class="bar" aria-label="答题进度 Quiz progress"><div id="progressFill" class="fill"></div></div><p class="pill" id="questionNum"></p><p id="questionText" class="question"></p><div id="answerButtons"></div><p id="feedback" class="feedback" role="status" aria-live="polite"></p><button id="nextBtn" class="action hide" type="button">下一题 / Next question →</button></div></div></div>
+  <div id="finishArea" class="result hide"><h3>🎉 闯关完成！ <span class="en" lang="en">Level complete!</span></h3><div id="finalStars" class="stars" aria-hidden="true">⭐</div><div id="finalScore" class="result-number">0 / 20</div><div id="resultBreakdown" class="breakdown"></div><p id="resultMessage" class="small"></p><p id="awardMessage" class="achievement hide"></p><p id="saveScoreLabel" class="pill"></p><div class="control-row"><button id="tryAgainBtn" class="action orange" type="button">再玩一次 / Play again</button><button id="finishBackBtn" class="action alt" type="button">选其他关 / Other levels</button></div></div>
  </section>
 </section>
 </main>
@@ -202,11 +273,11 @@ const STORE='chinese-reading-game-v3-players';
 const ACTIVE='chinese-reading-game-v3-active';
 const OLD_KEY='chinese-reading-game-v2-progress';
 let db={players:{}};
-let active='小玩家';
+let active='';
 let grade=4,currentLesson=null,qIndex=0,quizPoints=0,qAnswered=false,saved=false,credited=false,selfPron=null,selfFlow=null,quizOral=null;
 const el=id=>document.getElementById(id);
 const profileDefault=()=>({total:0,runs:0,history:[]});
-const currentProfile=()=>db.players[active]||(db.players[active]=profileDefault());
+const currentProfile=()=>active?(db.players[active]||(db.players[active]=profileDefault())):profileDefault();
 // Match attempts by lesson ID (or title for older saved games).
 function recordKey(rec){
  if(!rec||typeof rec!=='object')return null;
@@ -246,19 +317,19 @@ function load(){
     const old=JSON.parse(localStorage.getItem(OLD_KEY)||'null');
     if(old&&Number.isFinite(old.total)&&Array.isArray(old.history))db.players['体验玩家']={total:old.total,runs:Number(old.runs)||0,history:old.history};
    }
-   active=localStorage.getItem(ACTIVE)||'小玩家';
- }catch(err){setBilingual('profileNotice','这个浏览器不能读取以前的积分。','This browser could not read your old points.')}
- if(!db.players[active])db.players[active]=profileDefault();
+   // Ask for the username each time; saved scores remain available when it is entered.
+ }catch(err){setBilingual('nameError','无法读取旧积分。','Could not load previous scores.');el('nameError').classList.remove('hide')}
  const migrated=normalizeProfiles();
- el('playerInput').value=active;updateProfileUI();
+ el('playerInput').value='';updateProfileUI();
  if(migrated)persist();
 }
-function persist(){try{localStorage.setItem(STORE,JSON.stringify(db));localStorage.setItem(ACTIVE,active);return true}catch(e){setBilingual('profileNotice','保存失败。关掉页面后积分可能消失。','Could not save. Points may disappear when you close this page.');return false}}
+function persist(){try{localStorage.setItem(STORE,JSON.stringify(db));if(active)localStorage.setItem(ACTIVE,active);return true}catch(e){setBilingual('nameError','无法保存积分。','Could not save points.');el('nameError').classList.remove('hide');return false}}
 function saveUsername(){
  const name=el('playerInput').value.trim().replace(/\s+/g,' ').slice(0,24);
- if(!name){el('playerInput').value=active;setBilingual('profileNotice','请先写一个用户名（不用真名）。','Please enter a username (not your real name).');return}
+ if(!name){setBilingual('nameError','请填用户名。','Enter a username.');el('nameError').classList.remove('hide');el('playerInput').focus();return false}
+ el('nameError').classList.add('hide');
  if(name!==active){active=name;currentProfile();persist();updateProfileUI();}
- setBilingual('profileNotice','积分只存在这台设备的浏览器里。换电脑就看不到旧积分。','Your points stay in this browser on this device. They won\'t move to another device.');
+ return true;
 }
 function updateProfileUI(){const p=currentProfile();el('totalPoints').textContent=p.total;el('runCount').textContent=p.runs;renderHistory();renderCards()}
 function renderHistory(){
@@ -267,7 +338,7 @@ function renderHistory(){
  for(const rec of records){const row=document.createElement('div');row.className='history-row';const left=document.createElement('span');const date=rec.date?new Date(rec.date).toLocaleDateString('en-SG'):'—';left.textContent=`${date} · ${rec.title||rec.id||'阅读挑战'}`;const right=document.createElement('span');right.className='history-num';right.textContent=`${rec.score||0} / 20 分 · pts`;row.append(left,right);root.append(row)}
 }
 function downloadScores(){
- saveUsername();const p=currentProfile();const rows=[['Username','Date','Level','Read aloud self-check','Quiz','Total'],...p.history.map(h=>[active,h.date||'',h.title||h.id||'',h.oral??'',h.quiz??'',h.score??''])];
+ if(!saveUsername())return;const p=currentProfile();const rows=[['Username','Date','Level','Read aloud self-check','Quiz','Total'],...p.history.map(h=>[active,h.date||'',h.title||h.id||'',h.oral??'',h.quiz??'',h.score??''])];
  const csv='\ufeff'+rows.map(row=>row.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='Chinese_Reading_Challenge_Scores.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),300);
 }
@@ -288,22 +359,22 @@ function renderCards(){
 }
 function setView(view){el('homeView').classList.toggle('hide',view!=='home');el('playView').classList.toggle('hide',view!=='play');document.body.classList.toggle('is-playing',view==='play');window.scrollTo({top:0,behavior:'instant'})}
 function openLesson(id){
- saveUsername();stopTTS(true);currentLesson=LESSONS.find(x=>x.id===id);if(!currentLesson)return;
+ if(!saveUsername())return;stopTTS(true);currentLesson=LESSONS.find(x=>x.id===id);if(!currentLesson)return;
  qIndex=0;quizPoints=0;qAnswered=false;saved=false;credited=false;selfPron=null;selfFlow=null;quizOral=null;
  el('lessonUnit').textContent=currentLesson.unit;el('lessonTitle').textContent=currentLesson.title;
- const box=el('storyBox');box.replaceChildren();currentLesson.story.forEach(t=>{const p=document.createElement('p');p.textContent=t;box.append(p)});
+ for(const target of ['storyBox','quizStoryBox']){const box=el(target);box.replaceChildren();currentLesson.story.forEach(t=>{const p=document.createElement('p');p.textContent=t;box.append(p)})}
  const words=el('focusWords');words.replaceChildren();currentLesson.focus.forEach(w=>{const s=document.createElement('span');s.className='word-chip';s.textContent=w;words.append(s)});
  const parts=el('listenPartSelect');parts.replaceChildren();currentLesson.story.forEach((_,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`第 ${i+1} 段 / Paragraph ${i+1}`;parts.append(o)});
  el('selfPron').disabled=false;el('selfFlow').disabled=false;el('selfPron').value='';el('selfFlow').value='';updateSelfScore();
  el('startQuizBtn').classList.remove('hide');el('quizArea').classList.add('hide');el('finishArea').classList.add('hide');
- setBilingual('ttsStatus','准备好了。想听就按播放。','Ready. Press play if you want to listen.');setView('play');
+ el('playView').classList.remove('quiz-active');el('ttsStatus').replaceChildren();setView('play');
 }
 function showRubricDescription(id){
  const key=el(id).value;const area=el(id+'Description');
- if(!SELF_RUBRIC[id][key]){setBilingual(id+'Description','选分后可以看说明。','Choose a score to see what it means.');return}
+ if(!SELF_RUBRIC[id][key]){area.replaceChildren();return}
  setBilingual(id+'Description',...SELF_RUBRIC[id][key]);
 }
-function updateSelfScore(){showRubricDescription('selfPron');showRubricDescription('selfFlow');const p=el('selfPron').value;const f=el('selfFlow').value;selfPron=p===''?null:Number(p);selfFlow=f===''?null:Number(f);const ready=selfPron!==null&&selfFlow!==null;el('selfOralTotal').textContent=ready?`${selfPron+selfFlow} / 10`:'— / 10';if(ready)setBilingual('selfNotice','选好了！现在可以答题。','All set! You can start the quiz.')}
+function updateSelfScore(){showRubricDescription('selfPron');showRubricDescription('selfFlow');const p=el('selfPron').value;const f=el('selfFlow').value;selfPron=p===''?null:Number(p);selfFlow=f===''?null:Number(f);const ready=selfPron!==null&&selfFlow!==null;el('selfOralTotal').textContent=ready?`${selfPron+selfFlow} / 10`:'— / 10';if(ready)el('selfNotice').replaceChildren()}
 function renderFullRubric(){const root=el('fullRubric');root.replaceChildren();const headings=[['selfPron','语音和清晰度','Pronunciation and clarity'],['selfFlow','语调和流利程度','Intonation and fluency']];for(const [k,cn,en] of headings){const h=document.createElement('h4');h.textContent=cn+' / '+en;root.append(h);const list=document.createElement('ol');list.reversed=true;list.start=5;for(let n=5;n>=1;n--){const li=document.createElement('li');const b=document.createElement('b');b.textContent=n+'分 / points: ';li.append(b,document.createTextNode(SELF_RUBRIC[k][n][0]));const e=document.createElement('span');e.className='en';e.lang='en';e.textContent=SELF_RUBRIC[k][n][1];li.append(e);list.append(li)}root.append(list)}}
 // Playback uses only a Mandarin (China) request and a fixed normal (1×) speed.
 const TTS_SUPPORTED=Boolean(window.speechSynthesis&&window.SpeechSynthesisUtterance);
@@ -326,7 +397,7 @@ function initTTS(){if(TTS_SUPPORTED){findChinaVoice();speechSynthesis.addEventLi
 function startQuiz(){
  if(selfPron===null||selfFlow===null){setBilingual('selfNotice','请先选两项分数。','Please choose both scores first.');el('selfPron').focus();return}
  if((selfPron===0)!==(selfFlow===0)){setBilingual('selfNotice','没朗读就两项都选0；朗读了就两项都选1到5。','If you did not read, choose 0 for both. If you read, choose 1 to 5 for both.');return}
- quizOral=selfPron+selfFlow;el('selfPron').disabled=true;el('selfFlow').disabled=true;stopTTS(true);qIndex=0;quizPoints=0;el('startQuizBtn').classList.add('hide');el('quizArea').classList.remove('hide');renderQuestion();
+ quizOral=selfPron+selfFlow;el('selfPron').disabled=true;el('selfFlow').disabled=true;stopTTS(true);qIndex=0;quizPoints=0;el('startQuizBtn').classList.add('hide');el('quizArea').classList.remove('hide');el('playView').classList.add('quiz-active');renderQuestion();el('quizSection').scrollIntoView({behavior:'instant',block:'start'});
 }
 function renderQuestion(){
  qAnswered=false;const q=currentLesson.questions[qIndex];el('progressFill').style.width=((qIndex+1)/5*100)+'%';el('questionNum').textContent=`第 ${qIndex+1}/5 题 · Question ${qIndex+1} of 5`;el('questionText').textContent=q[0];el('feedback').textContent='';el('nextBtn').classList.add('hide');
@@ -346,14 +417,13 @@ function finishQuiz(){
  }
  const stars=total>=17?3:total>=12?2:total>=7?1:0;el('finalStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);el('finalScore').textContent=`${total} / 20`;
  const root=el('resultBreakdown');root.replaceChildren();for(const [cn,en,n] of [['朗读自评','Reading self-check',quizOral],['阅读理解','Reading quiz',quizPoints]]){const div=document.createElement('div');const title=document.createElement('div');title.textContent=cn+' / '+en;const val=document.createElement('strong');val.textContent=n+' / 10';div.append(title,val);root.append(div)}
- setBilingual('resultMessage',credited?'这是第一次完成这篇，分数已加入总积分。':'你重玩了这篇！本次成绩只供练习，不会加到总积分。',credited?'This is your first completed attempt. Its score counts.':'You replayed this story! This score is for practice only and does not add points.');
+ setBilingual('resultMessage',credited?'已计入积分。':'重玩不加分。',credited?'Points added.':'Replay: no extra points.');
  el('saveScoreLabel').textContent=`🏅 总积分 / Total points: ${p.total}`;
  let achievement='';if(credited&&prev<500&&p.total>=500)achievement='🏆 500分！你是坚持大师！ / 500 points! Reading Champion!';else if(credited&&prev<100&&p.total>=100)achievement='🥇 100分！你是阅读小达人！ / 100 points! Reading Star!';
  el('awardMessage').textContent=achievement;el('awardMessage').classList.toggle('hide',!achievement);
- setBilingual('saveStatus',credited?'第一次成绩已保存。以后重玩这篇不会增加积分。':'这是重玩成绩，没有保存或增加积分。',credited?'Your first score has been saved. Replaying this story will not earn more points.':'This replay score was not saved and earned no extra points.');
  el('finishArea').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function resetProgress(){if(!confirm('真的要清除这个用户名的成绩吗？不能找回。\nClear this username\'s scores? This cannot be undone.'))return;db.players[active]=profileDefault();persist();updateProfileUI();el('notify').textContent='成绩已清除。/ Scores cleared.'}
+function resetProgress(){if(!saveUsername())return;if(!confirm('真的要清除这个用户名的成绩吗？不能找回。\nClear this username\'s scores? This cannot be undone.'))return;db.players[active]=profileDefault();persist();updateProfileUI();el('notify').textContent='成绩已清除。/ Scores cleared.'}
 el('playerInput').addEventListener('change',saveUsername);
 el('playerInput').addEventListener('keydown',e=>{if(e.key==='Enter')el('playerInput').blur()});
 document.querySelectorAll('[data-grade]').forEach(b=>b.onclick=()=>chooseGrade(Number(b.dataset.grade)));
