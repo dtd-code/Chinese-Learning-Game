@@ -2,6 +2,7 @@
 (function(){
 "use strict";
 const HAN=/[\u3400-\u9fff]/u;
+const ORIGINAL_MORALS={"p4-1":"负责值日要慢慢说话，也要尊重别人","p4-2":"坚持比拿第一名更重要","p4-3":"对别人有礼貌，大家都会很开心","p5-1":"大家互相配合，比自己一个人做更好","p5-2":"有烦恼时可以找人帮忙","p6-1":"有了计划并努力去做，就能战胜困难","p6-2":"要记得以前的人为新加坡做过的事"};
 const CUSTOM={
 "p5-ta5":["乘巴士到图书馆参加阅读活动","小华发现车资卡不见了","回去找，还向工作人员问招领处"],
 "p4-ta2":["走到校门口等妈妈","弟弟没有带雨伞","把雨伞给弟弟一起走"],
@@ -129,7 +130,7 @@ function courseCorrect(l){
  const source={goal:a?.[0]||facts.goal?.[l.id]||q[1][1][q[1][2]],
   issue:a?.[1]||facts.issue?.[l.id]||q[2][1][q[2][2]],
   action:a?.[2]||facts.action?.[l.id]||q[3][1][q[3][2]],
-  moral:moralFromStory(l),
+  moral:ORIGINAL_MORALS[l.id]||moralFromStory(l),
   location:(()=>{
     const oldPlace=q[0][1][q[0][2]],text=l.story.join("");
     if(text.includes(oldPlace))return oldPlace;
