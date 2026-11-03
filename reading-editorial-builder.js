@@ -145,8 +145,8 @@ function optionPool(meta,all,key,allowed){
   const topicBigrams=phraseBigrams(x);
   const shared=[...exactBigrams].filter(c=>topicBigrams.has(c)).length;
   const isMoral=key==="learned";
-  const score=(isMoral ? -sameTopic*4 : sameTopic*5)+
-     (isMoral ? -Math.min(shared,5) : Math.min(shared,6)*4)-
+  const score=(isMoral ? sameTopic*5 : sameTopic*5)+
+     (isMoral ? -Math.min(shared,5)*3 : Math.min(shared,6)*4)-
      Math.abs(l-desired)*1.9;
   options.push({text:x,score,dist:Math.abs(l-desired)});
  }
@@ -186,11 +186,11 @@ const EMOTIONS={
  "开心":"心里很高兴，想告诉大家"
 };
 const OPPOSITES={
- "着急":["开心","难过"],"担心":["开心","生气"],
- "害怕":["开心","好奇"],"难过":["开心","好奇"],
- "生气":["开心","好奇"],"后悔":["开心","好奇"],
- "不好意思":["开心","生气"],"好奇":["难过","生气"],
- "开心":["难过","担心"]
+ "着急":["担心","难过"],"担心":["着急","害怕"],
+ "害怕":["担心","难过"],"难过":["担心","生气"],
+ "生气":["难过","担心"],"后悔":["难过","害怕"],
+ "不好意思":["难过","生气"],"好奇":["担心","开心"],
+ "开心":["好奇","难过"]
 };
 function pickThree(meta,all,key,allowed,i){
  const o=optionPool(meta,all,key,allowed);
