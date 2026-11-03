@@ -211,9 +211,16 @@ function generateQuestions(meta,all,allowed,i){
  const keys=["goal","issue","feeling","act","learned"];
  return keys.map((k,q)=>{
   if(k==="feeling"){
-   const t=feelingType(meta.feeling),labels=[t,...OPPOSITES[t]];
-   const arr=labels.map(x=>EMOTIONS[x]);
-   if(arr.some(x=>notAllowed(x,allowed)))throw Error(meta.id+" feeling choice untaught chars "+arr.map(x=>notAllowed(x,allowed)).join("|"));
+   const t=feelingType(meta.feeling),labels=[t,...OPPOSITES[t],"难过","开心","好奇","害怕","生气","担心","后悔"];
+   const arr=[];
+   for(const label of labels){
+    const next=EMOTIONS[label];
+    if(!next||arr.includes(next)||notAllowed(next,allowed))continue;
+    const lens=[...arr,next].map(words);
+    if(Math.max(...lens)-Math.min(...lens)>4)continue;
+    arr.push(next);if(arr.length===3)break;
+   }
+   if(arr.length!==3)throw Error(meta.id+" insufficient approved emotion choices");
    const pos=(i+q)%3,choices=[null,null,null];choices[pos]=arr[0];let n=1;
    for(let j=0;j<3;j++)if(j!==pos)choices[j]=arr[n++];
    return ["这时，故事里的人心情怎样？",choices,pos,"短文里写到了人物的心情。"];
