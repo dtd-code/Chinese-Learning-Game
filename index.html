@@ -639,6 +639,21 @@ select{
 .hero .username-inline input{
   margin-top:5px;
 }
+
+/* Quiz reading reference: 17pt and fully expanded, with no inner scrollbar. */
+#quizArea .quiz-reference {
+  position:static !important;
+  max-height:none !important;
+  height:auto !important;
+  overflow:visible !important;
+  overscroll-behavior:auto !important;
+}
+#quizArea #quizStoryBox,
+#quizArea #quizStoryBox p {
+  font-size:17pt !important;
+  line-height:1.65 !important;
+}
+
 </style>
 </head>
 <body>
