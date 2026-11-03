@@ -48,9 +48,13 @@ function moralFromStory(l){
  return m?.[1]||l.questions[4][1][l.questions[4][2]];
 }
 function getFeeling(l,allow){
- const s=l.story[1];
+ const paragraph=l.story[1],hero=findHero(l);
+ const position=paragraph.indexOf(hero);
+ // Do not attribute another character's emotions to the protagonist.
+ if(position<0)return null;
+ const s=paragraph.slice(position);
  const mood=[
-  ["急得","心里很着急"],["很着急","心里很着急"],["着急","心里很着急"],["脸都红了","心里很着急"],["难过","有点难过"],
+  ["担忧","心里很担心"],["担心得","心里很担心"],["焦虑","心里很着急"],["急得","心里很着急"],["很着急","心里很着急"],["着急","心里很着急"],["脸都红了","心里很着急"],["难过","有点难过"],
   ["生气","有点生气"],["担心","心里很担心"],["害怕","觉得很害怕"],
   ["很怕","心里有点怕"],["紧张","十分紧张"],["失望","感到很失望"],
   ["不好意思","有点不好意思"],["有点怕","心里有点怕"],["不安","心里很不安"],["不服气","有点不服气"],
@@ -59,7 +63,7 @@ function getFeeling(l,allow){
   ["怕","心里有点怕"],["笑","十分开心"]
  ];
  for(const [source,target] of mood){if(s.includes(source)&&inVocab(target,allow))return target;}
- return EMOTIONS.find(x=>s.includes(x)&&inVocab(x,allow))||"有点难过";
+ return EMOTIONS.find(x=>s.includes(x)&&inVocab(x,allow))||null;
 }
 function rotate(options,answer,seed){
  const correctIndex=seed%3,ret=Array(3);ret[correctIndex]=answer;
@@ -74,6 +78,7 @@ function scoreRelation(a,b){
 }
 function fallbackPool(correct,type,l,allow){
  const base={
+  location:["学校礼堂","学校食堂","学校课室","学校图书馆","家里的客厅","家里的饭厅","组屋楼下","公园","巴士站","熟食中心"],
   goal:["和同学一起完成学习活动","在学校参加一场活动","和朋友一起准备一份礼物","和同学一起看一本书","帮忙整理班里的东西"],
   issue:["一个同学把东西忘在家里","有个同学不愿意参加活动","大家找不到要用的东西","有人不小心打翻了东西","一个人不知道该怎么做"],
   action:["请同学一起帮忙想办法","先找老师帮忙再慢慢做","先把事情和朋友说清楚","回到原来的地方仔细找","先听大家的想法再决定"],
@@ -124,7 +129,13 @@ function courseCorrect(l){
  const source={goal:a?.[0]||facts.goal?.[l.id]||q[1][1][q[1][2]],
   issue:a?.[1]||facts.issue?.[l.id]||q[2][1][q[2][2]],
   action:a?.[2]||facts.action?.[l.id]||q[3][1][q[3][2]],
-  moral:moralFromStory(l)};
+  moral:moralFromStory(l),
+  location:(()=>{
+    const oldPlace=q[0][1][q[0][2]],text=l.story.join("");
+    if(text.includes(oldPlace))return oldPlace;
+    const opts=["东海岸公园","熟食中心","巴士转换站","学校图书馆","学校礼堂","学校食堂","学校课室","公园","学校","家里","巴士站","图书馆","地铁车厢"];
+    return opts.find(x=>text.includes(x))||oldPlace;
+  })()};
  // Prefer the actual new wording that is present in the revised story.
  return source;
 }
@@ -135,16 +146,21 @@ window.balanceReadingQuestions=function(data,ctx){
   const x=JSON.parse(JSON.stringify(l)),allow=taughtAllowed(x,ctx),hero=findHero(x);
   const correct=courseCorrect(x);
   const feel=getFeeling(x,allow);
-  const moods=EMOTIONS.filter(v=>inVocab(v,allow)&&v!==feel&&Math.abs(v.length-feel.length)<=2&&!x.story[1].includes(v));
-  const initialMoods=moods.sort((a,b)=>Math.abs(a.length-feel.length)-Math.abs(b.length-feel.length));
-  if(initialMoods.length<2)throw Error("Insufficient feeling choices "+x.id+" "+feel);
-  const moodChoice=rotate(initialMoods.slice(0,2),feel,i+3);
+  const useMood=Boolean(feel);
   const questionTexts=[
-   "这时，"+hero+"心里怎么样？",
+   useMood?"这时，"+hero+"心里怎么样？":x.questions[0][0],
    x.questions[1][0],x.questions[2][0],x.questions[3][0],x.questions[4][0]
   ];
+  let firstAnswer;
+  if(useMood){
+   const moods=EMOTIONS.filter(v=>inVocab(v,allow)&&v!==feel&&Math.abs(v.length-feel.length)<=2&&!x.story[1].includes(v));
+   const initialMoods=moods.sort((a,b)=>Math.abs(a.length-feel.length)-Math.abs(b.length-feel.length));
+   if(initialMoods.length<2)throw Error("Insufficient feeling choices "+x.id+" "+feel);
+   const moodChoice=rotate(initialMoods.slice(0,2),feel,i+3);
+   firstAnswer={options:moodChoice[0],correct:moodChoice[1],delta:Math.max(...moodChoice[0].map(v=>v.length))-Math.min(...moodChoice[0].map(v=>v.length))};
+  }else firstAnswer=generateOptions(correct.location,"location",x,pool,allow,i+3);
   const answers=[
-   {options:moodChoice[0],correct:moodChoice[1],delta:Math.max(...moodChoice[0].map(v=>v.length))-Math.min(...moodChoice[0].map(v=>v.length))},
+   firstAnswer,
    ...["goal","issue","action","moral"].map((field,j)=>generateOptions(correct[field],field,x,pool,allow,i*7+j))
   ];
   x.questions=answers.map((a,j)=>{
