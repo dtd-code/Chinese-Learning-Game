@@ -628,6 +628,17 @@ select{
  .hero .hero-note h1{font-size:27px}
 }
 
+
+/* Reading type size: 16-point, not 16 CSS pixels, in both places where a story is shown. */
+#storyBox, #storyBox p, #quizStoryBox, #quizStoryBox p,
+.story, .story p, .quiz-active .quiz-reference .story,
+.quiz-active .quiz-reference .story p {
+  font-size:16pt !important;
+  line-height:1.7;
+}
+.hero .username-inline input{
+  margin-top:5px;
+}
 </style>
 </head>
 <body>
