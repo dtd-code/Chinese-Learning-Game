@@ -105,23 +105,49 @@ function phrase(s,max=19){
  // Keep complete meaning when no valid shorter standalone clause exists.
  return s;
 }
+function topicTags(a){
+ const text=String(a.title)+" "+a.goal+" "+a.issue+" "+a.act;
+ const tags=[
+ ["lost",/找不到|不见|丢|招领|失主|水壶|车资卡|借书证|钱包|皮夹/],
+ ["road",/巴士|地铁|马路|交通|车厢|搭车|过马路|机场/],
+ ["reading",/书|图书馆|阅读|读书|字|文章|书架|故事/],
+ ["family",/妈妈|爸爸|爷爷|奶奶|外婆|家人|祖孙|母亲节|生日/],
+ ["animals",/动物|鸟|壁虎|小猫|自然|植物|绿豆|花园|野生|海边/],
+ ["food",/饭|食堂|餐|食品|煮|汤|菜|面|食物|小贩/],
+ ["sports",/跑|运动|球|比赛|冠军|接力|操场/],
+ ["perform",/音乐|演出|表演|朗诵|诗|舞台|礼堂|华乐/],
+ ["school",/老师|同学|学校|功课|学习|复习|考试|成绩|计划/],
+ ["online",/网络|网上|照片|相片|留言|资料|消息|电脑|手机/],
+ ["environment",/清洁|回收|环保|垃圾|节水|保护|社区|组屋/],
+ ["help",/帮助|帮忙|照顾|关心|不方便|安全|危险|老人/],
+ ["social",/争|吵|礼貌|道歉|公平|分工|分享|诚实|不开心/]
+ ];
+ return tags.filter(t=>t[1].test(text)).map(t=>t[0]);
+}
+function phraseBigrams(s){
+ const h=chars(s).join("");
+ const a=[];for(let i=0;i<h.length-1;i++)a.push(h.slice(i,i+2));
+ return new Set(a);
+}
 function optionPool(meta,all,key,allowed){
- const exact=phrase(meta[key],key==="learned"?23:19);
+ const max=key==="learned"?23:key==="goal"?17:15;
+ const exact=phrase(meta[key],max);
  const source=meta.goal+" "+meta.issue+" "+meta.act+" "+meta.place+" "+meta.title;
- const targetChars=new Set(chars(source));
- const desired=words(exact);
+ const desired=words(exact),exactBigrams=phraseBigrams(exact);
+ const tags=new Set(topicTags(meta));
  const options=[];
  for(let j=0;j<all.length;j++){
   const p=all[j];if(p.id===meta.id)continue;
-  const x=phrase(p[key],key==="learned"?23:19);
-  const l=words(x);
-  if(!x||Math.abs(l-desired)>3||notAllowed(x,allowed))continue;
+  const x=phrase(p[key],max),l=words(x);
+  if(!x||Math.abs(l-desired)>4||notAllowed(x,allowed))continue;
   if(x===exact||options.some(o=>o.text===x)||source.includes(x))continue;
-  const topicChars=new Set(chars(p.goal+" "+p.issue+" "+p.title+" "+p.place));
-  const shared=[...targetChars].filter(c=>topicChars.has(c)).length;
-  const overlap=[...new Set(chars(exact))].filter(c=>x.includes(c)).length;
-  const score=(key==="learned" ? -shared*1.5 : shared*1.7) -Math.abs(l-desired)*2+
-   Math.min(overlap,key==="learned"?2:5)*0.2;
+  const peerTags=topicTags(p),sameTopic=peerTags.filter(t=>tags.has(t)).length;
+  const topicBigrams=phraseBigrams(x);
+  const shared=[...exactBigrams].filter(c=>topicBigrams.has(c)).length;
+  const isMoral=key==="learned";
+  const score=(isMoral ? -sameTopic*4 : sameTopic*5)+
+     (isMoral ? -Math.min(shared,5) : Math.min(shared,6)*4)-
+     Math.abs(l-desired)*1.9;
   options.push({text:x,score,dist:Math.abs(l-desired)});
  }
  options.sort((a,b)=>b.score-a.score||a.dist-b.dist||a.text.localeCompare(b.text,"zh"));
@@ -133,7 +159,6 @@ function optionPool(meta,all,key,allowed){
  }
  return {correct:exact,wrong:pick.map(x=>x.text)};
 }
-
 function feelingType(text){
  const a=String(text);
  if(/后悔|不好意思/.test(a))return /后悔/.test(a)?"后悔":"不好意思";
@@ -193,7 +218,7 @@ function generateQuestions(meta,all,allowed,i){
   }
   const [options,answer]=pickThree(meta,all,k,allowed,i+q);
   const stem=prompts[k][(i+q)%prompts[k].length];
-  const explanation="短文里说："+phrase(meta[k],k==="learned"?23:19)+"。";
+  const explanation="短文里说："+phrase(meta[k],k==="learned"?23:k==="goal"?17:15)+"。";
   if(notAllowed(stem+explanation,allowed))throw Error(meta.id+" quiz stem or explanation has untaught char: "+notAllowed(stem+explanation,allowed));
   return [stem,options,answer,explanation];
  });
