@@ -4,6 +4,16 @@
 const HAN=/[\u3400-\u9fff]/u;
 const NAMES=["小华","小文","小安","小乐","小林","志强","建华","小雨","小美","小红","小青","小月","丽华","美华","小花","小晴","志文","子安","小山","小平"];
 const REPL=[
+["弄坏妈妈很喜欢的相片，还想不告诉别人","弄坏妈妈很喜欢的相片，却不敢告诉别人"],
+["把伞拿给弟弟，两人靠紧慢慢走到学校里","把伞拿给弟弟，两人一起走到学校门口"],
+["总是和别人不一样，差点想放弃","总是和别人不一样，差点不想再练习"],
+["听见打针的声音就想躲","看见护士拿着针就想躲"],
+["照着老师说的话慢慢呼吸","听老师的话，慢慢呼吸"],
+["志强心里一紧","志强有点担心"],
+["心疼得鼻子一酸","心里有点难过"],
+["脸上的笑容没有了","不笑了"],
+["不知该怎么办","不知道怎么办"],
+["懂得互相关心","要互相关心"],
 ["把电视放下","把电视节目换回来"],
 ["顺利完成","做完了"],
 ["完成，他","做完了，他"],
@@ -151,7 +161,13 @@ function safePart(s, fallback,allowed){
  const clean=replacePhrases(s,allowed);
  return isTaught(clean,allowed)?clean:fallback;
 }
-function nameFor(raw,i,allowed){if(/^(妈妈|爸爸|爷爷|奶奶|外婆|外公|哥哥|姐姐|弟弟|妹妹|阿姨|老师|表弟|同桌|祖父|祖母)$/.test(raw)&&isTaught(raw,allowed))return raw;const chosen=NAMES[i%NAMES.length];return isTaught(chosen,allowed)?chosen:"小华"}
+function nameFor(raw,i,allowed){
+ const roleNames={"阿嬷":"奶奶","阿公":"爷爷","祖父":"爷爷","祖母":"奶奶","婆婆":"奶奶","邻居爷爷":"爷爷","邻居阿俊":"朋友"};
+ const role=roleNames[raw]||raw;
+ if(/^(妈妈|爸爸|爷爷|奶奶|外婆|外公|哥哥|姐姐|弟弟|妹妹|阿姨|老师|表弟|表姐|表妹|堂弟|同桌|朋友)$/.test(role)&&isTaught(role,allowed))return role;
+ const chosen=NAMES[i%NAMES.length];
+ return isTaught(chosen,allowed)?chosen:"小华";
+}
 function rename(text,sourceName,targetName){
  if(!sourceName||sourceName===targetName)return String(text);
  return String(text).split(sourceName).join(targetName);
@@ -186,7 +202,12 @@ function safeFocus(str,allowed){
 }
 function fieldAspects(raw,allowed,i){
  const [grade,id,unit,rawTitle,place,who,friend,aim,problem,feeling,action,outcome,lesson,words]=raw;
- const w=nameFor(who,i,allowed),f=nameFor(friend,i+7,allowed);
+ const namesMale=["建华","志强","小山","小林","小文","小安","志文","小华"];
+ const namesFemale=["小雨","小美","小红","小青","小月","美华","小花","小晴","丽华"];
+ const allWords=String(aim)+String(problem)+String(action)+String(outcome);
+ const genderName=allWords.includes("她")?namesFemale[i%namesFemale.length]:allWords.includes("他")?namesMale[i%namesMale.length]:null;
+ const w=genderName&&isTaught(genderName,allowed)?genderName:nameFor(who,i,allowed);
+ const f=nameFor(friend,i+7,allowed);
  const rev=x=>rename(rename(x,who,w),friend,f);
  const p=safePlace(rev(place),allowed,i);
  const goal=safePart(rev(aim),COMMON_GOAL[i%COMMON_GOAL.length],allowed);
@@ -202,7 +223,7 @@ function paragraphSet(a,i){
  const opens=[
  "今天，"+w+"和"+f+"来到"+p+"。"+a.goal+"。"+w+"笑着说：“我们一起做吧！”",
  "那天，"+w+"和"+f+"在"+p+"。"+a.goal+"。"+w+"心里很高兴，想把这件事做好。",
- "放学后，"+w+"和"+f+"去"+p+"。"+a.goal+"。两人一边走，一边说笑。",
+ "那天，"+w+"和"+f+"在"+p+"。"+a.goal+"。两人一边说话，一边做准备。",
  "星期五，"+w+"和"+f+"来到"+p+"。"+a.goal+"。"+w+"早早做好准备。",
  "这一天，"+w+"和"+f+"在"+p+"。"+a.goal+"。看着眼前的东西，"+w+"很开心。",
  "有一天，"+w+"和"+f+"来到"+p+"。"+a.goal+"。两人都想把事情做好。"
@@ -223,7 +244,17 @@ function paragraphSet(a,i){
  w+"对"+f+"说：“我们先想想办法。”然后，"+w+"决定"+a.act+"。最后，"+a.result+"。"+w+"心里很高兴，知道"+a.learned+"。",
  w+"决定"+a.act+"。"+f+"也来帮忙，两人没有再吵。后来，"+a.result+"。"+w+"开心地说：“"+a.learned+"。”"
  ];
- return [opens[i%6],middle[i%6],close[i%6]];
+ return [opens[i%6],middle[i%6],close[i%6]].map(t=>t
+  .replace(/最后，他最后/g,"后来，他")
+  .replace(/最后，她最后/g,"后来，她")
+  .replace(/做好了完成/g,"做完了")
+  .replace(/更很重要/g,"更重要")
+  .replace(/学校学校里/g,"学校")
+  .replace(/他最后能/g,"他能")
+  .replace(/想不再做/g,"不想再做")
+  .replace(/心想： /g,"心想：")
+  .replace(/明白了： /g,"明白了：")
+ );
 }
 function qa(a,i){
  const specs=[
