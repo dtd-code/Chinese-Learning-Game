@@ -2,11 +2,11 @@
 (function(){
 "use strict";
 const introductions=[
-a=>"星期一早上，"+a.who+"和"+a.friend+"来到"+a.place+"。"+a.aim+"。"+a.who+"微笑着整理书包，眼里闪着期待的光。",
-a=>"放学后，"+a.place+"十分热闹。"+a.who+"和"+a.friend+"一起参加活动。"+a.aim+"。两人说说笑笑，心里都很期待。",
+a=>"那天，"+a.who+"和"+a.friend+"来到"+a.place+"。"+a.aim+"。"+a.who+"微笑着做好准备，眼里闪着期待的光。",
+a=>"放学前后，"+a.place+"十分热闹。"+a.who+"和"+a.friend+"一起参加活动。"+a.aim+"。两人说说笑笑，心里都很期待。",
 a=>"清晨，阳光照进"+a.place+"。"+a.who+"和"+a.friend+"早早来到这里。"+a.aim+"。"+a.who+"抿着嘴，认真地做好准备。",
 a=>"那天下午，"+a.who+"跟"+a.friend+"来到"+a.place+"。"+a.aim+"。想到能学到新本领，"+a.who+"就兴奋得笑了起来。",
-a=>"周末，"+a.place+"传来阵阵说话声。"+a.who+"和"+a.friend+"也在其中。"+a.aim+"。"+a.who+"一边观察，一边暗暗给自己打气。",
+a=>"那一天，"+a.place+"传来阵阵说话声。"+a.who+"和"+a.friend+"也在其中。"+a.aim+"。"+a.who+"一边观察，一边暗暗给自己打气。",
 a=>"星期三，"+a.who+"带着"+a.friend+"来到"+a.place+"。"+a.aim+"。"+a.who+"仔细检查准备好的东西，生怕漏掉什么。"
 ];
 const problems=[
@@ -26,7 +26,7 @@ a=>a.who+"认真观察后，先"+a.action+"。"+a.friend+"在旁边配合，两�
 a=>"犹豫了一会儿，"+a.who+"终于"+a.action+"。"+a.friend+"听完说明，轻轻点头。他们互相提醒，慢慢把难题解开。"
 ];
 const endings=[
-a=>"最后，"+a.outcome+"。"+a.who+"舒了一口气，嘴角扬起笑容。回家路上，"+a.who+"明白了一个道理："+a.lesson+"。",
+a=>"最后，"+a.outcome+"。"+a.who+"舒了一口气，嘴角扬起笑容。过了一会儿，"+a.who+"明白了一个道理："+a.lesson+"。",
 a=>"不久，"+a.outcome+"。"+a.friend+"笑着竖起大拇指，"+a.who+"也觉得心里暖暖的。这件事让"+a.who+"懂得："+a.lesson+"。",
 a=>"经过大家的努力，"+a.outcome+"。"+a.who+"回想起刚才的困难，心里充满感激，也更相信"+a.lesson+"。",
 a=>"到了活动结束时，"+a.outcome+"。"+a.who+"的紧张化成笑容，默默记住："+a.lesson+"。",
@@ -41,7 +41,7 @@ window.generateReadingBank=function(){
   if(ids.has(id))throw Error("重复的篇章编号："+id);ids.add(id);
   const a={grade,id,unit,title,place,who,friend,aim,problem,feeling,action,outcome,lesson},i=idx%6;
   const story=[introductions[i](a),problems[i](a),solutions[i](a)+endings[i](a)];
-  if(grade===6)story[1]+=who+"知道，除了照顾眼前的需要，还应该想想自己的决定会怎样影响别人。";
+  if(grade===6)story[1]+=who+"知道，自己的决定不仅影响结果，也会影响同伴的感受。";
   const peers=raw.filter(x=>x[0]===grade&&x[1]!==id);
   const other=(col)=>{const arr=[];for(let j=1;j<=peers.length&&arr.length<2;j++){const v=peers[(idx+j*7)%peers.length][col];if(!arr.includes(v))arr.push(v)}return arr};
   const specs=[["故事主要发生在哪里？",place,other(4)],[who+"一开始要做什么？",aim,other(7)],["故事遇到了什么问题？",problem,other(8)],[who+"怎样解决问题？",action,other(10)],["这个故事告诉我们什么道理？",lesson,other(12)]];
