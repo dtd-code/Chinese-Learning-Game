@@ -145,15 +145,15 @@ select{padding:11px 12px;border:2px solid #dadcf2;border-radius:12px;background:
  <section class="player-stats" aria-label="用户名和积分 Username and scores">
   <div class="player-form"><label for="playerInput">👤 用户名 <span class="en" lang="en">Username</span></label><input id="playerInput" maxlength="24" type="text" autocomplete="off" placeholder="例如：快乐小熊 / e.g. HappyPanda"><p class="mini-hint" id="profileNotice">用自己喜欢的名字，不要用真名。积分存在这台设备的浏览器里，换电脑就看不到旧积分。<span class="en" lang="en">Use a nickname, not your real name. Your points stay in this browser on this device. They won't move to another device.</span></p></div>
   <div class="score-tile first"><div aria-hidden="true">🏅</div><strong id="totalPoints">0</strong><span>我的总积分</span><small lang="en">My total points</small></div>
-  <div class="score-tile second"><div aria-hidden="true">🎯</div><strong id="runCount">0</strong><span>完成次数</span><small lang="en">Games finished</small></div>
+  <div class="score-tile second"><div aria-hidden="true">🎯</div><strong id="runCount">0</strong><span>已计分关卡</span><small lang="en">Levels counted</small></div>
  </section>
  <section class="panel" aria-labelledby="levelsTitle">
   <div class="panel-head"><div><h2 id="levelsTitle" class="section-title">🗺️ 选年级，开始闯关！<span class="en" lang="en">Pick your level and start playing!</span></h2><p class="small">这些短文是用《欢乐伙伴》的字词写的新故事，不是课文原文。<span class="en" lang="en">These are new stories using words from the textbook, not copies of the textbook stories.</span></p></div><span class="pill">⭐ 20分 / 20 pts</span></div>
   <div class="grade-tabs" id="gradeTabs" role="group" aria-label="选择年级 Choose a level"><button type="button" data-grade="4" aria-pressed="true">小四 <span class="en" lang="en">P4</span></button><button type="button" data-grade="5" aria-pressed="false">小五 <span class="en" lang="en">P5</span></button><button type="button" data-grade="6" aria-pressed="false">小六 <span class="en" lang="en">P6</span></button></div>
   <div id="lessonList" class="lesson-grid"></div><p id="notify" class="small" role="status" aria-live="polite"></p>
  </section>
- <section class="panel"><details class="wide-help"><summary>🎒 怎么玩？ / How to play</summary><div class="howto-grid"><div class="howstep">📖 <b>1. 读短文</b><span class="en" lang="en">Read the story.</span></div><div class="howstep">🔊 <b>2. 想听就听</b><span class="en" lang="en">Listen if you need help.</span></div><div class="howstep">✍️ <b>3. 给自己打分</b><span class="en" lang="en">Give yourself a reading score.</span></div><div class="howstep">🎯 <b>4. 答5道题</b><span class="en" lang="en">Answer 5 questions.</span></div></div><p class="small">每关有20分：朗读自评10分，答题10分。答完后，分数会加到你的总积分。<span class="en" lang="en">Each level has 20 points: 10 for your reading self-check and 10 for the quiz. Your score is added to your total.</span></p><p class="small">不用麦克风，也不会录音。自评不是老师给的正式成绩。<span class="en" lang="en">No microphone or recording is needed. Your self-check is not an official teacher grade.</span></p><p class="small">要看以前的积分，请在同一台设备、同一个浏览器输入一样的用户名。<span class="en" lang="en">To see old points, use the same username in the same browser on the same device.</span></p><button class="action soft" id="resetBtn" type="button">清除我的成绩 / Clear my scores</button></details></section>
- <section class="panel" aria-labelledby="historyTitle"><div class="panel-head"><div><h2 id="historyTitle" class="section-title">📘 我的挑战记录<span class="en" lang="en">My past games</span></h2><p class="small">只显示最近8次。<span class="en" lang="en">Showing your last 8 games.</span></p></div><button class="action alt" id="exportBtn" type="button">📥 保存成绩 / Save scores (CSV)</button></div><div id="historyList" class="history-list"></div></section>
+ <section class="panel"><details class="wide-help"><summary>🎒 怎么玩？ / How to play</summary><div class="howto-grid"><div class="howstep">📖 <b>1. 读短文</b><span class="en" lang="en">Read the story.</span></div><div class="howstep">🔊 <b>2. 想听就听</b><span class="en" lang="en">Listen if you need help.</span></div><div class="howstep">✍️ <b>3. 给自己打分</b><span class="en" lang="en">Give yourself a reading score.</span></div><div class="howstep">🎯 <b>4. 答5道题</b><span class="en" lang="en">Answer 5 questions.</span></div></div><p class="small">每关满分20分：朗读自评10分，答题10分。同一篇短文只算第一次完成的分数，重玩不加分。<span class="en" lang="en">Each level is worth up to 20 points: 10 for reading self-check and 10 for the quiz. Only your first completed attempt for each story counts. Replays earn no extra points.</span></p><p class="small">不用麦克风，也不会录音。自评不是老师给的正式成绩。<span class="en" lang="en">No microphone or recording is needed. Your self-check is not an official teacher grade.</span></p><p class="small">要看以前的积分，请在同一台设备、同一个浏览器输入一样的用户名。<span class="en" lang="en">To see old points, use the same username in the same browser on the same device.</span></p><button class="action soft" id="resetBtn" type="button">清除我的成绩 / Clear my scores</button></details></section>
+ <section class="panel" aria-labelledby="historyTitle"><div class="panel-head"><div><h2 id="historyTitle" class="section-title">📘 首次挑战成绩<span class="en" lang="en">First attempt scores</span></h2><p class="small">每篇只记录第一次成绩，显示最近8篇。<span class="en" lang="en">Only the first score for each story is saved. Showing up to 8 latest stories.</span></p></div><button class="action alt" id="exportBtn" type="button">📥 保存成绩 / Save scores (CSV)</button></div><div id="historyList" class="history-list"></div></section>
 </section>
 <section id="playView" class="panel hide" aria-label="挑战页面 Game level">
  <div class="quest-nav"><button id="backBtn" class="action soft" type="button">← 选关 / Back to levels</button></div>
@@ -203,10 +203,39 @@ const ACTIVE='chinese-reading-game-v3-active';
 const OLD_KEY='chinese-reading-game-v2-progress';
 let db={players:{}};
 let active='小玩家';
-let grade=4,currentLesson=null,qIndex=0,quizPoints=0,qAnswered=false,saved=false,selfPron=null,selfFlow=null,quizOral=null;
+let grade=4,currentLesson=null,qIndex=0,quizPoints=0,qAnswered=false,saved=false,credited=false,selfPron=null,selfFlow=null,quizOral=null;
 const el=id=>document.getElementById(id);
 const profileDefault=()=>({total:0,runs:0,history:[]});
 const currentProfile=()=>db.players[active]||(db.players[active]=profileDefault());
+// Match attempts by lesson ID (or title for older saved games).
+function recordKey(rec){
+ if(!rec||typeof rec!=='object')return null;
+ const matched=LESSONS.find(l=>l.id===rec.id || (rec.title&&l.title===rec.title));
+ if(matched)return 'lesson:'+matched.id;
+ if(rec.id)return 'lesson:'+rec.id;
+ if(rec.title)return 'title:'+rec.title;
+ return null;
+}
+function normalizeProfiles(){
+ // Older versions counted every replay. Keep the earliest saved attempt
+ // for each story, so only the first result contributes to total points.
+ let changed=false;
+ for(const p of Object.values(db.players)){
+  if(!p||typeof p!=='object')continue;
+  const original=Array.isArray(p.history)?p.history:[];
+  const seen=new Set(), unique=[];
+  original.forEach((rec,i)=>{
+   if(!rec||typeof rec!=='object')return;
+   const key=recordKey(rec)||'unknown:'+i;
+   if(seen.has(key))return;
+   seen.add(key);unique.push(rec);
+  });
+  const total=unique.reduce((sum,rec)=>sum+Math.min(20,Math.max(0,Number(rec.score??rec.total??0)||0)),0);
+  if(p.history?.length!==unique.length||p.total!==total||p.runs!==unique.length)changed=true;
+  p.history=unique;p.total=total;p.runs=unique.length;
+ }
+ return changed;
+}
 const bilingual=(cn,en)=>cn+' / '+en;
 function setBilingual(id,cn,en){const root=el(id);root.replaceChildren();root.append(document.createTextNode(cn));const sub=document.createElement('span');sub.className='en';sub.lang='en';sub.textContent=en;root.append(sub)}
 function load(){
@@ -220,7 +249,9 @@ function load(){
    active=localStorage.getItem(ACTIVE)||'小玩家';
  }catch(err){setBilingual('profileNotice','这个浏览器不能读取以前的积分。','This browser could not read your old points.')}
  if(!db.players[active])db.players[active]=profileDefault();
+ const migrated=normalizeProfiles();
  el('playerInput').value=active;updateProfileUI();
+ if(migrated)persist();
 }
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(db));localStorage.setItem(ACTIVE,active);return true}catch(e){setBilingual('profileNotice','保存失败。关掉页面后积分可能消失。','Could not save. Points may disappear when you close this page.');return false}}
 function saveUsername(){
@@ -229,7 +260,7 @@ function saveUsername(){
  if(name!==active){active=name;currentProfile();persist();updateProfileUI();}
  setBilingual('profileNotice','积分只存在这台设备的浏览器里。换电脑就看不到旧积分。','Your points stay in this browser on this device. They won\'t move to another device.');
 }
-function updateProfileUI(){const p=currentProfile();el('totalPoints').textContent=p.total;el('runCount').textContent=p.runs;renderHistory()}
+function updateProfileUI(){const p=currentProfile();el('totalPoints').textContent=p.total;el('runCount').textContent=p.runs;renderHistory();renderCards()}
 function renderHistory(){
  const root=el('historyList');root.replaceChildren();const records=[...currentProfile().history].reverse().slice(0,8);
  if(!records.length){const p=document.createElement('p');p.className='small';p.textContent='还没有挑战记录。 / No games finished yet.';root.append(p);return}
@@ -251,14 +282,14 @@ function renderCards(){
  const h=document.createElement('h3');h.textContent=item.title;
  const pill=document.createElement('span');pill.className='pill';pill.textContent=`第 ${i+1} 关 · Level ${i+1}`;
  const p=document.createElement('div');p.className='focus';p.textContent='重点词语 / Key words: '+item.focus.slice(0,4).join('、')+'…';
- const b=document.createElement('button');b.className='action';b.type='button';b.textContent='🚀 开始挑战 / Play now';b.onclick=()=>openLesson(item.id);
+ const b=document.createElement('button');b.className='action';b.type='button';const done=currentProfile().history.some(h=>recordKey(h)==='lesson:'+item.id);b.textContent=done?'🔁 再玩一次（不加分）/ Replay (no extra points)':'🚀 开始挑战 / Play now';b.onclick=()=>openLesson(item.id);
  card.append(art,pill,tag,h,p,b);root.append(card)
  });
 }
 function setView(view){el('homeView').classList.toggle('hide',view!=='home');el('playView').classList.toggle('hide',view!=='play');document.body.classList.toggle('is-playing',view==='play');window.scrollTo({top:0,behavior:'instant'})}
 function openLesson(id){
  saveUsername();stopTTS(true);currentLesson=LESSONS.find(x=>x.id===id);if(!currentLesson)return;
- qIndex=0;quizPoints=0;qAnswered=false;saved=false;selfPron=null;selfFlow=null;quizOral=null;
+ qIndex=0;quizPoints=0;qAnswered=false;saved=false;credited=false;selfPron=null;selfFlow=null;quizOral=null;
  el('lessonUnit').textContent=currentLesson.unit;el('lessonTitle').textContent=currentLesson.title;
  const box=el('storyBox');box.replaceChildren();currentLesson.story.forEach(t=>{const p=document.createElement('p');p.textContent=t;box.append(p)});
  const words=el('focusWords');words.replaceChildren();currentLesson.focus.forEach(w=>{const s=document.createElement('span');s.className='word-chip';s.textContent=w;words.append(s)});
@@ -305,14 +336,21 @@ function answer(i){if(qAnswered)return;qAnswered=true;const q=currentLesson.ques
 function nextQuestion(){if(qIndex<4){qIndex++;renderQuestion()}else finishQuiz()}
 function finishQuiz(){
  el('quizArea').classList.add('hide');el('finishArea').classList.remove('hide');const total=quizOral+quizPoints;const p=currentProfile();const prev=p.total;
- if(!saved){p.total+=total;p.runs++;p.history.push({id:currentLesson.id,title:currentLesson.title,oral:quizOral,quiz:quizPoints,score:total,date:new Date().toISOString(),source:'Reading self-check V5'});p.history=p.history.slice(-200);saved=true;persist();updateProfileUI()}
+ if(!saved){
+  credited=!p.history.some(h=>recordKey(h)==='lesson:'+currentLesson.id);
+  if(credited){
+   p.total+=total;p.runs++;
+   p.history.push({id:currentLesson.id,title:currentLesson.title,oral:quizOral,quiz:quizPoints,score:total,date:new Date().toISOString(),source:'Reading self-check V5 - first attempt'});
+  }
+  saved=true;persist();updateProfileUI();
+ }
  const stars=total>=17?3:total>=12?2:total>=7?1:0;el('finalStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);el('finalScore').textContent=`${total} / 20`;
  const root=el('resultBreakdown');root.replaceChildren();for(const [cn,en,n] of [['朗读自评','Reading self-check',quizOral],['阅读理解','Reading quiz',quizPoints]]){const div=document.createElement('div');const title=document.createElement('div');title.textContent=cn+' / '+en;const val=document.createElement('strong');val.textContent=n+' / 10';div.append(title,val);root.append(div)}
- setBilingual('resultMessage','分数已加到你的总积分。','Your score has been added to your total.');
+ setBilingual('resultMessage',credited?'这是第一次完成这篇，分数已加入总积分。':'你重玩了这篇！本次成绩只供练习，不会加到总积分。',credited?'This is your first completed attempt. Its score counts.':'You replayed this story! This score is for practice only and does not add points.');
  el('saveScoreLabel').textContent=`🏅 总积分 / Total points: ${p.total}`;
- let achievement='';if(prev<500&&p.total>=500)achievement='🏆 500分！你是坚持大师！ / 500 points! Reading Champion!';else if(prev<100&&p.total>=100)achievement='🥇 100分！你是阅读小达人！ / 100 points! Reading Star!';
+ let achievement='';if(credited&&prev<500&&p.total>=500)achievement='🏆 500分！你是坚持大师！ / 500 points! Reading Champion!';else if(credited&&prev<100&&p.total>=100)achievement='🥇 100分！你是阅读小达人！ / 100 points! Reading Star!';
  el('awardMessage').textContent=achievement;el('awardMessage').classList.toggle('hide',!achievement);
- setBilingual('saveStatus','每玩完一关，积分就会自动保存到这台设备的浏览器。','Your points are saved in this browser after each level.');
+ setBilingual('saveStatus',credited?'第一次成绩已保存。以后重玩这篇不会增加积分。':'这是重玩成绩，没有保存或增加积分。',credited?'Your first score has been saved. Replaying this story will not earn more points.':'This replay score was not saved and earned no extra points.');
  el('finishArea').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function resetProgress(){if(!confirm('真的要清除这个用户名的成绩吗？不能找回。\nClear this username\'s scores? This cannot be undone.'))return;db.players[active]=profileDefault();persist();updateProfileUI();el('notify').textContent='成绩已清除。/ Scores cleared.'}
