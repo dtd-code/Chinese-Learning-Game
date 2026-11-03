@@ -65,24 +65,24 @@ function userMeta(raw,i,compiled,custom,approved){
  return meta;
 }
 const intro=[
- a=>"在"+a.place+"，"+a.who+"和"+a.friend+"准备开始一天的活动。"+a.goal+"。"+a.who+"笑着说：“我们一起做吧！”",
+ a=>"在"+a.place+"，"+a.who+"和"+a.friend+"正在做准备。"+a.goal+"。"+a.who+"笑着说：“我们一起做吧！”",
  a=>"这一天，"+a.who+"和"+a.friend+"来到"+a.place+"。"+a.goal+"。两人都想把事情做好。",
  a=>a.who+"和"+a.friend+"在"+a.place+"。"+a.goal+"。"+a.who+"认真做好准备，心里很高兴。",
- a=>"有一天，"+a.who+"和"+a.friend+"来到"+a.place+"。"+a.goal+"。"+a.who+"看着眼前的东西，想把这件事做好。",
+ a=>"有一天，"+a.who+"和"+a.friend+"来到"+a.place+"。"+a.goal+"。"+a.who+"很用心，还开心地笑了。",
  a=>"那天，"+a.who+"和"+a.friend+"在"+a.place+"。"+a.goal+"。"+a.who+"很开心，还对"+a.friend+"笑了笑。",
- a=>"这次活动在"+a.place+"举行。"+a.who+"和"+a.friend+"都在场。"+a.goal+"。两人准备开始做事。"
+ a=>"那天，"+a.who+"和"+a.friend+"在"+a.place+"。"+a.goal+"。两人先说说要做的事。"
 ];
 const turns=[
- a=>"可是，"+a.issue+"。"+a.who+a.feeling+"。"+a.who+"心想：“我不能一直着急，要先想办法。”",
+ a=>"可是，"+a.issue+"。"+a.who+a.feeling+"。"+a.who+"心想：“这件事应该怎么办呢？”",
  a=>"没想到，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"看见了，问：“你怎么了？”",
  a=>"就在这时，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"说：“我们先想一想。”",
- a=>"事情却起了变化："+a.issue+"。"+a.who+a.feeling+"。"+a.who+"停下脚步，想了一会儿。",
- a=>"后来，"+a.issue+"。"+a.who+a.feeling+"。看见"+a.friend+"就在身边，"+a.who+"决定先想一想。",
+ a=>"这时，"+a.issue+"。"+a.who+a.feeling+"。"+a.who+"停下脚步，想了一会儿。",
+ a=>"后来，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"在一旁安静地听着。",
  a=>"不久，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"轻声说：“有问题，我们就一起想办法。”"
 ];
 const closure=[
  a=>a.who+"想了想，决定"+a.act+"。"+a.result+"。"+a.who+"开心地笑了，明白了： "+a.learned+"。",
- a=>a.who+"没有停下来，决定"+a.act+"。"+a.result+"。"+a.who+"脸上有了笑容，也明白了： "+a.learned+"。",
+ a=>a.who+"慢慢想了想，决定"+a.act+"。"+a.result+"。"+a.who+"脸上有了笑容，也明白了： "+a.learned+"。",
  a=>a.who+"想了一会儿，决定"+a.act+"。"+a.result+"。"+a.who+"心里很高兴，知道"+a.learned+"。",
  a=>a.who+"想出了一个办法："+a.act+"。"+a.result+"。后来，"+a.who+"明白了： "+a.learned+"。",
  a=>"想了一会儿，"+a.who+"决定"+a.act+"。"+a.result+"。"+a.who+"笑着对"+a.friend+"说：“我知道了，"+a.learned+"。”",
