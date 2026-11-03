@@ -102,7 +102,7 @@ function contextualVariants(text,l,allow){
 }
 
 function generateOptions(correct,type,l,pool,allow,seed){
- const variants=type==="moral"?[]:contextualVariants(correct,l,allow);
+ const variants=(type==="moral"||type==="location")?[]:contextualVariants(correct,l,allow);
  let candidates=pool.filter(p=>p.grade===l.grade&&p.id!==l.id)
   .map(p=>p[type]).filter(s=>s&&s!==correct&&inVocab(s,allow)&&!l.story.join("").includes(s));
  const fallback=fallbackPool(correct,type,l,allow);
