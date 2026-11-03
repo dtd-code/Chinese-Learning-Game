@@ -133,14 +133,7 @@ function optionPool(meta,all,key,allowed){
  }
  return {correct:exact,wrong:pick.map(x=>x.text)};
 }
-const emotionMenu=[
-"心里很着急，不知道怎么办","心里很高兴，想马上分享",
-"有点生气，想先说清楚","心里很难过，低下了头",
-"有点担心，怕别人受伤","心里很害怕，不敢往前",
-"觉得很不好意思，脸红了","心里很开心，笑了起来",
-"有点后悔，想向别人道歉","感到很放心，松了一口气",
-"很想知道答案，认真观察","觉得很奇怪，想弄明白"
-];
+
 function feelingType(text){
  const a=String(text);
  if(/后悔|不好意思/.test(a))return /后悔/.test(a)?"后悔":"不好意思";
@@ -153,16 +146,24 @@ function feelingType(text){
  if(/开心|高兴/.test(a))return "开心";
  return "担心";
 }
-const feelingChoices={
-"着急":["心里很着急，不知道怎么办","心里很高兴，想马上分享","心里很难过，低下了头"],
-"担心":["有点担心，怕别人受伤","心里很开心，笑了起来","觉得很不好意思，脸红了"],
-"害怕":["心里很害怕，不敢往前","心里很高兴，想马上分享","有点生气，想先说清楚"],
-"难过":["心里很难过，低下了头","心里很开心，笑了起来","很想知道答案，认真观察"],
-"生气":["有点生气，想先说清楚","心里很开心，笑了起来","感到很放心，松了一口气"],
-"后悔":["有点后悔，想向别人道歉","心里很高兴，想马上分享","有点担心，怕别人受伤"],
-"不好意思":["觉得很不好意思，脸红了","感到很放心，松了一口气","很想知道答案，认真观察"],
-"好奇":["很想知道答案，认真观察","心里很难过，低下了头","有点生气，想先说清楚"],
-"开心":["心里很开心，笑了起来","心里很害怕，不敢往前","有点担心，怕别人受伤"]
+// Equal-length emotion descriptions use early-school characters only.
+const EMOTIONS={
+ "着急":"心里很着急，不知道怎么办",
+ "担心":"心里有点担心，想先帮忙",
+ "害怕":"心里很害怕，想快点回家",
+ "难过":"心里很难过，不想再说话",
+ "生气":"心里有点生气，不想说话",
+ "后悔":"觉得自己做错了，想说对不起",
+ "不好意思":"有点不好意思，低下了头",
+ "好奇":"心里很好奇，想再看一看",
+ "开心":"心里很高兴，想告诉大家"
+};
+const OPPOSITES={
+ "着急":["开心","难过"],"担心":["开心","生气"],
+ "害怕":["开心","好奇"],"难过":["开心","好奇"],
+ "生气":["开心","好奇"],"后悔":["开心","好奇"],
+ "不好意思":["开心","生气"],"好奇":["难过","生气"],
+ "开心":["难过","担心"]
 };
 function pickThree(meta,all,key,allowed,i){
  const o=optionPool(meta,all,key,allowed);
@@ -174,24 +175,25 @@ function pickThree(meta,all,key,allowed,i){
  return [arr,pos];
 }
 const prompts={
-"goal":["故事开始时，大家准备做什么？","故事里的人原本有什么计划？","从短文开头可知，他们想做什么？"],
-"issue":["什么事情让活动遇到了困难？","故事中出现了什么问题？","事情后来发生了什么变化？"],
-"act":["他们最后采用了哪一种做法？","哪一项最符合短文中的解决方法？","遇到问题后，人物采取了什么行动？"],
-"learned":["哪一句话最符合这个故事的道理？","读完短文，哪一种想法最恰当？","哪一个道理最符合人物的经历？"]
+ "goal":["开始时，他们想做什么？","故事里的人想做什么？","短文开头写了什么事？"],
+ "issue":["后来发生了什么事？","他们碰到了什么问题？","是什么事让大家很着急？"],
+ "act":["他们想了什么办法？","后来，他们是怎么做的？","谁的做法和短文里的一样？"],
+ "learned":["读完故事，我们明白了什么？","哪一句话说出了故事的道理？","这个故事让我们学到什么？"]
 };
 function generateQuestions(meta,all,allowed,i){
  const keys=["goal","issue","feeling","act","learned"];
  return keys.map((k,q)=>{
   if(k==="feeling"){
-   const t=feelingType(meta.feeling),arr=feelingChoices[t]||feelingChoices["担心"];
-   if(arr.some(x=>notAllowed(x,allowed)))throw Error(meta.id+" feeling options include untaught chars "+arr.filter(x=>notAllowed(x,allowed)).join("|"));
+   const t=feelingType(meta.feeling),labels=[t,...OPPOSITES[t]];
+   const arr=labels.map(x=>EMOTIONS[x]);
+   if(arr.some(x=>notAllowed(x,allowed)))throw Error(meta.id+" feeling choice untaught chars "+arr.map(x=>notAllowed(x,allowed)).join("|"));
    const pos=(i+q)%3,choices=[null,null,null];choices[pos]=arr[0];let n=1;
    for(let j=0;j<3;j++)if(j!==pos)choices[j]=arr[n++];
-   return ["遇到难题时，主要人物有什么感受？",choices,pos,"短文中说到人物的心情和表情。"];
+   return ["这时，故事里的人心情怎样？",choices,pos,"短文里写到了人物的心情。"];
   }
   const [options,answer]=pickThree(meta,all,k,allowed,i+q);
   const stem=prompts[k][(i+q)%prompts[k].length];
-  const explanation="短文中提到："+phrase(meta[k],k==="learned"?23:19)+"。";
+  const explanation="短文里说："+phrase(meta[k],k==="learned"?23:19)+"。";
   if(notAllowed(stem+explanation,allowed))throw Error(meta.id+" quiz stem or explanation has untaught char: "+notAllowed(stem+explanation,allowed));
   return [stem,options,answer,explanation];
  });
