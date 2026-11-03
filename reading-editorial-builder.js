@@ -170,7 +170,7 @@ function pickThree(meta,all,key,allowed,i){
  if(o.wrong.length<2)throw Error(meta.id+" "+key+" insufficient similar options: correct "+o.correct+"; found "+o.wrong.join("|"));
  const total=[o.correct,...o.wrong];
  if(Math.max(...total.map(words))-Math.min(...total.map(words))>4)throw Error(meta.id+" "+key+" option gap invalid");
- const pos=i%3,arr=new Array(3);arr[pos]=o.correct;let j=1;
+ const pos=i%3,arr=new Array(3);arr[pos]=o.correct;let j=0;
  for(let p=0;p<3;p++)if(p!==pos)arr[p]=o.wrong[j++];
  return [arr,pos];
 }
@@ -235,6 +235,12 @@ window.BUILD_EDITORIAL=function(originals,raw,vocab,writing,base,externalOverrid
    }
   }
  }
+ if(issues.length)return {stories:[],issues,metadata:meta};
+ for(const a of all){for(const q of a.questions){
+  if(q[1].length!==3||q[1].some(x=>typeof x!=="string"||!x)||new Set(q[1]).size!==3){
+   issues.push({id:a.id,error:"Invalid question options: "+JSON.stringify(q[1])});
+  }
+ }}
  if(issues.length)return {stories:[],issues,metadata:meta};
  const stories=all.map(a=>({id:a.id,grade:a.grade,unit:a.unit,title:a.title,focus:a.focus,story:a.story,questions:a.questions}));
  return {stories,issues:[],metadata:meta};
