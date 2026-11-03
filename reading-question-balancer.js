@@ -50,10 +50,10 @@ function moralFromStory(l){
 function getFeeling(l,allow){
  const s=l.story[1];
  const mood=[
-  ["很着急","心里很着急"],["着急","心里很着急"],["难过","有点难过"],
+  ["急得","心里很着急"],["很着急","心里很着急"],["着急","心里很着急"],["脸都红了","心里很着急"],["难过","有点难过"],
   ["生气","有点生气"],["担心","心里很担心"],["害怕","觉得很害怕"],
   ["很怕","心里有点怕"],["紧张","十分紧张"],["失望","感到很失望"],
-  ["不好意思","有点不好意思"],["不安","心里很不安"],["不服气","有点不服气"],
+  ["不好意思","有点不好意思"],["有点怕","心里有点怕"],["不安","心里很不安"],["不服气","有点不服气"],
   ["心疼","心里很难过"],["焦急","心里很着急"],["害羞","有点害羞"],
   ["不开心","有点不开心"],["很累","有些不舒服"],["不知该怎么办","心里很着急"],
   ["怕","心里有点怕"],["笑","十分开心"]
@@ -81,14 +81,30 @@ function fallbackPool(correct,type,l,allow){
  }[type]||[];
  return base.filter(x=>x!==correct&&inVocab(x,allow));
 }
+
+const DETAIL_ALTS=[["图书馆",["美术室","学校礼堂","学校食堂","音乐室"]],["阅读活动",["画画活动","音乐活动","体育活动"]],["车资卡",["书包","水壶","车票"]],["工作人员",["巴士司机","学校老师","其他乘客"]],["服务柜台",["巴士司机","学校老师","服务人员"]],["老人",["小孩","同学","司机"]],["妈妈",["爸爸","姐姐","老师"]],["弟弟",["妹妹","朋友","同学"]],["哥哥",["姐姐","弟弟","朋友"]],["学校",["家里","公园","商店"]],["公园",["学校","花园","食堂"]],["地铁",["巴士","校车","汽车"]],["巴士",["校车","地铁","汽车"]],["食堂",["课室","图书馆","礼堂"]],["课室",["食堂","礼堂","图书馆"]],["音乐",["画画","体育","阅读"]],["画画",["唱歌","跳舞","运动"]],["相片",["书本","卡片","照片"]],["小猫",["小狗","小鸟","小鱼"]],["动物",["植物","小鸟","小猫"]],["同学",["老师","朋友","妈妈"]],["朋友",["家人","同学","老师"]],["老师",["同学","朋友","妈妈"]],["拿开",["放好","拿起","打开"]],["放好",["拿走","拿开","放下"]],["走到",["跑到","来到","回到"]],["回去",["走开","回家","过去"]],["不见了",["弄坏了","忘记了","拿错了"]],["弄坏了",["弄丢了","找不到","忘记了"]],["打翻",["拿走","放错","碰倒"]],["找不到",["不想带","忘记拿","拿错了"]],["整理",["检查","收好","拿走"]],["检查",["整理","收好","拿走"]],["练习",["玩耍","休息","比赛"]],["比赛",["表演","练习","游戏"]],["互相",["自己","大家","一起"]],["慢慢",["马上","一起","轻轻"]],["轻轻",["大声","马上","慢慢"]]];
+function contextualVariants(text,l,allow){
+ const result=[];
+ for(const [token,replacements] of DETAIL_ALTS){
+  const i=text.indexOf(token);if(i<0)continue;
+  for(const alt of replacements){
+   if(!inVocab(alt,allow))continue;
+   const changed=text.slice(0,i)+alt+text.slice(i+token.length);
+   if(changed!==text&&Math.abs(changed.length-text.length)<=3&&!l.story.join("").includes(changed))result.push(changed);
+  }
+ }
+ return [...new Set(result)];
+}
+
 function generateOptions(correct,type,l,pool,allow,seed){
+ const variants=contextualVariants(correct,l,allow);
  let candidates=pool.filter(p=>p.grade===l.grade&&p.id!==l.id)
   .map(p=>p[type]).filter(s=>s&&s!==correct&&inVocab(s,allow)&&!l.story.join("").includes(s));
  const fallback=fallbackPool(correct,type,l,allow);
- candidates=candidates.concat(fallback);
+ candidates=variants.concat(candidates,fallback);
  // Prefer similar-length choices, with the same grammatical role.
  candidates=[...new Set(candidates)].filter(s=>Math.abs(s.length-correct.length)<=3)
-  .sort((a,b)=>scoreRelation(correct,a)-scoreRelation(correct,b));
+  .sort((a,b)=>(variants.includes(a)?-100:0)-(variants.includes(b)?-100:0)+scoreRelation(correct,a)-scoreRelation(correct,b));
  const selected=[];
  for(const s of candidates)if(!selected.includes(s)&&selected.length<2)selected.push(s);
  if(selected.length<2){
