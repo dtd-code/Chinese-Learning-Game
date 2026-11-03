@@ -832,47 +832,125 @@ function showRubricDescription(id){
  setBilingual(id+'Description',...SELF_RUBRIC[id][key]);
 }
 function updateSelfScore(){showRubricDescription('selfPron');showRubricDescription('selfFlow');const p=el('selfPron').value;const f=el('selfFlow').value;selfPron=p===''?null:Number(p);selfFlow=f===''?null:Number(f);const ready=selfPron!==null&&selfFlow!==null;el('selfOralTotal').textContent=ready?`${selfPron+selfFlow} / 10`:'— / 10';if(ready)el('selfNotice').replaceChildren()}
-// Playback uses only a Mandarin (China) request and a fixed normal (1×) speed.
+// Mandarin (China), normal reading speed (1x).
+// Resume uses browser word-boundary offsets when available; otherwise an
+// elapsed-time estimate within short spoken phrases, not whole paragraphs.
 const TTS_SUPPORTED=Boolean(window.speechSynthesis&&window.SpeechSynthesisUtterance);
 let voiceCN=null,ttsQueue=[],ttsRunning=false,ttsPaused=false,ttsSerial=0,ttsUtterance=null,ttsActiveEntry=null;
-function findChinaVoice(){if(!TTS_SUPPORTED)return;const voices=window.speechSynthesis.getVoices();voiceCN=voices.find(v=>/^zh[-_]CN$/i.test(v.lang))||voices.find(v=>/^zh[-_]CN/i.test(v.lang))||null;}
+let ttsStartedAt=0,ttsBoundaryPos=0,ttsBoundarySeen=false;
+function findChinaVoice(){
+ if(!TTS_SUPPORTED)return;
+ const voices=window.speechSynthesis.getVoices();
+ voiceCN=voices.find(v=>/^zh[-_]CN$/i.test(v.lang))||voices.find(v=>/^zh[-_]CN/i.test(v.lang))||null;
+}
 function clearHighlight(){el('storyBox').querySelectorAll('p').forEach(p=>p.classList.remove('speaking'))}
-function updatePauseButton(){const btn=el('pauseReadBtn');btn.disabled=!ttsRunning;btn.textContent=ttsPaused?'▶ 继续 / Resume':'⏸ 暂停 / Pause'}
-function stopTTS(silent=false){ttsSerial++;ttsQueue=[];ttsRunning=false;ttsPaused=false;ttsUtterance=null;ttsActiveEntry=null;if(TTS_SUPPORTED){try{speechSynthesis.cancel()}catch(e){}}clearHighlight();updatePauseButton();if(!silent)setBilingual('ttsStatus','已停止范读。','Reading stopped.')}
-function toTTSChunks(text,index){return (text.match(/[^。！？!?；;]+[。！？!?；;]?/g)||[text]).map(part=>({text:part.trim(),index})).filter(part=>part.text)}
+function updatePauseButton(){
+ const btn=el('pauseReadBtn');btn.disabled=!ttsRunning;
+ btn.textContent=ttsPaused?'▶ 继续 / Resume':'⏸ 暂停 / Pause';
+}
+function stopTTS(silent=false){
+ ttsSerial++;ttsQueue=[];ttsRunning=false;ttsPaused=false;
+ ttsUtterance=null;ttsActiveEntry=null;ttsStartedAt=0;ttsBoundaryPos=0;ttsBoundarySeen=false;
+ if(TTS_SUPPORTED){try{speechSynthesis.cancel()}catch(e){}}
+ clearHighlight();updatePauseButton();
+ if(!silent)setBilingual('ttsStatus','已停止范读。','Reading stopped.');
+}
+function toTTSChunks(text,index){
+ // Short, punctuation-delimited phrases improve recovery on browsers without boundaries.
+ const chunks=[];
+ const phrases=text.match(/[^。！？!?；;，,：:\n]+[。！？!?；;，,：:]?/g)||[text];
+ for(const phrase of phrases){
+  let str=phrase.trim();
+  while(str.length>22){chunks.push({text:str.slice(0,22),index});str=str.slice(22)}
+  if(str)chunks.push({text:str,index});
+ }
+ return chunks;
+}
 function speakNext(serial){
  if(serial!==ttsSerial||!ttsRunning||ttsPaused)return;
  const entry=ttsActiveEntry||ttsQueue.shift();
- if(!entry){ttsRunning=false;ttsUtterance=null;clearHighlight();updatePauseButton();setBilingual('ttsStatus','听完了！','Finished!');return}
- ttsActiveEntry=entry;clearHighlight();
- const paras=el('storyBox').querySelectorAll('p');if(paras[entry.index])paras[entry.index].classList.add('speaking');
- const u=new SpeechSynthesisUtterance(entry.text);ttsUtterance=u;u.lang='zh-CN';if(voiceCN)u.voice=voiceCN;u.rate=1;u.pitch=1;u.volume=1;
- u.onend=()=>{if(serial!==ttsSerial||ttsPaused||ttsUtterance!==u)return;ttsActiveEntry=null;ttsUtterance=null;speakNext(serial)};
- u.onerror=()=>{if(serial!==ttsSerial||ttsPaused||ttsUtterance!==u)return;ttsRunning=false;ttsActiveEntry=null;clearHighlight();updatePauseButton();setBilingual('ttsStatus','播放失败，请换 Edge 或 Chrome。','Playback failed. Try Edge or Chrome.')};
- try{speechSynthesis.speak(u);updatePauseButton();setBilingual('ttsStatus',`正在读第${entry.index+1}段。`,`Playing paragraph ${entry.index+1}.`)}catch(e){ttsRunning=false;clearHighlight();updatePauseButton();setBilingual('ttsStatus','无法播放范读。','Cannot play audio.')}
+ if(!entry){
+  ttsRunning=false;ttsUtterance=null;ttsStartedAt=0;
+  clearHighlight();updatePauseButton();
+  setBilingual('ttsStatus','听完了！','Finished!');
+  return;
+ }
+ ttsActiveEntry=entry;ttsStartedAt=0;ttsBoundaryPos=0;ttsBoundarySeen=false;
+ clearHighlight();
+ const paras=el('storyBox').querySelectorAll('p');
+ if(paras[entry.index])paras[entry.index].classList.add('speaking');
+ const u=new SpeechSynthesisUtterance(entry.text);ttsUtterance=u;
+ u.lang='zh-CN';if(voiceCN)u.voice=voiceCN;u.rate=1;u.pitch=1;u.volume=1;
+ u.onstart=()=>{if(serial===ttsSerial&&!ttsPaused&&ttsUtterance===u)ttsStartedAt=Date.now()};
+ u.onboundary=e=>{
+  if(serial!==ttsSerial||ttsPaused||ttsUtterance!==u)return;
+  if(Number.isFinite(e.charIndex)&&e.charIndex>=0&&e.charIndex<entry.text.length){
+   ttsBoundaryPos=Math.max(ttsBoundaryPos,e.charIndex);
+   if(e.charIndex>0)ttsBoundarySeen=true;
+  }
+ };
+ u.onend=()=>{
+  if(serial!==ttsSerial||ttsPaused||ttsUtterance!==u)return;
+  ttsActiveEntry=null;ttsUtterance=null;speakNext(serial);
+ };
+ u.onerror=()=>{
+  if(serial!==ttsSerial||ttsPaused||ttsUtterance!==u)return;
+  ttsRunning=false;ttsActiveEntry=null;ttsUtterance=null;
+  clearHighlight();updatePauseButton();
+  setBilingual('ttsStatus','播放失败，请换 Edge 或 Chrome。','Playback failed. Try Edge or Chrome.');
+ };
+ try{
+  speechSynthesis.speak(u);updatePauseButton();
+  setBilingual('ttsStatus','正在读第'+(entry.index+1)+'段。','Playing paragraph '+(entry.index+1)+'.');
+ }catch(e){
+  ttsRunning=false;ttsUtterance=null;clearHighlight();updatePauseButton();
+  setBilingual('ttsStatus','无法播放范读。','Cannot play audio.');
+ }
 }
 function startTTS(all){
  if(!currentLesson)return;
  if(!TTS_SUPPORTED){setBilingual('ttsStatus','这个浏览器不能播放语音。','This browser cannot play audio.');return}
  stopTTS(true);
  const i=Number(el('listenPartSelect').value)||0;
- ttsQueue=(all?currentLesson.story.map((text,index)=>({text,index})):[{text:currentLesson.story[i],index:i}]).flatMap(({text,index})=>toTTSChunks(text,index));
- ttsRunning=true;ttsPaused=false;updatePauseButton();speakNext(ttsSerial)
+ ttsQueue=(all?currentLesson.story.map((text,index)=>({text,index})):[{text:currentLesson.story[i],index:i}])
+  .flatMap(({text,index})=>toTTSChunks(text,index));
+ ttsRunning=true;ttsPaused=false;updatePauseButton();speakNext(ttsSerial);
+}
+function getInterruptedOffset(){
+ if(!ttsActiveEntry)return 0;
+ const str=ttsActiveEntry.text;
+ if(ttsBoundarySeen)return Math.min(str.length-1,Math.max(0,ttsBoundaryPos));
+ // No reported Chinese word boundaries: estimate 4 characters per second.
+ // This is approximate, never claim character-exact resume on unsupported devices.
+ if(!ttsStartedAt)return 0;
+ const elapsed=Math.max(0,(Date.now()-ttsStartedAt)/1000);
+ const estimate=Math.floor(elapsed*4.0);
+ return Math.min(Math.max(estimate,0),Math.max(0,str.length-1));
 }
 function pauseTTS(){
  if(!TTS_SUPPORTED||!ttsRunning)return;
  if(!ttsPaused){
-  // Avoid browser resume() bugs: keep the current sentence and restart it when continuing.
-  ttsPaused=true;ttsSerial++;ttsUtterance=null;
+  const offset=getInterruptedOffset();
+  if(ttsActiveEntry&&offset>0){
+   const rest=ttsActiveEntry.text.slice(offset).trimStart();
+   if(rest)ttsActiveEntry={text:rest,index:ttsActiveEntry.index};
+   else ttsActiveEntry=null;
+  }
+  ttsPaused=true;ttsSerial++;ttsUtterance=null;ttsStartedAt=0;
   try{speechSynthesis.cancel()}catch(e){}
   updatePauseButton();setBilingual('ttsStatus','已暂停。','Paused.');
  }else{
   ttsPaused=false;const serial=++ttsSerial;updatePauseButton();
   setBilingual('ttsStatus','继续朗读。','Resuming.');
-  setTimeout(()=>{if(serial===ttsSerial&&ttsRunning&&!ttsPaused)speakNext(serial)},80);
+  setTimeout(()=>{if(serial===ttsSerial&&ttsRunning&&!ttsPaused)speakNext(serial)},100);
  }
 }
-function initTTS(){if(TTS_SUPPORTED){findChinaVoice();speechSynthesis.addEventListener?.('voiceschanged',findChinaVoice)}else{['readAllBtn','readPartBtn','pauseReadBtn'].forEach(id=>el(id).disabled=true)}updatePauseButton()}
+function initTTS(){
+ if(TTS_SUPPORTED){findChinaVoice();speechSynthesis.addEventListener?.('voiceschanged',findChinaVoice)}
+ else ['readAllBtn','readPartBtn','pauseReadBtn'].forEach(id=>el(id).disabled=true);
+ updatePauseButton();
+}
+
 function startQuiz(){
  if(selfPron===null||selfFlow===null){setBilingual('selfNotice','请先选两项分数。','Please choose both scores first.');el('selfPron').focus();return}
  if((selfPron===0)!==(selfFlow===0)){setBilingual('selfNotice','没朗读就两项都选0；朗读了就两项都选1到5。','If you did not read, choose 0 for both. If you read, choose 1 to 5 for both.');return}
