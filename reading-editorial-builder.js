@@ -9,11 +9,11 @@ const words=str=>[...String(str)].length;
 const notAllowed=(str,set)=>[...new Set(chars(str).filter(c=>!set.has(c)))].join("");
 const clean=str=>String(str||"").replace(/[\s\u00a0]+/g," ").replace(/。+$/,"").trim();
 const ORIGINALS={
-"p4-1":{who:"小华",friend:"同学",place:"食堂",goal:"在食堂负责值日",issue:"有个同学走到排队的人前面，想先买饭",feeling:"有点生气，但没有大声说话",act:"轻声请那个同学排队",result:"那个同学脸红了，向大家说对不起",learned:"负责值日要有耐心，也要尊重别人"},
-"p4-2":{who:"志强",friend:"小安",place:"学校操场",goal:"参加运动会的接力赛",issue:"志强接过棒时不小心跌倒了",feeling:"心里很难过，怕跑不到终点",act:"站起来继续向终点跑去",result:"虽然没拿冠军，队友还是为他加油",learned:"遇到困难不轻易放弃，比名次更重要"},
+"p4-1":{who:"小华",friend:"同学",place:"食堂",goal:"在食堂负责值日",issue:"有个同学走到排队的人前面，想先买饭",feeling:"有点生气，但没有大声说话",act:"轻声请那个同学排队",result:"那个同学脸红了，向大家说对不起",learned:"负责值日要慢慢说话，也要尊重别人"},
+"p4-2":{who:"志强",friend:"小安",place:"学校操场",goal:"参加运动会的接力赛",issue:"志强接过棒时不小心跌倒了",feeling:"心里很难过，怕跑不到终点",act:"站起来继续向终点跑去",result:"虽然没拿冠军，队友还是为他加油",learned:"有困难时不轻易放弃，比名次更重要"},
 "p4-3":{who:"建华",friend:"妈妈",place:"熟食中心",goal:"和妈妈一起吃午饭",issue:"一位老人拿着东西，找不到座位",feeling:"心里有点不想让出座位",act:"听了妈妈的话，站起来请老人坐下",result:"老人笑着道谢，建华也觉得开心",learned:"要尊重老人，也要有礼貌"},
 "p5-1":{who:"志强",friend:"同伴",place:"营地",goal:"参加学校的露营活动",issue:"志强想一个人完成任务，却做不完",feeling:"有点难过，不知道怎么办",act:"请同伴帮忙，大家一起完成任务",result:"大家一起做好了任务，志强很开心",learned:"大家互相配合，比一个人做事更好"},
-"p5-2":{who:"小雨",friend:"小文",place:"网上",goal:"分享自己画的画",issue:"有人在画下面留言，嘲笑小雨",feeling:"心里很难过，不想再画画",act:"把事情告诉老师，请老师帮助",result:"同学向小雨道歉，小雨又开心地画画",learned:"遇到烦恼时可以向可信的人求助"},
+"p5-2":{who:"小雨",friend:"小文",place:"网上",goal:"分享自己画的画",issue:"有人在画下面留言，嘲笑小雨",feeling:"心里很难过，不想再画画",act:"把事情告诉老师，请老师帮助",result:"同学向小雨道歉，小雨又开心地画画",learned:"有烦恼时可以向可信的人求助"},
 "p6-1":{who:"建华",friend:"老师",place:"学校操场",goal:"参加学校的跑步比赛",issue:"功课多，建华跑了一会儿就很累",feeling:"有点担心，怕自己做不好",act:"按老师的计划每天练习，也注意休息",result:"建华坚持跑到终点，心里很开心",learned:"有计划地练习，才能一步一步进步"},
 "p6-2":{who:"小文",friend:"老师",place:"新加坡的老街",goal:"认识老街的壁画和旧店屋",issue:"小文不明白为什么要画以前的生活",feeling:"心里很好奇，想知道原因",act:"听老师讲解，再仔细看壁画",result:"小文知道了以前的人怎样生活",learned:"城市会改变，我们也要记住过去的故事"}
 };
@@ -77,7 +77,7 @@ const turns=[
  a=>"没想到，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"看见了，问：“你怎么了？”",
  a=>"就在这时，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"说：“我们先想一想。”",
  a=>"事情却起了变化："+a.issue+"。"+a.who+a.feeling+"。"+a.who+"没有马上离开，而是停下来想办法。",
- a=>"后来，"+a.issue+"。"+a.who+a.feeling+"。看见"+a.friend+"就在身边，"+a.who+"决定先把问题说清楚。",
+ a=>"后来，"+a.issue+"。"+a.who+a.feeling+"。看见"+a.friend+"就在身边，"+a.who+"决定先想一想。",
  a=>"不久，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"轻声说：“有问题，我们就一起想办法。”"
 ];
 const closure=[
