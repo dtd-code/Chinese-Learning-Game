@@ -638,6 +638,9 @@ select{
 </section>
 </main>
 <footer class="footer"><p>本游戏不调用麦克风、不录音、不收集真实姓名；浏览器朗读声音可能由系统或浏览器语音服务提供。</p><p lang="en">This game does not use the microphone, record your voice, or collect real names. Read-aloud audio may come from your device or browser voice service.</p></footer>
+<script src="./reading-vocab-p4.js"></script>
+<script src="./reading-vocab-p5.js"></script>
+<script src="./reading-vocab-p6.js"></script>
 <script src="./reading-bank-core.js"></script>
 <script src="./reading-p4-course.js"></script>
 <script src="./reading-p4-extra.js"></script>
@@ -779,7 +782,7 @@ function openLesson(id){
  qIndex=0;quizPoints=0;qAnswered=false;saved=false;credited=false;selfPron=null;selfFlow=null;quizOral=null;
  el('lessonUnit').textContent=currentLesson.unit;el('lessonTitle').textContent=currentLesson.title;
  for(const target of ['storyBox','quizStoryBox']){const box=el(target);box.replaceChildren();currentLesson.story.forEach(t=>{const p=document.createElement('p');p.textContent=t;box.append(p)})}
- const words=el('focusWords');words.replaceChildren();(LESSON_READ_WORDS[currentLesson.id]||currentLesson.focus).forEach(w=>{const s=document.createElement('span');s.className='word-chip';s.textContent=w;words.append(s)});
+ const words=el('focusWords');words.replaceChildren();const match=currentLesson.unit.match(/^([456][AB]) 第(\d+)课/);const lessonCode=match?match[1]+'-'+match[2]:null;const allWords=LESSON_READ_WORDS[currentLesson.id]||(lessonCode&&window.READING_VOCAB?.[lessonCode]?.split('、'))||currentLesson.focus;allWords.forEach(w=>{const s=document.createElement('span');s.className='word-chip';s.textContent=w;words.append(s)});
  const parts=el('listenPartSelect');parts.replaceChildren();currentLesson.story.forEach((_,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`第 ${i+1} 段 / Paragraph ${i+1}`;parts.append(o)});
  el('selfPron').disabled=false;el('selfFlow').disabled=false;el('selfPron').value='';el('selfFlow').value='';updateSelfScore();
  el('startQuizBtn').classList.remove('hide');el('quizArea').classList.add('hide');el('finishArea').classList.add('hide');
