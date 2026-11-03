@@ -1,234 +1,331 @@
 <!DOCTYPE html>
 <html lang="zh-SG">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>华文阅读大挑战 · V4.1 可选范读与朗读自评版</title>
+<meta name="color-scheme" content="light">
+<title>华文阅读挑战</title>
 <style>
-:root{--blue:#184d85;--blue2:#286ac0;--teal:#087c7a;--bg:#f0f6fb;--white:#fff;--text:#26384a;--muted:#596e83;--line:#d8e4ef;--green:#176c42;--red:#a33135;--gold:#a4610d}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#e8f5fb,#f7f8fe 70%);color:var(--text);font-family:system-ui,-apple-system,'Microsoft YaHei','Noto Sans CJK SC',sans-serif;line-height:1.65}
-header{background:linear-gradient(108deg,#123f73,#147b8d);color:#fff;padding:25px 18px 19px}header .head{max-width:1050px;margin:auto;display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}h1{font-size:clamp(1.5rem,4vw,2.35rem);margin:0}h2{color:var(--blue);margin:0 0 12px;font-size:1.55rem}h3{margin:10px 0}p{margin:8px 0 14px}header p{color:#d5ebf7;margin:4px 0 0}.subtitle{font-size:.9rem}
-main{max-width:1050px;margin:22px auto;padding:0 16px 50px}.panel{background:#fff;padding:25px;border:1px solid var(--line);border-radius:19px;box-shadow:0 8px 24px #2647660b;margin-bottom:18px}.statbar{display:flex;gap:11px;flex-wrap:wrap;margin:0 0 18px}.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:11px 16px;flex:1;min-width:155px}.stat strong{font-size:1.65rem;display:block;color:var(--blue)}.stat span{font-size:.83rem;color:var(--muted)}
-.row{display:flex;align-items:center;justify-content:space-between;gap:13px;flex-wrap:wrap}.button,.answer,button{font:inherit}button{cursor:pointer}.button{border:0;padding:11px 20px;background:var(--blue2);border-radius:11px;color:white;font-weight:700}.button:hover{background:#18538f}.button.secondary{background:#e9f3fc;color:var(--blue)}.button.secondary:hover{background:#dcecfb}.button.quiet{background:#f5f7fa;color:#42596c}.button:disabled{background:#c0cbd4;color:#f7f7f7;cursor:not-allowed}.grades{display:flex;gap:9px;margin:14px 0}.grades button{border-radius:11px;border:1px solid #cbdce8;background:#f5f9fc;padding:10px 22px;font-weight:700;color:#245278}.grades button.active{background:var(--blue);color:white;border-color:var(--blue)}
-.lessons{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}.lesson-card{border:1px solid var(--line);background:#fbfdff;border-radius:15px;padding:18px}.tag{font-size:.79rem;color:var(--teal);font-weight:700}.lesson-card h3{color:#184d85;margin:7px 0}.chip{display:inline-block;border-radius:999px;background:#e9f7f6;color:#0a6967;padding:3px 10px;margin:3px 4px 3px 0;font-size:.88rem}.small,.hint{color:var(--muted);font-size:.89rem}.story{font-size:1.12rem;line-height:2.08;background:#f6fafe;border:1px solid #e1edf6;padding:19px 23px;border-radius:15px}.story p{margin:0 0 13px;text-indent:2em}.story p:last-child{margin-bottom:0}.rubric{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px;margin:13px 0}.rubric>div{border:1px solid var(--line);border-radius:13px;padding:14px;background:#fafcfe}label{font-weight:700;display:block;margin-bottom:7px}select{width:100%;padding:12px 9px;border:1px solid #9ab9d1;border-radius:10px;background:#fff;font-size:1rem;color:#183954}.callout{background:#fff8e8;border-left:4px solid #e9ad34;padding:11px 14px;border-radius:9px;color:#665021;margin:14px 0}.qhead{font-size:1.23rem;font-weight:700;color:#174a7c}.answer{display:block;text-align:left;width:100%;padding:13px 17px;border:1px solid #c4d5e5;background:#f7fbff;color:#26384a;border-radius:11px;margin:9px 0}.answer:hover:not(:disabled){background:#e7f2ff}.answer:disabled{cursor:default}.answer.correct{background:#d9f6e7;border-color:#74bc90;color:#155f34}.answer.wrong{background:#ffe4e4;border-color:#dc9393;color:#8b2d2d}.feedback{min-height:40px;font-weight:600}.success{color:var(--green)}.error{color:var(--red)}.resultTotal{font-size:clamp(2.5rem,8vw,4.8rem);color:var(--blue);font-weight:850;line-height:1.3}.award{background:#f4f8ff;border:1px solid #d6e6fb;border-radius:15px;padding:15px;margin:12px 0}.divider{height:1px;background:var(--line);margin:21px 0}.hide{display:none !important}.foot{color:#65768a;font-size:.84rem;margin:20px 4px}.progress-track{background:#e6eef7;border-radius:999px;height:9px;overflow:hidden;margin:8px 0 20px}.progress-fill{background:#1780a8;height:100%;width:0;transition:width .3s ease}.score-details{background:#f7fafd;border:1px solid var(--line);border-radius:13px;padding:15px;margin-bottom:16px}.score-details p{margin:3px 0}details{margin-top:16px}summary{cursor:pointer;color:var(--blue)}.warn{color:#945c06;font-size:.87rem}#notify{font-size:.92rem;color:#8b4b23}@media(max-width:540px){.panel{padding:18px}.story{font-size:1.04rem;padding:13px}.stat{min-width:130px}.button{width:100%}.row{align-items:stretch}.grades button{flex:1}}
-
-.profile {background:#f1f8ff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
-.profile-grid {display:flex;flex-wrap:wrap;gap:10px;align-items:end}
-.profile-grid>div {flex:1;min-width:210px}
-input[type=text] {font:inherit;border:1px solid #9ab9d1;padding:12px 11px;border-radius:10px;width:100%;background:white;color:#172b40}
-.speech-controls {background:#f8fbff;border:1px solid var(--line);border-radius:15px;padding:18px;margin:13px 0}
-.mic-buttons {display:flex;flex-wrap:wrap;gap:10px}.mic-buttons button{flex:1;min-width:145px}
-.chipscore {background:#e7f3fa;border-radius:8px;color:#174a7c;padding:3px 7px;font-weight:800}
-.record {padding:10px 0;border-bottom:1px solid var(--line);font-size:.93rem}
-#historyList{margin-top:10px}#historyList:empty:before{content:'暂无完整的挑战记录';color:var(--muted);font-size:.9rem}
-.audio-guide{margin:16px 0;background:#f2f8ff;border:1px solid #cadff1;border-radius:15px;padding:18px}
-.audio-guide h3{margin:0;color:var(--blue)}
-.audio-options{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
-.audio-options>div{flex:1;min-width:190px}
-.audio-guide button{margin-bottom:4px}
-.story p.speaking{background:#fff0c8;outline:3px solid #f1cc83;border-radius:6px}
-
-@media(max-width:540px){.mic-buttons .button{min-width:100%}}
-.self-total{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#eaf4ff;border:1px solid #a8cce8;border-radius:13px;padding:12px 16px;margin:10px 0}
-.self-total strong{font-size:1.6rem;color:#16528d}
-select:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #64a3e3;outline-offset:2px}
-
-.score-description{background:#eef6ff;border-radius:9px;padding:10px 12px;min-height:48px;margin:10px 0 2px}
-.score-description .english-description{display:block;margin-top:5px;color:#547083;font-size:.92em}
-.rubric-list{padding-left:22px;margin:9px 0 3px}.rubric-list li{padding-bottom:12px;margin-bottom:7px;border-bottom:1px solid #e4edf5}.rubric-list li:last-child{border-bottom:0}
+:root{--ink:#23334c;--muted:#536783;--blue:#4a60ed;--pink:#fb6797;--mint:#16b6a4;--sun:#ffbf4c;--paper:#fff;--stroke:#e4eaf4;--shadow:0 18px 44px rgba(45,58,130,.12)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","Noto Sans CJK SC",sans-serif;color:var(--ink);background:radial-gradient(circle at 3% 8%,#fff0c6 0 11%,transparent 33%),radial-gradient(circle at 96% 34%,#ddf5ff 0 13%,transparent 39%),linear-gradient(180deg,#f8f6ff,#eef8ff 58%,#fff9f1);line-height:1.55;min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #e17f16;outline-offset:3px}
+button:disabled{cursor:not-allowed;opacity:.57}
+main{max-width:1120px;padding:18px 19px 55px;margin:auto}
+.hero{max-width:1120px;margin:18px auto 0;position:relative;overflow:hidden;color:#fff;background:linear-gradient(116deg,#604ce9 0%,#7463f4 45%,#ef76b6 100%);border-radius:30px;padding:34px 42px 36px;box-shadow:0 21px 55px #6657d840;isolation:isolate}
+.hero:after{content:"";position:absolute;right:-55px;top:-110px;width:325px;height:325px;border:39px solid #ffffff16;border-radius:50%;z-index:-1}
+.hero:before{content:"";position:absolute;left:48%;bottom:-83px;width:220px;height:220px;background:#ffffff10;border-radius:50%;z-index:-1}
+.hero h1{font-size:clamp(2rem,6vw,3.65rem);letter-spacing:.04em;margin:5px 0 7px;line-height:1.17;text-shadow:0 4px 0 #5140a270}
+.hero .eyebrow{font-weight:900;letter-spacing:.03em;font-size:.93rem;display:inline-block;background:#ffffff29;border:1px solid #ffffff42;border-radius:30px;padding:7px 15px}
+.hero .kicker{font-weight:700;color:#fff7cc;font-size:1.15rem;margin:10px 0}
+.hero .subline{display:inline-block;background:#fff;color:#5143b9;padding:10px 15px;border-radius:13px;font-weight:900;margin-top:7px;box-shadow:0 6px 0 #ffffff50}
+.hero .english{font-size:.83rem;margin:10px 0 0;color:#f2edff}
+.hero-art{position:absolute;right:55px;top:44px;font-size:7.7rem;transform:rotate(10deg);filter:drop-shadow(0 13px 1px #4334a850)}
+.hero-star{position:absolute;color:#fff4a7;font-size:2.1rem;right:216px;top:20px;animation:float 5s ease-in-out infinite}
+.hero-star.b{right:27px;top:200px;font-size:1.5rem;animation-delay:-1.7s}
+@keyframes float{50%{transform:translateY(-12px) rotate(16deg)}}
+.hero-note{max-width:670px}
+.panel{background:#fff;border:2px solid #edf0fb;border-radius:26px;box-shadow:var(--shadow);padding:25px;margin:18px 0}
+.section-title{margin:0;font-size:clamp(1.25rem,3vw,1.65rem);color:#2a3f76}
+.en{display:block;color:var(--muted);font-size:.83em;font-weight:500;margin-top:2px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.player-stats{display:grid;grid-template-columns:1.35fr .8fr .8fr;gap:15px;margin-top:18px}
+.player-form,.score-tile{background:#fff;border:2px solid #eef1fa;border-radius:22px;padding:17px 19px;box-shadow:0 8px 20px #6a5bc414}
+.player-form{background:linear-gradient(126deg,#fff9e9,#fff);border-color:#ffe9b6}
+.player-form label{font-size:1.05rem;color:#6b4f1a;font-weight:850;display:block}
+.player-form input{width:100%;border:2px solid #edc97c;background:white;border-radius:13px;padding:11px 12px;font-size:1.06rem;margin-top:8px;max-width:390px}
+.mini-hint{font-size:.81rem;color:#655b43;margin:8px 0 0;line-height:1.48}
+.score-tile{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.score-tile.first{background:#edf5ff;border-color:#cde3ff}.score-tile.second{background:#f6f0ff;border-color:#e4d6ff}
+.score-tile strong{font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.24;color:#5548c3}
+.score-tile span{font-size:.92rem;font-weight:800;color:#3d507d}
+.score-tile small{color:#73809a;font-size:.78rem}
+.grade-tabs{display:flex;gap:12px;flex-wrap:wrap;margin:17px 0 20px}
+.grade-tabs button{padding:12px 22px;border:2px solid #dee2f7;background:#f7f8ff;color:#464b83;border-radius:17px;font-weight:900;min-width:136px;transition:transform .15s,box-shadow .15s}
+.grade-tabs button:hover,.action:hover:not(:disabled){transform:translateY(-2px)}
+.grade-tabs button[aria-pressed="true"]{color:#fff;background:linear-gradient(120deg,#6f61f5,#e477b3);box-shadow:0 7px 0 #d6c9ff;border-color:transparent;transform:translateY(-3px)}
+.lesson-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.level-card{background:#fff;border:2px solid #eae9f7;border-radius:22px;padding:19px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;box-shadow:0 6px 0 #f0edfa;transition:transform .2s,box-shadow .2s}
+.level-card:hover{transform:translateY(-5px);box-shadow:0 13px 20px #716dc229}
+.level-card:nth-child(3n+1){background:linear-gradient(#fff9e9,#fff);border-color:#ffe1a6}.level-card:nth-child(3n+2){background:linear-gradient(#eefdf8,#fff);border-color:#bceadd}.level-card:nth-child(3n){background:linear-gradient(#fff1f7,#fff);border-color:#ffd1e5}
+.level-card h3{margin:3px 0;font-size:1.24rem;color:#2c367a;line-height:1.35}
+.level-card .art{font-size:2.4rem;align-self:flex-start}
+.level-card .tag{font-size:.78rem;color:#6e6382;font-weight:800}
+.level-card .focus{font-size:.86rem;color:#586476;line-height:1.6;flex:1}
+.pill{display:inline-block;padding:5px 12px;border-radius:30px;background:#f5e9ff;color:#6348ad;font-weight:850;font-size:.85rem}
+.action{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:15px;padding:13px 20px;font-weight:850;text-align:center;background:linear-gradient(115deg,#5961f2,#8069ed);color:#fff;box-shadow:0 6px 0 #d2ccfc;transition:transform .15s}
+.action.alt{color:#32516a;background:#eaf4ff;box-shadow:0 5px 0 #d3e6f8}
+.action.soft{color:#46517c;background:#f4f3fb;box-shadow:0 5px 0 #e6e3f1}
+.action.green{background:linear-gradient(115deg,#0ea899,#22bdae);box-shadow:0 6px 0 #bcece3}
+.action.orange{background:linear-gradient(115deg,#ef9a32,#f7ae54);box-shadow:0 6px 0 #ffead0;color:#593b0e}
+.action:active:not(:disabled){transform:translateY(4px);box-shadow:0 2px 0 #dedcf4}
+.level-card .action{margin-top:auto;align-self:stretch}
+.wide-help summary{color:#5346bc;font-weight:900;cursor:pointer;font-size:1.1rem;list-style:none}
+.wide-help summary:after{content:" ＋";color:#ea799f}.wide-help[open] summary:after{content:" −"}
+.howto-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 8px}
+.howstep{border-radius:15px;padding:12px;background:#f5f6ff;border:1px solid #e2e6ff}
+.howstep:nth-child(2){background:#fff5ea;border-color:#ffe0b5}.howstep:nth-child(3){background:#edf9f4;border-color:#cde9dd}.howstep:nth-child(4){background:#fff1f7;border-color:#ffdaeb}
+.howstep b{display:block;color:#3f447b;margin:3px 0}
+.howstep .en{font-size:.79rem}
+.history-list .history-row{display:flex;justify-content:space-between;border-bottom:1px solid #edf1f9;padding:11px 4px;gap:12px;flex-wrap:wrap}
+.history-list .history-row:last-child{border:0}
+.history-num{font-weight:900;color:#6a50d5}
+.small{color:var(--muted);font-size:.9rem;line-height:1.6}
+.muted{color:var(--muted)}
+.hide{display:none !important}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.quest-nav{margin-bottom:17px}.quest-nav .action{padding:10px 14px}
+.quest-head{padding:15px 20px;border-radius:19px;background:linear-gradient(105deg,#fff2d5,#fff9ee);border:2px solid #ffe4b1;margin-bottom:18px}
+.quest-head h2{font-size:1.65rem;color:#513b7e;margin:4px 0 5px}
+.stepper{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 17px}
+.stepper span{border-radius:999px;padding:7px 11px;background:#f3f0ff;color:#504a9b;font-weight:750;font-size:.86rem}
+.stepper span:nth-child(2){background:#fff0e1;color:#9b671f}.stepper span:nth-child(3){background:#e2f8f2;color:#1b7664}
+.quest-section{margin:20px 0;border:2px solid #ecedfa;border-radius:21px;padding:20px}
+.quest-section:nth-of-type(3){background:#fffdf9}
+.quest-section h3{margin:0 0 10px;color:#414c96;font-size:1.27rem}
+.story{background:#f4f9ff;border:2px dashed #d4e6fb;border-radius:18px;padding:20px 22px;font-size:1.13rem;line-height:2.13;color:#263a4c}
+.story p{margin:0 0 12px;text-indent:2em}.story p:last-child{margin-bottom:0}
+.story p.speaking{background:#fff2bb;border-radius:10px;box-shadow:0 0 0 7px #fff2bb}
+.word-cloud{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}
+.word-chip{display:inline-block;background:#ecf9f3;border:1px solid #bce6d1;border-radius:11px;padding:4px 11px;color:#177b61;font-size:.89rem;font-weight:800}
+.sound-card{border-radius:20px;background:#f0f5ff;border:2px solid #dbe7ff;padding:17px;margin-top:14px}
+.sound-card h3{margin:0}.control-row{display:flex;flex-wrap:wrap;gap:11px;margin:12px 0}
+.control-row .action{flex:1;min-width:160px}
+.field-label{display:block;font-size:.97rem;font-weight:900;margin:13px 0 6px;color:#3b4676}
+select{padding:11px 12px;border:2px solid #dadcf2;border-radius:12px;background:#fff;color:#293b56;max-width:100%;font-weight:650}
+.notice{border-radius:15px;padding:12px 15px;background:#fff5dc;color:#654822;border:1px solid #ffe0a3;margin:13px 0;font-size:.9rem;line-height:1.55}
+.notice .en{color:#806c4d}
+.rubric-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rubric-card{background:#fff;border:2px solid #eae5fc;border-radius:18px;padding:16px}
+.rubric-card select{width:100%}
+.rubric-desc{background:#f7f5ff;border-radius:12px;padding:11px;margin-top:11px;min-height:83px;color:#4d477a;font-size:.9rem}
+.rubric-desc .en{margin-top:7px}
+.self-total{background:linear-gradient(115deg,#fceefd,#e9f8ff);border-radius:17px;padding:14px 17px;margin:17px 0;display:flex;align-items:center;justify-content:space-between;gap:15px;font-weight:900}
+.self-total strong{font-size:1.5rem;color:#6754c4}
+.rubric-full summary{font-weight:850;color:#594da8;cursor:pointer}
+.rubric-full li{margin-bottom:9px}
+.quiz-area{margin-top:15px}.bar{height:12px;background:#e7eaf7;overflow:hidden;border-radius:999px;margin:12px 0 17px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#25bdac,#8ed4ee);border-radius:999px;transition:width .2s}
+.question{font-size:1.31rem;font-weight:900;margin:10px 0;color:#293c79}
+.answer{background:#fff;border:2px solid #e2e6f6;border-radius:16px;padding:14px 16px;display:block;width:100%;margin:10px 0;text-align:left;font-weight:780;color:#2b4262;transition:background .15s,transform .15s}
+.answer:hover:not(:disabled){background:#f1f0ff;transform:translateX(3px)}
+.answer.correct{background:#dcf8e9;border-color:#54c999;color:#136541}
+.answer.wrong{background:#ffe5e8;border-color:#f49ead;color:#8b344a}
+.feedback{font-size:1rem;font-weight:850;min-height:35px;margin:13px 0}
+.result{text-align:center;background:linear-gradient(145deg,#fff9e8,#fff 48%,#f1efff);padding:25px 16px;border-radius:20px}
+.stars{font-size:2.55rem;letter-spacing:.1em}.result-number{font-size:clamp(2.8rem,9vw,4.2rem);line-height:1.2;font-weight:950;color:#5a54d6}
+.breakdown{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px auto;max-width:550px}
+.breakdown>div{background:white;border:1px solid #e8e9f9;border-radius:16px;padding:13px;text-align:center}
+.breakdown strong{font-size:1.5rem;color:#463aaf}
+.achievement{font-weight:900;color:#9a5a1f;background:#ffedc1;border-radius:14px;padding:11px 16px;display:inline-block}
+.footer{font-size:.9rem;max-width:1120px;margin:8px auto 35px;padding:0 20px;color:#55637f;line-height:1.65;text-align:center}
+.footer p{margin:4px 0}
+.is-playing .hero{padding:22px 35px;margin-top:10px}.is-playing .hero h1{font-size:1.9rem}.is-playing .hero .eyebrow,.is-playing .hero .hero-note,.is-playing .hero .hero-star{display:none}.is-playing .hero-art{font-size:3rem;right:30px;top:18px}
+@media(max-width:860px){.player-stats{grid-template-columns:1fr 1fr}.player-form{grid-column:1/-1}.lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-art{font-size:5.5rem;right:25px}.hero-note{max-width:76%}.howto-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){main{padding:10px 11px 32px}.hero{border-radius:0 0 25px 25px;margin:0;padding:24px 18px 27px}.hero-art{font-size:3.3rem;right:17px;top:38px}.hero-note{max-width:100%}.hero .subline{font-size:.82rem;padding:8px 11px}.hero .english{max-width:83%}.hero .eyebrow{font-size:.78rem}.panel{padding:16px;border-radius:20px}.lesson-grid,.rubric-grid,.howto-grid{grid-template-columns:1fr}.grade-tabs{gap:7px}.grade-tabs button{flex:1;min-width:0;padding:11px 6px;font-size:.88rem}.player-stats{gap:9px}.score-tile{padding:12px 5px}.story{font-size:1.05rem;padding:15px}.control-row .action{min-width:100%}.quest-section{padding:14px}.breakdown{grid-template-columns:1fr}.is-playing .hero{border-radius:0 0 18px 18px;padding:19px 15px}.is-playing .hero .hero-art{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header><div class="head"><div><h1>📖 华文阅读大挑战</h1><p>《欢乐伙伴》字词主题 · 小三／小四 · V4.1 可选范读＋朗读自评</p></div><div class="subtitle">每关最高20分｜朗读自评10分＋理解10分</div></div></header>
+<header class="hero" role="banner">
+ <div class="hero-note">
+  <span class="eyebrow">🌈 阅读冒险 · Reading Adventure</span>
+  <h1>华文阅读挑战</h1>
+  <p class="kicker">《欢乐伙伴》字词主题</p>
+  <div class="subline">每关最高20分|朗读自评10分+阅读理解10分</div>
+  <p class="english" lang="en">Up to 20 points per level | Reading self-check: 10 + Reading quiz: 10</p>
+ </div>
+ <span class="hero-star" aria-hidden="true">✦</span><span class="hero-star b" aria-hidden="true">★</span><span class="hero-art" aria-hidden="true">📚🐼</span>
+</header>
 <main>
-<section class="statbar" aria-label="学生积分统计">
-<div class="stat"><strong id="totalPoints">0</strong><span>当前代号累计积分</span></div>
-<div class="stat"><strong id="runCount">0</strong><span>已完成挑战次数</span></div>
-<div class="stat"><strong id="badgeCount">0 / 2</strong><span>奖励进度（100 / 500分）</span></div>
-<div class="stat"><strong id="playerDisplay">体验玩家</strong><span>当前学生代号</span></div></section>
-<section id="homeView" class="panel">
-  <div class="profile"><div class="profile-grid"><div><label for="playerInput">学生代号（建议使用匿名编号，不填真实姓名）</label><input id="playerInput" type="text" maxlength="20" placeholder="例如：小勇士01" autocomplete="off"></div><button id="setPlayerBtn" class="button secondary" type="button">切换／创建代号</button><button id="exportBtn" class="button quiet" type="button">导出当前成绩 CSV</button></div><p class="small" id="profileNotice">每个代号在本浏览器独立累计，换电脑不会自动同步。</p></div>
-  <div class="row"><div><h2>请选择年级和关卡</h2><p class="small">短文是依据课文主题和词语编写的原创练习，并非原课文。</p></div><button id="resetBtn" class="button quiet" type="button">清除本设备成绩</button></div>
-  <div class="grades" role="group" aria-label="年级"><button id="grade3" class="active" type="button">小三</button><button id="grade4" type="button">小四</button></div>
-  <div id="lessonList" class="lessons"></div>
-  <p id="notify"></p>
-  <details><summary>玩法、朗读自评、积分和隐私说明</summary>
-<p><strong>玩法：</strong>先阅读短文；如果需要帮助，可以随时听全文或选一段听范读，不需要听也可直接朗读。然后按自己的真实朗读表现分别评「语音和清晰度」与「语调和流利度」，每项0至5分，两项合计最高10分。最后回答5道选择题，每题2分，本关最多20分。</p>
-<p><strong>自评不是正式口试成绩：</strong>请根据所附评量标准尽量诚实评分。0分只用于没有朗读；如果已朗读，请按描述选择1～5分。系统只负责加总，并不监听、录音或自动判断发音。</p>
-<p><strong>范读：</strong>声音由浏览器的语音合成能力提供，部分声音可能依赖系统或云端语音服务；不录制学生声音。个别多音字的读音仍以教师指导为准。</p>
-<p><strong>累计积分：</strong>只在当前浏览器按匿名学生代号保存。换设备、更换本地文件路径或清除浏览器资料可能看不到旧积分；不会自动同步到教师电脑。老师可让学生导出CSV。重新挑战同一关仍可累计新得分。</p></details>
+<section id="homeView">
+ <section class="player-stats" aria-label="用户名和积分 Username and scores">
+  <div class="player-form"><label for="playerInput">👤 用户名 <span class="en" lang="en">Username</span></label><input id="playerInput" maxlength="24" type="text" autocomplete="off" placeholder="例如：快乐小熊 / e.g. HappyPanda"><p class="mini-hint" id="profileNotice">用自己喜欢的名字，不要用真名。积分存在这台设备的浏览器里，换电脑就看不到旧积分。<span class="en" lang="en">Use a nickname, not your real name. Your points stay in this browser on this device. They won't move to another device.</span></p></div>
+  <div class="score-tile first"><div aria-hidden="true">🏅</div><strong id="totalPoints">0</strong><span>我的总积分</span><small lang="en">My total points</small></div>
+  <div class="score-tile second"><div aria-hidden="true">🎯</div><strong id="runCount">0</strong><span>完成次数</span><small lang="en">Games finished</small></div>
+ </section>
+ <section class="panel" aria-labelledby="levelsTitle">
+  <div class="panel-head"><div><h2 id="levelsTitle" class="section-title">🗺️ 选年级，开始闯关！<span class="en" lang="en">Pick your level and start playing!</span></h2><p class="small">这些短文是用《欢乐伙伴》的字词写的新故事，不是课文原文。<span class="en" lang="en">These are new stories using words from the textbook, not copies of the textbook stories.</span></p></div><span class="pill">⭐ 20分 / 20 pts</span></div>
+  <div class="grade-tabs" id="gradeTabs" role="group" aria-label="选择年级 Choose a level"><button type="button" data-grade="4" aria-pressed="true">小四 <span class="en" lang="en">P4</span></button><button type="button" data-grade="5" aria-pressed="false">小五 <span class="en" lang="en">P5</span></button><button type="button" data-grade="6" aria-pressed="false">小六 <span class="en" lang="en">P6</span></button></div>
+  <div id="lessonList" class="lesson-grid"></div><p id="notify" class="small" role="status" aria-live="polite"></p>
+ </section>
+ <section class="panel"><details class="wide-help"><summary>🎒 怎么玩？ / How to play</summary><div class="howto-grid"><div class="howstep">📖 <b>1. 读短文</b><span class="en" lang="en">Read the story.</span></div><div class="howstep">🔊 <b>2. 想听就听</b><span class="en" lang="en">Listen if you need help.</span></div><div class="howstep">✍️ <b>3. 给自己打分</b><span class="en" lang="en">Give yourself a reading score.</span></div><div class="howstep">🎯 <b>4. 答5道题</b><span class="en" lang="en">Answer 5 questions.</span></div></div><p class="small">每关有20分：朗读自评10分，答题10分。答完后，分数会加到你的总积分。<span class="en" lang="en">Each level has 20 points: 10 for your reading self-check and 10 for the quiz. Your score is added to your total.</span></p><p class="small">不用麦克风，也不会录音。自评不是老师给的正式成绩。<span class="en" lang="en">No microphone or recording is needed. Your self-check is not an official teacher grade.</span></p><p class="small">要看以前的积分，请在同一台设备、同一个浏览器输入一样的用户名。<span class="en" lang="en">To see old points, use the same username in the same browser on the same device.</span></p><button class="action soft" id="resetBtn" type="button">清除我的成绩 / Clear my scores</button></details></section>
+ <section class="panel" aria-labelledby="historyTitle"><div class="panel-head"><div><h2 id="historyTitle" class="section-title">📘 我的挑战记录<span class="en" lang="en">My past games</span></h2><p class="small">只显示最近8次。<span class="en" lang="en">Showing your last 8 games.</span></p></div><button class="action alt" id="exportBtn" type="button">📥 保存成绩 / Save scores (CSV)</button></div><div id="historyList" class="history-list"></div></section>
 </section>
-<section id="playView" class="panel hide">
-  <div class="row"><button id="backBtn" class="button quiet" type="button">← 返回关卡</button><span class="tag" id="lessonUnit"></span></div><h2 id="lessonTitle" style="margin-top:15px"></h2>
-  <h3>第一部分 · 阅读与朗读</h3><div id="storyBox" class="story"></div>
-  <section class="audio-guide" aria-label="短文语音范读">
-    <h3>🔊 可选择听范读（不听也可以）</h3>
-    <p class="small">已经会读的同学可以直接自己朗读，不必听。需要帮助时，可选择听全文或指定段落，也可以调节语速。范读由电脑合成，个别多音字请以老师指导为准。</p>
-    <div class="audio-options"><div><label for="voiceSelect">中文声音</label><select id="voiceSelect"><option value="">自动选择中文语音</option></select></div><div><label for="speechRate">范读速度</label><select id="speechRate"><option value="0.75">较慢（0.75倍）</option><option value="0.9" selected>稍慢（0.9倍）</option><option value="1">正常（1倍）</option></select></div></div>
-    <div class="audio-options"><div><label for="listenPartSelect">指定要听的自然段</label><select id="listenPartSelect"><option value="0">第1段</option></select></div></div>
-    <div class="mic-buttons" style="margin-top:10px"><button id="readAllBtn" class="button" type="button">▶ 听全文范读</button><button id="readPartBtn" class="button secondary" type="button">▶ 听所选段落</button><button id="pauseReadBtn" class="button quiet" type="button">⏸ 暂停／继续</button><button id="stopReadBtn" class="button quiet" type="button">■ 停止范读</button></div>
-    <p id="ttsStatus" class="small" role="status" aria-live="polite">准备就绪。需要时可听范读；不听也可以直接朗读。</p>
-  </section>
-  <p><strong>本课重点词语：</strong><span id="focusWords"></span></p>
-  <div class="callout">🎤 <strong>自己朗读，自我评分：</strong>请尝试朗读整篇短文。如果需要提示，可以先听范读；如果已经会读，可以跳过范读。朗读完毕后，按照下面两个标准给自己打分。<strong>不使用麦克风，不会自动评估。</strong></div>
-  <section class="speech-controls" aria-label="朗读自评">
-    <div class="row"><h3>✍️ 朗读自评</h3><span class="tag">满分10分 · 两项各5分</span></div>
-    <p class="small">请选择两项分数。0分表示没有朗读；已朗读的同学请依照评量表选择1～5分。</p>
-    <div class="rubric">
-      <div><label for="selfPron">① 语音和清晰度（0～5分）</label>
-        <select id="selfPron" required><option value="">请选择分数</option><option value="5">5分｜语音非常准确和清晰</option><option value="4">4分｜语音相当准确、清晰，少许错误</option><option value="3">3分｜语音还算准确，较多错误，不太清晰</option><option value="2">2分｜语音不太准确、清晰，部分难辨</option><option value="1">1分｜多数汉字读错，语音不清晰</option><option value="0">0分｜没有朗读</option></select>
-        <p id="selfPronDescription" class="score-description small" aria-live="polite">选分后显示相应的中英双语评量说明。</p>
-      </div>
-      <div><label for="selfFlow">② 语调和流利程度（0～5分）</label>
-        <select id="selfFlow" required><option value="">请选择分数</option><option value="5">5分｜非常流利，语速停顿适当，语调有节奏</option><option value="4">4分｜相当流利，甚少迟疑，语调变化适当</option><option value="3">3分｜还算流利，较多迟疑，语调略有变化</option><option value="2">2分｜不太流利，语速停顿不适当，语调不太正确</option><option value="1">1分｜不流利，语速停顿不适当，语调没有变化</option><option value="0">0分｜没有朗读</option></select>
-        <p id="selfFlowDescription" class="score-description small" aria-live="polite">选分后显示相应的中英双语评量说明。</p>
-      </div>
-    </div>
-    <div class="self-total" role="status" aria-live="polite"><span>我的朗读自评总分</span><strong id="selfOralTotal">— / 10</strong></div>
-    <p id="selfNotice" class="small" aria-live="polite">完成自评后，即可开始阅读理解。</p>
-  </section>
-  <details><summary>查看完整1～5分朗读评量标准（中英双语）</summary><div class="rubric"><div><strong>语音和清晰度</strong><div class="small">Pronunciation and clarity</div><ol class="rubric-list" reversed start="5"><li><strong>5分：</strong>语音非常准确和清晰。<div class="small">Clear and consistently good pronunciation with hardly any errors.</div></li><li><strong>4分：</strong>语音相当准确，有少许错误。语音相当清晰。<div class="small">Clear pronunciation with occasional errors that do not affect intelligibility.</div></li><li><strong>3分：</strong>语音还算准确，有较多错误，不太清晰。<div class="small">Generally clear pronunciation with several errors that are noticeable.</div></li><li><strong>2分：</strong>语音不太准确，有相当多错误。语音不太清晰，某些语音难以识别。<div class="small">Pronunciation somewhat difficult to understand, with numerous serious errors.</div></li><li><strong>1分：</strong>语音不准确，大多数字都读错。语音不清晰。<div class="small">Very unclear pronunciation, with most words being mispronounced.</div></li></ol></div><div><strong>语调和流利程度</strong><div class="small">Intonation and level of fluency</div><ol class="rubric-list" reversed start="5"><li><strong>5分：</strong>非常流利。语速适中，停顿适当。语调正确有节奏感。<div class="small">Fluent reading delivered with appropriate pauses and without hesitations. Appropriate variation of pitch and tone.</div></li><li><strong>4分：</strong>相当流利。语速相当适中，甚少迟疑。语调相当正确，有适当的变化。<div class="small">Smooth delivery with almost no hesitations. Some variation of appropriate pitch and tone.</div></li><li><strong>3分：</strong>还算流利。语速还算适中，较多迟疑。语调还算正确，有些许变化。<div class="small">Generally smooth delivery with some hesitations. A slight attempt to vary pitch and tone.</div></li><li><strong>2分：</strong>不太流利。语速不太适中，停顿不太适当。语调不太正确。<div class="small">Generally uneven delivery with a number of noticeable hesitations.</div></li><li><strong>1分：</strong>不流利。语速不适中，停顿不适当。语调不正确，没有变化。<div class="small">Very slow and jerky delivery, almost word-by-word pronunciation.</div></li></ol></div></div><p class="small">请按照自己的整体表现判断，不要机械地计算读错字数。0分代表「没有朗读」，是游戏新增的选项，不属于评量表的原有1～5级。</p></details>
-  <div class="divider"></div><h3>第二部分 · 阅读理解（5题 × 2分）</h3><button id="startQuizBtn" class="button" type="button">完成自评，开始5道选择题 →</button><p class="small">请先选择两项朗读自评分数，再进行阅读理解。系统只负责计分，不会评价你的声音。</p>
-  <div id="quizArea" class="hide"><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div><p class="tag" id="questionNum"></p><p class="qhead" id="questionText"></p><div id="answerButtons"></div><div class="feedback" id="feedback" aria-live="polite"></div><button class="button hide" id="nextBtn" type="button">下一题 →</button></div>
-  <div id="finishArea" class="hide"><h3>🏆 本关挑战结果</h3><div id="resultBreakdown" class="score-details"></div><div class="resultTotal" id="finalScore"></div><p id="resultMessage"></p><div id="awards" class="award"></div><p id="saveStatus" class="warn"></p><div class="row"><span id="saveScoreLabel" class="chipscore">完成整关后自动累计分数</span><button class="button secondary" id="tryAgainBtn" type="button">再挑战一次</button><button class="button quiet" id="finishBackBtn" type="button">返回关卡列表</button></div></div>
+<section id="playView" class="panel hide" aria-label="挑战页面 Game level">
+ <div class="quest-nav"><button id="backBtn" class="action soft" type="button">← 选关 / Back to levels</button></div>
+ <div class="quest-head"><span id="lessonUnit" class="pill"></span><h2 id="lessonTitle"></h2><div class="stepper" aria-label="游戏步骤 Game steps"><span>1 📖 读 / Read</span><span>2 ✍️ 自评 / Self-check</span><span>3 🎯 答题 / Quiz</span></div></div>
+ <section class="quest-section"><h3>📖 第一站：读短文 <span class="en" lang="en">Part 1: Read the story</span></h3><div id="storyBox" class="story"></div><p><strong>🌱 重点词语 <span class="en" lang="en">Words to learn</span></strong></p><div id="focusWords" class="word-cloud"></div>
+  <div class="sound-card"><h3>🔊 想听就听 <span class="en" lang="en">Listen if you need help</span></h3><p class="small">会读就自己读，不用先听。不会读可以听全文或一段。<span class="en" lang="en">If you can read it, go ahead! If you need help, listen to the whole story or one paragraph.</span></p><p class="pill">🇨🇳 普通话（中国） · 正常速度（1倍） / Mandarin (China) · Normal speed (1×)</p>
+    <label class="field-label" for="listenPartSelect">选要听的段落 <span class="en" lang="en">Choose a paragraph</span></label><select id="listenPartSelect"></select>
+    <div class="control-row"><button id="readAllBtn" class="action" type="button">▶ 听全文 / Play all</button><button id="readPartBtn" class="action green" type="button">▶ 听这一段 / Play paragraph</button><button id="pauseReadBtn" class="action alt" type="button">⏸ 暂停 / 继续 · Pause / Resume</button><button id="stopReadBtn" class="action soft" type="button">■ 停止 / Stop</button></div>
+    <p class="small" id="ttsStatus" role="status" aria-live="polite">准备好了。想听就按播放。<span class="en" lang="en">Ready. Press play if you want to listen.</span></p>
+  </div>
+ </section>
+ <section class="quest-section" aria-label="朗读自评 Reading self-check"><h3>✍️ 第二站：朗读自评 <span class="en" lang="en">Part 2: Reading self-check</span></h3><div class="notice">先自己朗读，再选两项分数。每项最多5分。没朗读就两项都选0分。<span class="en" lang="en">Read aloud by yourself, then choose two scores. Each is out of 5. If you did not read, choose 0 for both.</span></div>
+  <div class="rubric-grid"><div class="rubric-card"><label class="field-label" for="selfPron">① 语音和清晰度 <span class="en" lang="en">Pronunciation and clarity (0–5)</span></label><select id="selfPron" required><option value="">请选择 / Choose a score</option><option value="5">5分 · 非常准确清晰 / Excellent</option><option value="4">4分 · 相当准确清晰 / Good</option><option value="3">3分 · 还算准确 / Fair</option><option value="2">2分 · 不太准确 / Needs practice</option><option value="1">1分 · 不准确 / Difficult</option><option value="0">0分 · 没有朗读 / Did not read</option></select><div id="selfPronDescription" class="rubric-desc" aria-live="polite">选分后可以看说明。<span class="en" lang="en">Choose a score to see what it means.</span></div></div>
+  <div class="rubric-card"><label class="field-label" for="selfFlow">② 语调和流利程度 <span class="en" lang="en">Intonation and fluency (0–5)</span></label><select id="selfFlow" required><option value="">请选择 / Choose a score</option><option value="5">5分 · 非常流利 / Excellent</option><option value="4">4分 · 相当流利 / Good</option><option value="3">3分 · 还算流利 / Fair</option><option value="2">2分 · 不太流利 / Needs practice</option><option value="1">1分 · 不流利 / Difficult</option><option value="0">0分 · 没有朗读 / Did not read</option></select><div id="selfFlowDescription" class="rubric-desc" aria-live="polite">选分后可以看说明。<span class="en" lang="en">Choose a score to see what it means.</span></div></div></div>
+  <div class="self-total"><span>我的朗读分数 <span class="en" lang="en">My reading score</span></span><strong id="selfOralTotal">— / 10</strong></div><p id="selfNotice" class="small" aria-live="polite">选好两个分数，再开始答题。<span class="en" lang="en">Choose both scores before starting the quiz.</span></p>
+  <details class="rubric-full"><summary>📋 看完整评分表 / See the full scoring guide</summary><div id="fullRubric"></div></details>
+ </section>
+ <section class="quest-section"><h3>🎯 第三站：阅读理解 <span class="en" lang="en">Part 3: Reading quiz · 5 questions × 2 points</span></h3><button id="startQuizBtn" class="action orange" type="button">我评好了，开始答题！ / Start quiz!</button><p class="small">每题选一个答案。选了就不能改。<span class="en" lang="en">Choose one answer per question. You cannot change it after tapping.</span></p>
+  <div id="quizArea" class="quiz-area hide"><div class="bar" aria-label="答题进度 Quiz progress"><div id="progressFill" class="fill"></div></div><p class="pill" id="questionNum"></p><p id="questionText" class="question"></p><div id="answerButtons"></div><p id="feedback" class="feedback" role="status" aria-live="polite"></p><button id="nextBtn" class="action hide" type="button">下一题 / Next question →</button></div>
+  <div id="finishArea" class="result hide"><h3>🎉 闯关完成！ <span class="en" lang="en">Level complete!</span></h3><div id="finalStars" class="stars" aria-hidden="true">⭐</div><div id="finalScore" class="result-number">0 / 20</div><div id="resultBreakdown" class="breakdown"></div><p id="resultMessage" class="small"></p><p id="awardMessage" class="achievement hide"></p><p id="saveScoreLabel" class="pill"></p><p id="saveStatus" class="small"></p><div class="control-row"><button id="tryAgainBtn" class="action orange" type="button">再玩一次 / Play again</button><button id="finishBackBtn" class="action alt" type="button">选其他关 / Other levels</button></div></div>
+ </section>
 </section>
-<section class="panel"><div class="row"><h2 style="margin:0">📚 当前代号的挑战记录</h2><span class="small">最近8次</span></div><div id="historyList"></div></section>
-<p class="foot">教学试行版。依据上传的《欢乐伙伴 华文 字词表》与《小三、小四华文口试评量表》设计。朗读分为学生自评，不是官方口试成绩。本游戏不调用麦克风、不录音、不收集真实姓名；浏览器朗读声音可能由系统或浏览器语音服务提供。</p>
 </main>
+<footer class="footer"><p>本游戏不调用麦克风、不录音、不收集真实姓名；浏览器朗读声音可能由系统或浏览器语音服务提供。</p><p lang="en">This game does not use the microphone, record your voice, or collect real names. Read-aloud audio may come from your device or browser voice service.</p></footer>
 <script>
-const LESSONS=[{"id":"p3-1","grade":3,"unit":"3A 第3课《我的好伙伴》","title":"闹钟里的提醒","focus":["伙伴","闹钟","按钮","准时","迟到","改掉","习惯","陪伴"],"story":["星期一早上，志明听见闹钟响了，却按下按钮，想再睡五分钟。没想到，他一睁开眼睛，已经快要迟到了。他赶紧穿上校服，背起书包跑出家门。来到学校时，升旗礼已经开始。志明低着头，心里很不好意思。","下课后，好伙伴小杰没有责怪他，而是问：“你是不是又忘记早点睡觉了？”志明点点头。小杰建议他晚上先收拾书包，再把闹钟放在书桌上，这样早上就必须起床去关掉它。志明认真地听，还在日历上写下“准时”两个字。","接下来的一个星期，志明每天都照着计划做。即使早上很想赖床，他还是提醒自己要守时。到了星期五，他终于连续五天没有迟到。小杰笑着说：“你真的改掉了坏习惯！”志明十分开心，也明白了好伙伴不仅会陪伴自己，还会帮助自己进步。"],"questions":[["志明星期一为什么差点迟到？",["他忘记带书包","他按下闹钟按钮继续睡","他找不到校服"],1,"志明按下按钮，又睡了一会儿。"],["升旗礼开始时，志明的心情怎样？",["很不好意思","非常生气","十分得意"],0,"短文写他低着头，心里很不好意思。"],["小杰建议志明晚上先做什么？",["到操场跑步","打电话给老师","收拾书包"],2,"小杰建议他晚上先收拾书包。"],["志明在日历上写下哪两个字？",["努力","准时","加油"],1,"他写下的是“准时”。"],["这篇短文主要告诉我们什么？",["伙伴只要一起玩就好","守时不需要练习","好伙伴能帮助彼此进步"],2,"小杰用建议和鼓励帮助志明改掉坏习惯。"]]},{"id":"p3-2","grade":3,"unit":"3B 第11课《环保小天使》","title":"小小环保队","focus":["环保","浪费","回收箱","塑料瓶","纸盒","环保袋","废物利用","保护环境"],"story":["星期六，丽丽和弟弟到民众俱乐部参加环保活动。工作人员在桌上放了纸盒、塑料瓶和金属罐，请大家把它们放进不同的回收箱。弟弟觉得麻烦，说：“全部丢在一起，不是更快吗？”丽丽摇摇头，耐心地解释垃圾分类的好处。","接着，他们用干净的旧纸盒制作小笔筒。弟弟原本想把纸盒扔掉，没想到它竟然可以变成有用的东西。他高兴地说：“原来这就是废物利用！”活动结束后，大家一起清理桌面，没有浪费一张还能使用的纸。","回家的路上，妈妈想去超市买水果。丽丽马上拿出自己带来的环保袋。妈妈称赞她做事细心。弟弟也决定以后少用一次性塑料袋。他们明白，因为每个人都愿意尽一份力，所以我们的生活环境才会越来越美好。"],"questions":[["丽丽和弟弟去了哪里参加活动？",["动物园","民众俱乐部","游泳池"],1,"环保活动在民众俱乐部举行。"],["工作人员请大家做什么？",["把垃圾分类","到外面种树","购买新书包"],0,"他们要把物品放进不同的回收箱。"],["旧纸盒被做成了什么？",["纸飞机","新衣服","小笔筒"],2,"他们把旧纸盒做成小笔筒。"],["去超市前，丽丽拿出了什么？",["雨伞","环保袋","水壶"],1,"她拿出的是环保袋。"],["弟弟最后决定怎么做？",["少用一次性塑料袋","多买塑料瓶","把纸盒全部丢掉"],0,"弟弟决定以后少用一次性塑料袋。"]]},{"id":"p3-3","grade":3,"unit":"3A 第7课《留张便条》","title":"花盆旁的一张纸","focus":["花盆","便条","邻居","认错","赔","轻手轻脚","小心","道歉"],"story":["星期日下午，安安和弟弟在组屋楼下玩皮球。弟弟用力一踢，皮球飞向邻居的花盆。“啪”的一声，花盆倒在地上，裂开了一道口子。弟弟吓得想马上溜走。安安却说：“做错了事，应该勇敢认错。我们不能假装什么都不知道。”","他们轻手轻脚地走到邻居家门前，按了门铃，可是没有人回答。弟弟着急地问：“现在怎么办？”安安想了想，拿出纸笔写了一张便条，说明事情经过，还留下妈妈的电话号码。他们把便条放在门旁安全、不容易被风吹走的地方。","傍晚，邻居伯伯打来电话。兄弟俩主动道歉，并表示愿意赔偿花盆。伯伯听了，没有责骂他们，反而称赞他们诚实。弟弟松了一口气，说：“原来承认错误并没有想象中那么可怕。以后踢球，我一定会更小心。”"],"questions":[["花盆为什么裂开了？",["被风吹倒","被皮球撞倒","被雨水淋坏"],1,"弟弟踢出的皮球撞到了花盆。"],["弟弟一开始想怎么做？",["马上溜走","写一张便条","打电话给妈妈"],0,"他一开始想溜走。"],["为什么兄弟俩没有当面道歉？",["他们忘记了地址","他们不敢说话","邻居家里没有人回应"],2,"他们按门铃却没有人回答。"],["安安在便条上留下什么？",["老师的姓名","妈妈的电话号码","自己的考试分数"],1,"便条留下妈妈的电话号码。"],["伯伯为什么称赞兄弟俩？",["他们很诚实","他们踢球踢得好","他们跑得很快"],0,"他们主动认错并表示愿意赔偿。"]]},{"id":"p4-1","grade":4,"unit":"4A 第4课《今天我值日》","title":"食堂里的小风波","focus":["值日","负责","维持秩序","插队","公平","提醒","保证","责任"],"story":["星期三，小慧负责在食堂维持秩序。下课铃一响，学生们便走向各个摊位。小慧看见大家自觉排队，心里十分高兴。突然，一名男生急急忙忙地跑过来，直接站到队伍最前面。排在后面的同学纷纷皱起眉头，却没有人开口。","小慧走过去，礼貌地提醒他：“请你到后面排队。插队对其他同学不公平。”男生觉得难为情，低声解释自己赶着去参加活动。小慧说：“我明白你着急，不过大家都应该遵守规则。”男生想了想，点头道歉，回到队伍后面。","不久，另一名学生不小心打翻了一杯水。小慧马上请大家绕开湿滑的地面，又通知附近的老师和清洁人员处理。老师称赞她既细心又有责任感。小慧明白，值日不仅是提醒别人遵守规则，更是主动照顾大家的安全。"],"questions":[["小慧星期三负责什么工作？",["带大家做早操","在食堂维持秩序","整理图书馆的书"],1,"她负责在食堂维持秩序。"],["男生做了什么让同学不满？",["把书包弄丢","打翻了一杯水","插队"],2,"男生直接站到队伍最前面。"],["小慧为什么要求男生重新排队？",["插队不公平","队伍太短","老师叫他回教室"],0,"她指出插队对其他同学不公平。"],["地上有水时，小慧先怎样处理？",["马上跑回课室","请大家绕开湿滑地面","继续排队不理会"],1,"她先保护大家安全，再通知老师和清洁人员。"],["小慧从值日工作中明白什么？",["只要大声说话就好","值日只需检查队伍","值日也要主动照顾他人的安全"],2,"短文最后一句点出了值日的责任。"]]},{"id":"p4-2","grade":4,"unit":"4B 第11课《天天运动身体好》","title":"最后一棒","focus":["接力赛","发令枪","接力棒","终点","观众席","队友","欢呼","成绩"],"story":["一年一度的运动会终于到了。操场四周彩旗飘扬，观众席上传来阵阵加油声。四年级接力赛即将开始，阿杰站在最后一棒的位置，紧张得手心冒汗。他不断提醒自己：接棒时要看准队友，跑步时要专心。","发令枪响后，第一名队员飞快地冲出去。大家轮流把接力棒交给下一位队友。轮到阿杰时，他们的队伍暂时落后。阿杰紧握接力棒，用尽力气往终点跑去。眼看前方的选手越来越近，他突然差一点儿摔倒，却及时稳住脚步，继续向前冲。","最后，他们得到亚军。阿杰有些失望，觉得自己没有拿到冠军。队友却围过来，对他说：“你没有放弃，我们已经尽力了！”老师也提醒大家，比赛的意义不仅是名次，还有互相鼓励和团队合作。阿杰抬起头，看见大家脸上的笑容，终于开心地跟着欢呼起来。"],"questions":[["阿杰负责跑接力赛的哪一棒？",["第一棒","第二棒","最后一棒"],2,"短文说明阿杰站在最后一棒的位置。"],["比赛开始的信号是什么？",["发令枪响","老师吹口哨","太阳升起"],0,"发令枪响后，比赛开始。"],["阿杰接棒时，队伍的情况如何？",["已经夺冠","暂时落后","退出比赛"],1,"轮到他时，队伍暂时落后。"],["他们最后得到什么名次？",["冠军","季军","亚军"],2,"他们最终获得亚军。"],["队友怎样安慰阿杰？",["肯定他没有放弃、已经尽力","责怪他跑得太慢","叫他不要再比赛"],0,"队友肯定他的坚持和努力。"]]},{"id":"p4-3","grade":4,"unit":"4B 第10课《这样才对》","title":"一声谢谢","focus":["礼貌","不耐烦","老人家","无礼","面带笑容","承认错误","理睬","麻烦您了"],"story":["星期六中午，建华跟妈妈到熟食中心吃午餐。因为天气炎热，他排了一会儿队就显得不耐烦。好不容易买到食物，他看见一张空桌子，立刻跑过去占位子。就在这时，一位提着重物的老人家走来，礼貌地问：“小朋友，请问这里有人坐吗？”","建华没有抬头，只随口说：“没有，可是我先看到的！”老人家听了，安静地走开。妈妈见状，轻声告诉建华：“你可以保留自己的座位，但说话不应该这样无礼。别人有礼貌地询问，我们也应该有礼貌地回答。”","建华听了，觉得很惭愧。他马上走到老人家面前，承认错误：“对不起，我刚才说话太不礼貌了。麻烦您了，我帮您把东西放好。”老人家面带笑容，向他道谢。建华终于明白，礼貌不只是说“请”和“谢谢”，还要懂得尊重别人。"],"questions":[["建华为什么显得不耐烦？",["天气炎热、排队等了很久","忘了带钱包","找不到妈妈"],0,"天气热，加上排队，使他不耐烦。"],["老人家怎样询问座位？",["大声责骂","礼貌地询问","马上坐下"],1,"老人家礼貌地问是否有人坐。"],["妈妈认为建华哪一点做得不对？",["买食物太慢","忘记带水","说话不礼貌"],2,"妈妈提醒他应该有礼貌地回答。"],["建华听了妈妈的话后怎样做？",["主动承认错误并帮忙","假装听不见","马上跑走"],0,"他主动道歉并帮老人家放东西。"],["这篇短文主要强调什么？",["只要说话大声就可以","应该尊重别人并注意礼貌","吃饭一定要坐在门口"],1,"礼貌也包含对人的尊重。"]]}];
-
-const OLD_KEY='chinese-reading-game-v2-progress';
+const LESSONS=[{"id":"p4-1","grade":4,"unit":"4A 第4课《今天我值日》","title":"食堂里的小风波","focus":["值日","负责","维持秩序","插队","公平","提醒","保证","责任"],"story":["星期三，小慧负责在食堂维持秩序。下课铃一响，学生们便走向各个摊位。小慧看见大家自觉排队，心里十分高兴。突然，一名男生急急忙忙地跑过来，直接站到队伍最前面。排在后面的同学纷纷皱起眉头，却没有人开口。","小慧走过去，礼貌地提醒他：“请你到后面排队。插队对其他同学不公平。”男生觉得难为情，低声解释自己赶着去参加活动。小慧说：“我明白你着急，不过大家都应该遵守规则。”男生想了想，点头道歉，回到队伍后面。","不久，另一名学生不小心打翻了一杯水。小慧马上请大家绕开湿滑的地面，又通知附近的老师和清洁人员处理。老师称赞她既细心又有责任感。小慧明白，值日不仅是提醒别人遵守规则，更是主动照顾大家的安全。"],"questions":[["小慧星期三负责什么工作？",["带大家做早操","在食堂维持秩序","整理图书馆的书"],1,"她负责在食堂维持秩序。"],["男生做了什么让同学不满？",["把书包弄丢","打翻了一杯水","插队"],2,"男生直接站到队伍最前面。"],["小慧为什么要求男生重新排队？",["插队不公平","队伍太短","老师叫他回教室"],0,"她指出插队对其他同学不公平。"],["地上有水时，小慧先怎样处理？",["马上跑回课室","请大家绕开湿滑地面","继续排队不理会"],1,"她先保护大家安全，再通知老师和清洁人员。"],["小慧从值日工作中明白什么？",["只要大声说话就好","值日只需检查队伍","值日也要主动照顾他人的安全"],2,"短文最后一句点出了值日的责任。"]]},{"id":"p4-2","grade":4,"unit":"4B 第11课《天天运动身体好》","title":"最后一棒","focus":["接力赛","发令枪","接力棒","终点","观众席","队友","欢呼","成绩"],"story":["一年一度的运动会终于到了。操场四周彩旗飘扬，观众席上传来阵阵加油声。四年级接力赛即将开始，阿杰站在最后一棒的位置，紧张得手心冒汗。他不断提醒自己：接棒时要看准队友，跑步时要专心。","发令枪响后，第一名队员飞快地冲出去。大家轮流把接力棒交给下一位队友。轮到阿杰时，他们的队伍暂时落后。阿杰紧握接力棒，用尽力气往终点跑去。眼看前方的选手越来越近，他突然差一点儿摔倒，却及时稳住脚步，继续向前冲。","最后，他们得到亚军。阿杰有些失望，觉得自己没有拿到冠军。队友却围过来，对他说：“你没有放弃，我们已经尽力了！”老师也提醒大家，比赛的意义不仅是名次，还有互相鼓励和团队合作。阿杰抬起头，看见大家脸上的笑容，终于开心地跟着欢呼起来。"],"questions":[["阿杰负责跑接力赛的哪一棒？",["第一棒","第二棒","最后一棒"],2,"短文说明阿杰站在最后一棒的位置。"],["比赛开始的信号是什么？",["发令枪响","老师吹口哨","太阳升起"],0,"发令枪响后，比赛开始。"],["阿杰接棒时，队伍的情况如何？",["已经夺冠","暂时落后","退出比赛"],1,"轮到他时，队伍暂时落后。"],["他们最后得到什么名次？",["冠军","季军","亚军"],2,"他们最终获得亚军。"],["队友怎样安慰阿杰？",["肯定他没有放弃、已经尽力","责怪他跑得太慢","叫他不要再比赛"],0,"队友肯定他的坚持和努力。"]]},{"id":"p4-3","grade":4,"unit":"4B 第10课《这样才对》","title":"一声谢谢","focus":["礼貌","不耐烦","老人家","无礼","面带笑容","承认错误","理睬","麻烦您了"],"story":["星期六中午，建华跟妈妈到熟食中心吃午餐。因为天气炎热，他排了一会儿队就显得不耐烦。好不容易买到食物，他看见一张空桌子，立刻跑过去占位子。就在这时，一位提着重物的老人家走来，礼貌地问：“小朋友，请问这里有人坐吗？”","建华没有抬头，只随口说：“没有，可是我先看到的！”老人家听了，安静地走开。妈妈见状，轻声告诉建华：“你可以保留自己的座位，但说话不应该这样无礼。别人有礼貌地询问，我们也应该有礼貌地回答。”","建华听了，觉得很惭愧。他马上走到老人家面前，承认错误：“对不起，我刚才说话太不礼貌了。麻烦您了，我帮您把东西放好。”老人家面带笑容，向他道谢。建华终于明白，礼貌不只是说“请”和“谢谢”，还要懂得尊重别人。"],"questions":[["建华为什么显得不耐烦？",["天气炎热、排队等了很久","忘了带钱包","找不到妈妈"],0,"天气热，加上排队，使他不耐烦。"],["老人家怎样询问座位？",["大声责骂","礼貌地询问","马上坐下"],1,"老人家礼貌地问是否有人坐。"],["妈妈认为建华哪一点做得不对？",["买食物太慢","忘记带水","说话不礼貌"],2,"妈妈提醒他应该有礼貌地回答。"],["建华听了妈妈的话后怎样做？",["主动承认错误并帮忙","假装听不见","马上跑走"],0,"他主动道歉并帮老人家放东西。"],["这篇短文主要强调什么？",["只要说话大声就可以","应该尊重别人并注意礼貌","吃饭一定要坐在门口"],1,"礼貌也包含对人的尊重。"]]},{"id":"p5-1","grade":5,"unit":"5A 第1课《到户外去》","title":"露营夜的小任务","focus":["露营","营地","物品清单","手电筒","防蚊用品","单独","齐心协力","配合"],"story":["学校举行两天一夜的露营活动。出发前，老师请大家根据物品清单整理行李。志强把睡袋、手电筒和防蚊用品放进背包，还认真检查有没有带齐袜子。老师提醒大家，露营期间不能单独行动，遇到困难应马上告诉老师。","到了营地，同学们分组搭帐篷。起初，志强急着证明自己能干，一个人拉着绳子，结果帐篷怎么也立不起来。队友佳恩建议大家分工：两人扶住支架，两人绑紧绳子，其他人负责整理地面。大家互相配合，终于把帐篷搭好了。","黄昏时，天空渐渐暗下来。老师安排各组准备营火会的节目。志强主动向队友道谢，还说：“今天我才明白，齐心协力比一个人硬撑更有效。”晚上，他把手电筒放在容易拿到的地方，并提醒朋友遵守营地规则。"],"questions":[["出发前，老师请大家根据什么整理行李？",["天气预报","物品清单","考试时间表"],1,"老师请同学们根据物品清单整理行李。"],["露营期间，老师不允许大家怎样做？",["单独行动","向老师求助","带手电筒"],0,"老师提醒大家不能单独行动。"],["志强一开始为什么搭不好帐篷？",["他忘了带帐篷","营地太暗","他想一个人完成工作"],2,"志强起初只顾自己拉绳子。"],["同学们后来怎样把帐篷搭好？",["等到晚上才开始","分工合作","请别人全部代劳"],1,"大家分工并互相配合。"],["志强从活动中学到了什么？",["团结合作更有效","遇到困难要马上放弃","做事不需要听意见"],0,"他明白齐心协力比独自硬撑更有效。"]]},{"id":"p5-2","grade":5,"unit":"5B 第9课《成长的烦恼》","title":"留言背后的心情","focus":["成长","烦恼","嘲笑","心情","网络平台","交流","控制","惭愧"],"story":["最近，慧敏常常在学校的网络平台上分享自己的画作。有一天，她发现有人在作品下面留言，嘲笑她画得不好。虽然对方说这只是开玩笑，慧敏还是难过了好几天，甚至不想再拿起画笔。","好友佩仪发现她心情不好，主动坐下来和她交流。佩仪说：“别人随口说的话，也可能伤害一个人的感受。你可以向老师求助，不必独自忍受。”慧敏鼓起勇气，把事情告诉老师。老师帮助她处理不友善的留言，也提醒全班同学在网上说话要有礼貌。","后来，那名留言的同学明白自己做得不对，诚恳地向慧敏道歉。他感到十分惭愧，答应以后会先想想别人的感受，再发表意见。慧敏也重新找回画画的快乐。她明白，成长中难免会遇到烦恼，但可以通过沟通和求助找到解决方法。"],"questions":[["慧敏为什么不想再画画？",["她丢失了画笔","有人在网上嘲笑她的画","她忙着准备比赛"],1,"不友善的留言使慧敏十分难过。"],["佩仪发现慧敏难过后怎样做？",["主动关心并和她交流","跟着嘲笑她","假装看不见"],0,"佩仪主动陪她谈话。"],["佩仪建议慧敏向谁求助？",["陌生网友","售货员","老师"],2,"佩仪建议她告诉老师。"],["留言的同学后来有什么反应？",["继续开玩笑","诚恳道歉","责怪慧敏"],1,"他认识到错误并向慧敏道歉。"],["这篇短文最想告诉我们什么？",["遇到烦恼可以沟通与求助","网上说话不用顾及别人","被批评后必须放弃兴趣"],0,"沟通和求助可以帮助解决烦恼。"]]},{"id":"p6-1","grade":6,"unit":"6A 第1课《加油！加油！》","title":"一步一步向目标前进","focus":["克服","锻炼","测验","勤奋","计划","压力","目标","动力"],"story":["六年级的嘉俊报名参加学校的长跑比赛。他想挑战自己，却发现每天的功课和测验让他感到压力。第一次练习时，他跑了两圈就气喘吁吁，怀疑自己根本无法完成比赛。","体育老师没有责备他，而是帮他制订计划：第一周每天慢跑十分钟，之后再逐渐增加时间。老师提醒他，锻炼身体需要耐心，也要保证足够休息。嘉俊把小目标写在纸上，每完成一项就画上一颗星星。这些小小的进步给了他继续努力的动力。","比赛当天，嘉俊一度落在队伍后面。听见同学们的鼓励，他想起过去几周的勤奋练习，决定调整呼吸，按照自己的节奏继续跑。虽然最后没有获得奖牌，他却顺利到达终点。嘉俊明白，克服困难不一定要赢过别人，更重要的是战胜想放弃的自己。"],"questions":[["嘉俊第一次练习时遇到什么困难？",["跑了两圈就很累","忘记报名","没有带运动鞋"],0,"他跑了两圈便气喘吁吁。"],["体育老师怎样帮助嘉俊？",["要求每天跑十公里","帮他制订逐步增加练习量的计划","叫他退出比赛"],1,"老师帮他从每天慢跑十分钟开始。"],["嘉俊为什么在纸上画星星？",["记录完成的小目标","装饰考试卷","计算比赛名次"],0,"每完成一项小目标，他就画一颗星星。"],["比赛中，嘉俊听到什么后继续坚持？",["广播宣布放学","有人批评他","同学们的鼓励"],2,"同学的鼓励给了他动力。"],["短文中的“战胜自己”主要指什么？",["一定夺得冠军","克服放弃的念头，坚持到底","跑得比所有人快"],1,"他没有放弃，顺利到达终点。"]]},{"id":"p6-2","grade":6,"unit":"6B 第7课《新加坡的过去和现在》","title":"老街上的新壁画","focus":["大街小巷","壁画","行业","贡献","游客","景物","印象","巧妙"],"story":["学校安排六年级学生到新加坡的一条老街进行学习之旅。街道两旁有老店屋，也有新建的大厦。老师带大家欣赏一幅画在墙上的壁画：画里有人推着小车卖糕点，有人在小店里修理鞋子，还有邻居坐在门口聊天。","同学们原本以为壁画只是用来装饰墙面。导览员却解释，这些画记录了过去常见的行业和居民生活，让今天的游客也能了解早年的新加坡。一名同学注意到，壁画的色彩和真实店屋巧妙地结合在一起，远远望去仿佛能走进画里。","回校后，大家讨论老街的新旧变化。有人说高楼大厦让城市更方便，也有人认为老店屋保留了珍贵的回忆。老师提醒大家，新加坡今天的面貌，是许多不同年代的人共同贡献的成果。嘉欣在学习单上写道：“城市会改变，但我们不应忘记它走过的路。”"],"questions":[["学生到哪里进行学习之旅？",["机场跑道","一条老街","海底隧道"],1,"他们到新加坡的一条老街参观。"],["壁画描绘了什么？",["未来的太空生活","只有现代高楼","过去的行业与居民生活"],2,"壁画画出了以前的小贩和居民活动。"],["导览员认为壁画有什么作用？",["帮助大家认识过去","让所有旧建筑消失","用来宣传新商场"],0,"壁画记录了过去的生活。"],["为什么同学觉得壁画很特别？",["壁画可以发出声音","壁画与真实店屋巧妙结合","壁画藏在地下"],1,"壁画和真实店屋看起来像连在一起。"],["短文最后强调什么？",["城市改变时也要记得历史","旧街道完全没有价值","只有高楼大厦才重要"],0,"文章提醒大家不要忘记城市的过去。"]]}];
+const SELF_RUBRIC={
+ selfPron:{
+ '5':['语音非常准确和清晰。','Clear and consistently good pronunciation with hardly any errors.'],
+ '4':['语音相当准确，有少许错误。语音相当清晰。','Clear pronunciation with occasional errors that do not affect intelligibility.'],
+ '3':['语音还算准确，有较多错误，不太清晰。','Generally clear pronunciation with several noticeable errors.'],
+ '2':['语音不太准确，有相当多错误。语音不太清晰，某些语音难以识别。','Pronunciation is sometimes difficult to understand, with many errors.'],
+ '1':['语音不准确，大多数字都读错。语音不清晰。','Very unclear pronunciation, with most words mispronounced.'],
+ '0':['没有朗读。','Did not read aloud.']
+ },
+ selfFlow:{
+ '5':['非常流利。语速适中，停顿适当。语调正确，有节奏感。','Fluent reading, with good pauses and natural intonation.'],
+ '4':['相当流利。语速相当适中，甚少迟疑。语调有适当变化。','Smooth reading with few hesitations and some natural intonation.'],
+ '3':['还算流利。语速还算适中，较多迟疑。语调有些许变化。','Fairly smooth reading with some hesitations and some intonation.'],
+ '2':['不太流利。语速和停顿不太适当。语调不太正确。','Uneven reading with many hesitations.'],
+ '1':['不流利。语速和停顿不适当。语调不正确，没有变化。','Slow, word-by-word reading without natural intonation.'],
+ '0':['没有朗读。','Did not read aloud.']
+ }
+};
 const STORE='chinese-reading-game-v3-players';
 const ACTIVE='chinese-reading-game-v3-active';
+const OLD_KEY='chinese-reading-game-v2-progress';
 let db={players:{}};
-let active='体验玩家';
-let grade=3,currentLesson=null,qIndex=0,readingPoints=0,qAnswered=false,saved=false;
-let selfPron=null,selfFlow=null,quizOral=null;
-function el(id){return document.getElementById(id)}
-function defaultProfile(){return {total:0,runs:0,history:[]}}
-function getProfile(){return db.players[active]||(db.players[active]=defaultProfile())}
-function load(){try{const v=JSON.parse(localStorage.getItem(STORE)||'null');if(v&&v.players&&typeof v.players==='object')db=v;else{const old=JSON.parse(localStorage.getItem(OLD_KEY)||'null');if(old&&Number.isFinite(old.total)&&Number.isFinite(old.runs)&&Array.isArray(old.history))db.players['体验玩家']={total:old.total,runs:old.runs,history:old.history.map(x=>({...x,source:'V2 旧版'}))}}active=localStorage.getItem(ACTIVE)||'体验玩家'}catch(e){el('profileNotice').textContent='此浏览器目前无法读取历史数据。成绩可能只能在当前页面保存。'}if(!db.players[active])db.players[active]=defaultProfile();el('playerInput').value=active;updateProfileUI()}
-function persist(){try{localStorage.setItem(STORE,JSON.stringify(db));localStorage.setItem(ACTIVE,active);return true}catch(e){el('profileNotice').textContent='无法写入本地储存。成绩可能在关闭浏览器后丢失。';return false}}
-function switchPlayer(){const name=el('playerInput').value.trim().replace(/\s+/g,' ').slice(0,20);if(!name){el('profileNotice').textContent='请先输入匿名学生代号，例如：小勇士01。';return}active=name;getProfile();persist();updateProfileUI();el('profileNotice').textContent='已切换到「'+active+'」。这个代号只在本浏览器内独立累计。'}
-function updateProfileUI(){const p=getProfile();el('totalPoints').textContent=p.total;el('runCount').textContent=p.runs;el('badgeCount').textContent=`${Number(p.total>=100)+Number(p.total>=500)} / 2`;el('playerDisplay').textContent=active;renderHistory()}
-function renderHistory(){const view=el('historyList');view.replaceChildren();const hist=[...getProfile().history].reverse().slice(0,8);for(const h of hist){const r=document.createElement('div');r.className='record';const d=h.date?new Date(h.date).toLocaleString('zh-SG'):'早前';r.textContent=`${d} · ${h.title||h.id} · ${h.score}分${h.source?' ('+h.source+')':''}`;view.append(r)}}
-function downloadScores(){const p=getProfile();const rows=[['学生代号','时间','课文','朗读自评','理解分','总分','来源'],...p.history.map(h=>[active,h.date||'',h.title||h.id,h.oral==null?'':h.oral,h.quiz===undefined?'':h.quiz,h.score,h.source||'旧版练习'])];const csv='\ufeff'+rows.map(row=>row.map(c=>'"'+String(c??'').replaceAll('"','""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='华文阅读成绩_'+active.replace(/[^\p{L}\p{N}_-]/gu,'_')+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),300)}
-function setView(view){el('homeView').classList.toggle('hide',view!=='home');el('playView').classList.toggle('hide',view!=='play');window.scrollTo({top:0,behavior:'smooth'})}
-function chooseGrade(n){grade=n;el('grade3').classList.toggle('active',n===3);el('grade4').classList.toggle('active',n===4);renderCards()}
-function renderCards(){const list=el('lessonList');list.replaceChildren();LESSONS.filter(x=>x.grade===grade).forEach(item=>{const card=document.createElement('article');card.className='lesson-card';const tag=document.createElement('div');tag.className='tag';tag.textContent=item.unit;const h=document.createElement('h3');h.textContent=item.title;const p=document.createElement('p');p.className='small';p.textContent='重点：'+item.focus.slice(0,4).join('、')+'……';const btn=document.createElement('button');btn.className='button';btn.textContent='开始挑战 →';btn.onclick=()=>openLesson(item.id);card.append(tag,h,p,btn);list.append(card)})}
-function openLesson(id){
- stopTTS(true);currentLesson=LESSONS.find(x=>x.id===id);if(!currentLesson)return;
- qIndex=0;readingPoints=0;qAnswered=false;saved=false;selfPron=null;selfFlow=null;quizOral=null;
- el('lessonUnit').textContent=currentLesson.unit;el('lessonTitle').textContent=currentLesson.title;
- const b=el('storyBox');b.replaceChildren();currentLesson.story.forEach(t=>{const p=document.createElement('p');p.textContent=t;b.append(p)});
- const f=el('focusWords');f.replaceChildren();currentLesson.focus.forEach(t=>{const chip=document.createElement('span');chip.className='chip';chip.textContent=t;f.append(chip)});
- const parts=el('listenPartSelect');parts.replaceChildren();currentLesson.story.forEach((_,i)=>{const option=document.createElement('option');option.value=String(i);option.textContent=`第${i+1}段`;parts.append(option)});
- el('selfPron').disabled=false;el('selfFlow').disabled=false;el('selfPron').value='';el('selfFlow').value='';el('selfNotice').textContent='完成自评后，即可开始阅读理解。';updateSelfScore();
- el('startQuizBtn').classList.remove('hide');el('quizArea').classList.add('hide');el('finishArea').classList.add('hide');setTTSStatus('准备就绪。需要时可听范读；不听也可以直接朗读。');setView('play');
-}
-// Rubric text follows the supplied bilingual Primary 3/4 reading-aloud assessment table.
-const SELF_RUBRIC={"selfPron":{"5":{"cn":"语音非常准确和清晰。","en":"Clear and consistently good pronunciation with hardly any errors."},"4":{"cn":"语音相当准确，有少许错误。语音相当清晰。","en":"Clear pronunciation with occasional errors that do not affect intelligibility."},"3":{"cn":"语音还算准确，有较多错误，不太清晰。","en":"Generally clear pronunciation with several errors that are noticeable."},"2":{"cn":"语音不太准确，有相当多错误。语音不太清晰，某些语音难以识别。","en":"Pronunciation somewhat difficult to understand, with numerous serious errors."},"1":{"cn":"语音不准确，大多数字都读错。语音不清晰。","en":"Very unclear pronunciation, with most words being mispronounced."},"0":{"cn":"没有朗读（游戏新增选项，不属于原评量表）。","en":"Not attempted (game-only option)."}},"selfFlow":{"5":{"cn":"非常流利。语速适中，停顿适当。语调正确有节奏感。","en":"Fluent reading delivered with appropriate pauses and without hesitations. Appropriate variation of pitch and tone."},"4":{"cn":"相当流利。语速相当适中，甚少迟疑。语调相当正确，有适当的变化。","en":"Smooth delivery with almost no hesitations. Some variation of appropriate pitch and tone."},"3":{"cn":"还算流利。语速还算适中，较多迟疑。语调还算正确，有些许变化。","en":"Generally smooth delivery with some hesitations. A slight attempt to vary pitch and tone."},"2":{"cn":"不太流利。语速不太适中，停顿不太适当。语调不太正确。","en":"Generally uneven delivery with a number of noticeable hesitations."},"1":{"cn":"不流利。语速不适中，停顿不适当。语调不正确，没有变化。","en":"Very slow and jerky delivery, almost word-by-word pronunciation."},"0":{"cn":"没有朗读（游戏新增选项，不属于原评量表）。","en":"Not attempted (game-only option)."}}};
-function showRubricDescription(id){
- const value=el(id).value;
- const box=el(id+'Description');
- const item=SELF_RUBRIC[id][value];
- if(!item){box.textContent='选分后显示相应的中英双语评量说明。';return}
- box.replaceChildren();
- const zh=document.createElement('span');zh.textContent=item.cn;
- const en=document.createElement('span');en.lang='en';en.className='english-description';en.textContent=item.en;
- box.append(zh,en);
-}
-function updateSelfScore(){
- showRubricDescription('selfPron');showRubricDescription('selfFlow');
- const p=el('selfPron').value,f=el('selfFlow').value;
- selfPron=p===''?null:Number(p);selfFlow=f===''?null:Number(f);
- const ready=selfPron!==null&&selfFlow!==null;
- el('selfOralTotal').textContent=ready?`${selfPron+selfFlow} / 10`:'— / 10';
- if(ready)el('selfNotice').textContent='已完成自评。可以开始阅读理解；得分将计入本关成绩。';
-}
-// TTS audio is synthesized by the browser / installed voice; no recording is created.
-const TTS_SUPPORTED=Boolean(window.speechSynthesis&&window.SpeechSynthesisUtterance);
-let ttsVoices=[],ttsQueue=[],ttsPlaying=false,ttsPaused=false,ttsSerial=0,ttsUtterance=null;
-function loadVoiceOptions(){
- if(!TTS_SUPPORTED)return;
- const oldValue=el('voiceSelect').value;
- const current=window.speechSynthesis.getVoices();
- ttsVoices=current.filter(v=>/^zh(-|_)/i.test(v.lang)||/chinese|mandarin|中文|普通话/i.test(v.name));
- const sel=el('voiceSelect');sel.replaceChildren();
- const def=document.createElement('option');def.value='';def.textContent=ttsVoices.length?'自动选择中文语音':'使用系统默认语音（没有找到中文语音）';sel.append(def);
- ttsVoices.forEach((v,i)=>{const opt=document.createElement('option');opt.value=String(i);opt.textContent=`${v.name} (${v.lang})${v.localService?' · 本机':''}`;sel.append(opt)});
- if([...sel.options].some(x=>x.value===oldValue))sel.value=oldValue;
-}
-function preferredVoice(){
- const chosen=el('voiceSelect').value;
- if(chosen!=='')return ttsVoices[Number(chosen)]||null;
- return ttsVoices.find(v=>/zh[-_]SG/i.test(v.lang))||ttsVoices.find(v=>/zh[-_]CN/i.test(v.lang))||ttsVoices[0]||null;
-}
-function setTTSStatus(message){el('ttsStatus').textContent=message}
-function clearSpeakingHighlight(){el('storyBox').querySelectorAll('p').forEach(p=>p.classList.remove('speaking'))}
-function stopTTS(silent=false){
- ttsSerial++;ttsQueue=[];ttsPlaying=false;ttsPaused=false;ttsUtterance=null;
- if(TTS_SUPPORTED){try{window.speechSynthesis.cancel()}catch(e){}}
- clearSpeakingHighlight();
- if(!silent)setTTSStatus('范读已停止。');
-}
-function speakNext(serial){
- if(!ttsPlaying||serial!==ttsSerial)return;
- if(!ttsQueue.length){ttsPlaying=false;ttsPaused=false;clearSpeakingHighlight();setTTSStatus('✅ 范读结束。现在可以自己朗读。');return}
- const entry=ttsQueue.shift();clearSpeakingHighlight();const paragraphs=el('storyBox').querySelectorAll('p');if(paragraphs[entry.index])paragraphs[entry.index].classList.add('speaking');
- const u=new SpeechSynthesisUtterance(entry.text);ttsUtterance=u;
- const voice=preferredVoice();if(voice){u.voice=voice;u.lang=voice.lang}else u.lang='zh-CN';
- u.rate=Number(el('speechRate').value)||0.9;u.pitch=1;u.volume=1;
- u.onend=()=>{if(serial===ttsSerial)speakNext(serial)};
- u.onerror=e=>{if(serial!==ttsSerial)return;ttsPlaying=false;clearSpeakingHighlight();setTTSStatus('语音播放失败（'+(e.error||'未知原因')+'）。请检查系统中文语音或更换浏览器。')};
- try{window.speechSynthesis.speak(u);setTTSStatus('🔊 正在范读：第 '+(entry.index+1)+' 段。可暂停或停止。')}catch(e){ttsPlaying=false;setTTSStatus('无法播放电脑范读：'+e.message)}
-}
-function startTTS(full){
- if(!currentLesson)return;
- if(!TTS_SUPPORTED){setTTSStatus('此浏览器不支持网页语音朗读。可使用 Microsoft Edge 的「大声朗读」功能。');return}
- stopTTS(true);
- // Each paragraph is a separate utterance, avoiding unusually long audio requests.
- ttsQueue=full?currentLesson.story.map((text,index)=>({text,index})):[{text:currentLesson.story[Number(el('listenPartSelect').value)||0],index:Number(el('listenPartSelect').value)||0}];
- ttsPlaying=true;const serial=ttsSerial;speakNext(serial)
-}
-function toggleTTSPause(){
- if(!TTS_SUPPORTED||!ttsPlaying)return;
+let active='小玩家';
+let grade=4,currentLesson=null,qIndex=0,quizPoints=0,qAnswered=false,saved=false,selfPron=null,selfFlow=null,quizOral=null;
+const el=id=>document.getElementById(id);
+const profileDefault=()=>({total:0,runs:0,history:[]});
+const currentProfile=()=>db.players[active]||(db.players[active]=profileDefault());
+const bilingual=(cn,en)=>cn+' / '+en;
+function setBilingual(id,cn,en){const root=el(id);root.replaceChildren();root.append(document.createTextNode(cn));const sub=document.createElement('span');sub.className='en';sub.lang='en';sub.textContent=en;root.append(sub)}
+function load(){
  try{
-  if(window.speechSynthesis.paused){window.speechSynthesis.resume();ttsPaused=false;setTTSStatus('▶ 继续范读。')}
-  else{window.speechSynthesis.pause();ttsPaused=true;setTTSStatus('⏸ 已暂停，点击「暂停／继续」继续。')}
- }catch(e){setTTSStatus('此设备无法暂停语音，建议停止后重播。')}
+   const found=JSON.parse(localStorage.getItem(STORE)||'null');
+   if(found&&found.players&&typeof found.players==='object')db=found;
+   else{
+    const old=JSON.parse(localStorage.getItem(OLD_KEY)||'null');
+    if(old&&Number.isFinite(old.total)&&Array.isArray(old.history))db.players['体验玩家']={total:old.total,runs:Number(old.runs)||0,history:old.history};
+   }
+   active=localStorage.getItem(ACTIVE)||'小玩家';
+ }catch(err){setBilingual('profileNotice','这个浏览器不能读取以前的积分。','This browser could not read your old points.')}
+ if(!db.players[active])db.players[active]=profileDefault();
+ el('playerInput').value=active;updateProfileUI();
 }
-function initTTS(){
- if(TTS_SUPPORTED){loadVoiceOptions();if(typeof window.speechSynthesis.addEventListener==='function')window.speechSynthesis.addEventListener('voiceschanged',loadVoiceOptions)}
- else{for(const id of ['readAllBtn','readPartBtn','pauseReadBtn','stopReadBtn'])el(id).disabled=true;setTTSStatus('此浏览器不支持网页语音播放。')}
+function persist(){try{localStorage.setItem(STORE,JSON.stringify(db));localStorage.setItem(ACTIVE,active);return true}catch(e){setBilingual('profileNotice','保存失败。关掉页面后积分可能消失。','Could not save. Points may disappear when you close this page.');return false}}
+function saveUsername(){
+ const name=el('playerInput').value.trim().replace(/\s+/g,' ').slice(0,24);
+ if(!name){el('playerInput').value=active;setBilingual('profileNotice','请先写一个用户名（不用真名）。','Please enter a username (not your real name).');return}
+ if(name!==active){active=name;currentProfile();persist();updateProfileUI();}
+ setBilingual('profileNotice','积分只存在这台设备的浏览器里。换电脑就看不到旧积分。','Your points stay in this browser on this device. They won\'t move to another device.');
 }
-function startQuiz(){if(selfPron===null||selfFlow===null){el('selfNotice').textContent='⚠️ 请先在两个打分框选择分数（未朗读可选择0分），才能进入理解题。';el('selfPron').focus();return;}if((selfPron===0)!==(selfFlow===0)){el('selfNotice').textContent='⚠️ 如果没有朗读，两项都选0分；已经朗读，则两项都应选1～5分。';return;}quizOral=selfPron+selfFlow;el('selfPron').disabled=true;el('selfFlow').disabled=true;stopTTS(true);qIndex=0;readingPoints=0;el('startQuizBtn').classList.add('hide');el('finishArea').classList.add('hide');el('quizArea').classList.remove('hide');renderQuestion()}
-function renderQuestion(){qAnswered=false;const q=currentLesson.questions[qIndex];el('progressFill').style.width=((qIndex+1)/5*100)+'%';el('questionNum').textContent=`第 ${qIndex+1} / 5 题`;el('questionText').textContent=q[0];el('feedback').textContent='';el('nextBtn').classList.add('hide');const area=el('answerButtons');area.replaceChildren();q[1].forEach((label,i)=>{const btn=document.createElement('button');btn.className='answer';btn.type='button';btn.textContent=['A','B','C'][i]+'. '+label;btn.onclick=()=>answer(i);area.append(btn)})}
-function answer(index){if(qAnswered)return;qAnswered=true;const q=currentLesson.questions[qIndex];const buttons=[...el('answerButtons').children];buttons.forEach(b=>b.disabled=true);buttons[q[2]].classList.add('correct');if(index===q[2]){readingPoints+=2;el('feedback').textContent='✅ 答对了！获得2分。'+q[3];el('feedback').className='feedback success'}else{buttons[index].classList.add('wrong');el('feedback').textContent='💡 正确答案已标成绿色。'+q[3];el('feedback').className='feedback error'}el('nextBtn').textContent=qIndex===4?'查看本关成绩 →':'下一题 →';el('nextBtn').classList.remove('hide')}
+function updateProfileUI(){const p=currentProfile();el('totalPoints').textContent=p.total;el('runCount').textContent=p.runs;renderHistory()}
+function renderHistory(){
+ const root=el('historyList');root.replaceChildren();const records=[...currentProfile().history].reverse().slice(0,8);
+ if(!records.length){const p=document.createElement('p');p.className='small';p.textContent='还没有挑战记录。 / No games finished yet.';root.append(p);return}
+ for(const rec of records){const row=document.createElement('div');row.className='history-row';const left=document.createElement('span');const date=rec.date?new Date(rec.date).toLocaleDateString('en-SG'):'—';left.textContent=`${date} · ${rec.title||rec.id||'阅读挑战'}`;const right=document.createElement('span');right.className='history-num';right.textContent=`${rec.score||0} / 20 分 · pts`;row.append(left,right);root.append(row)}
+}
+function downloadScores(){
+ saveUsername();const p=currentProfile();const rows=[['Username','Date','Level','Read aloud self-check','Quiz','Total'],...p.history.map(h=>[active,h.date||'',h.title||h.id||'',h.oral??'',h.quiz??'',h.score??''])];
+ const csv='\ufeff'+rows.map(row=>row.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='Chinese_Reading_Challenge_Scores.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),300);
+}
+function chooseGrade(n){grade=n;document.querySelectorAll('[data-grade]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.grade)===n)));renderCards()}
+const icons=['🎒','🌱','🫶','🏕️','🎨','🏃','🏙️'];
+function renderCards(){
+ const root=el('lessonList');root.replaceChildren();
+ LESSONS.filter(l=>l.grade===grade).forEach((item,i)=>{
+ const card=document.createElement('article');card.className='level-card';
+ const art=document.createElement('div');art.className='art';art.setAttribute('aria-hidden','true');art.textContent=({4:['🧹','🏃','🤝'],5:['🏕️','🎨'],6:['🏃‍♂️','🏙️']}[grade]||icons)[i]||'📚';
+ const tag=document.createElement('div');tag.className='tag';tag.textContent=item.unit;
+ const h=document.createElement('h3');h.textContent=item.title;
+ const pill=document.createElement('span');pill.className='pill';pill.textContent=`第 ${i+1} 关 · Level ${i+1}`;
+ const p=document.createElement('div');p.className='focus';p.textContent='重点词语 / Key words: '+item.focus.slice(0,4).join('、')+'…';
+ const b=document.createElement('button');b.className='action';b.type='button';b.textContent='🚀 开始挑战 / Play now';b.onclick=()=>openLesson(item.id);
+ card.append(art,pill,tag,h,p,b);root.append(card)
+ });
+}
+function setView(view){el('homeView').classList.toggle('hide',view!=='home');el('playView').classList.toggle('hide',view!=='play');document.body.classList.toggle('is-playing',view==='play');window.scrollTo({top:0,behavior:'instant'})}
+function openLesson(id){
+ saveUsername();stopTTS(true);currentLesson=LESSONS.find(x=>x.id===id);if(!currentLesson)return;
+ qIndex=0;quizPoints=0;qAnswered=false;saved=false;selfPron=null;selfFlow=null;quizOral=null;
+ el('lessonUnit').textContent=currentLesson.unit;el('lessonTitle').textContent=currentLesson.title;
+ const box=el('storyBox');box.replaceChildren();currentLesson.story.forEach(t=>{const p=document.createElement('p');p.textContent=t;box.append(p)});
+ const words=el('focusWords');words.replaceChildren();currentLesson.focus.forEach(w=>{const s=document.createElement('span');s.className='word-chip';s.textContent=w;words.append(s)});
+ const parts=el('listenPartSelect');parts.replaceChildren();currentLesson.story.forEach((_,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`第 ${i+1} 段 / Paragraph ${i+1}`;parts.append(o)});
+ el('selfPron').disabled=false;el('selfFlow').disabled=false;el('selfPron').value='';el('selfFlow').value='';updateSelfScore();
+ el('startQuizBtn').classList.remove('hide');el('quizArea').classList.add('hide');el('finishArea').classList.add('hide');
+ setBilingual('ttsStatus','准备好了。想听就按播放。','Ready. Press play if you want to listen.');setView('play');
+}
+function showRubricDescription(id){
+ const key=el(id).value;const area=el(id+'Description');
+ if(!SELF_RUBRIC[id][key]){setBilingual(id+'Description','选分后可以看说明。','Choose a score to see what it means.');return}
+ setBilingual(id+'Description',...SELF_RUBRIC[id][key]);
+}
+function updateSelfScore(){showRubricDescription('selfPron');showRubricDescription('selfFlow');const p=el('selfPron').value;const f=el('selfFlow').value;selfPron=p===''?null:Number(p);selfFlow=f===''?null:Number(f);const ready=selfPron!==null&&selfFlow!==null;el('selfOralTotal').textContent=ready?`${selfPron+selfFlow} / 10`:'— / 10';if(ready)setBilingual('selfNotice','选好了！现在可以答题。','All set! You can start the quiz.')}
+function renderFullRubric(){const root=el('fullRubric');root.replaceChildren();const headings=[['selfPron','语音和清晰度','Pronunciation and clarity'],['selfFlow','语调和流利程度','Intonation and fluency']];for(const [k,cn,en] of headings){const h=document.createElement('h4');h.textContent=cn+' / '+en;root.append(h);const list=document.createElement('ol');list.reversed=true;list.start=5;for(let n=5;n>=1;n--){const li=document.createElement('li');const b=document.createElement('b');b.textContent=n+'分 / points: ';li.append(b,document.createTextNode(SELF_RUBRIC[k][n][0]));const e=document.createElement('span');e.className='en';e.lang='en';e.textContent=SELF_RUBRIC[k][n][1];li.append(e);list.append(li)}root.append(list)}}
+// Playback uses only a Mandarin (China) request and a fixed normal (1×) speed.
+const TTS_SUPPORTED=Boolean(window.speechSynthesis&&window.SpeechSynthesisUtterance);
+let voiceCN=null,ttsQueue=[],ttsRunning=false,ttsSerial=0,ttsUtterance=null;
+function findChinaVoice(){if(!TTS_SUPPORTED)return;const voices=window.speechSynthesis.getVoices();voiceCN=voices.find(v=>/^zh[-_]CN$/i.test(v.lang))||voices.find(v=>/^zh[-_]CN/i.test(v.lang))||null;}
+function clearHighlight(){el('storyBox').querySelectorAll('p').forEach(p=>p.classList.remove('speaking'))}
+function stopTTS(silent=false){ttsSerial++;ttsQueue=[];ttsRunning=false;ttsUtterance=null;if(TTS_SUPPORTED){try{speechSynthesis.cancel()}catch(e){}}clearHighlight();if(!silent)setBilingual('ttsStatus','已停止范读。','Reading stopped.')}
+function speakNext(serial){
+ if(serial!==ttsSerial||!ttsRunning)return;
+ if(!ttsQueue.length){ttsRunning=false;clearHighlight();setBilingual('ttsStatus','听完了！现在你可以自己朗读。','Finished! Now you can read aloud.');return}
+ const entry=ttsQueue.shift();clearHighlight();const paras=el('storyBox').querySelectorAll('p');if(paras[entry.index])paras[entry.index].classList.add('speaking');
+ const u=new SpeechSynthesisUtterance(entry.text);ttsUtterance=u;u.lang='zh-CN';if(voiceCN)u.voice=voiceCN;u.rate=1;u.pitch=1;u.volume=1;
+ u.onend=()=>{if(serial===ttsSerial)speakNext(serial)};
+ u.onerror=()=>{if(serial!==ttsSerial)return;ttsRunning=false;clearHighlight();setBilingual('ttsStatus','语音播放失败。请试试 Edge 或 Chrome。','Audio failed. Try Edge or Chrome.')};
+ try{speechSynthesis.speak(u);setBilingual('ttsStatus',`正在读第${entry.index+1}段。`,`Playing paragraph ${entry.index+1}.`)}catch(e){ttsRunning=false;setBilingual('ttsStatus','无法播放范读。','Cannot play audio.')}
+}
+function startTTS(all){if(!currentLesson)return;if(!TTS_SUPPORTED){setBilingual('ttsStatus','这个浏览器不能播放语音。','This browser cannot play the audio.');return}stopTTS(true);const i=Number(el('listenPartSelect').value)||0;ttsQueue=all?currentLesson.story.map((text,index)=>({text,index})):[{text:currentLesson.story[i],index:i}];ttsRunning=true;const serial=ttsSerial;speakNext(serial)}
+function pauseTTS(){if(!ttsRunning||!TTS_SUPPORTED)return;try{if(speechSynthesis.paused){speechSynthesis.resume();setBilingual('ttsStatus','继续播放。','Playing again.')}else{speechSynthesis.pause();setBilingual('ttsStatus','已暂停。再按一次继续。','Paused. Press again to resume.')}}catch(e){setBilingual('ttsStatus','不能暂停。请先停止，再重播。','Cannot pause. Stop and replay instead.')}}
+function initTTS(){if(TTS_SUPPORTED){findChinaVoice();speechSynthesis.addEventListener?.('voiceschanged',findChinaVoice)}else{['readAllBtn','readPartBtn','pauseReadBtn','stopReadBtn'].forEach(id=>el(id).disabled=true)}}
+function startQuiz(){
+ if(selfPron===null||selfFlow===null){setBilingual('selfNotice','请先选两项分数。','Please choose both scores first.');el('selfPron').focus();return}
+ if((selfPron===0)!==(selfFlow===0)){setBilingual('selfNotice','没朗读就两项都选0；朗读了就两项都选1到5。','If you did not read, choose 0 for both. If you read, choose 1 to 5 for both.');return}
+ quizOral=selfPron+selfFlow;el('selfPron').disabled=true;el('selfFlow').disabled=true;stopTTS(true);qIndex=0;quizPoints=0;el('startQuizBtn').classList.add('hide');el('quizArea').classList.remove('hide');renderQuestion();
+}
+function renderQuestion(){
+ qAnswered=false;const q=currentLesson.questions[qIndex];el('progressFill').style.width=((qIndex+1)/5*100)+'%';el('questionNum').textContent=`第 ${qIndex+1}/5 题 · Question ${qIndex+1} of 5`;el('questionText').textContent=q[0];el('feedback').textContent='';el('nextBtn').classList.add('hide');
+ const area=el('answerButtons');area.replaceChildren();q[1].forEach((label,i)=>{const btn=document.createElement('button');btn.className='answer';btn.type='button';btn.textContent='ABC'[i]+'. '+label;btn.onclick=()=>answer(i);area.append(btn)});
+}
+function answer(i){if(qAnswered)return;qAnswered=true;const q=currentLesson.questions[qIndex];const bs=[...el('answerButtons').children];bs.forEach(b=>b.disabled=true);bs[q[2]].classList.add('correct');if(i===q[2]){quizPoints+=2;el('feedback').textContent='✅ 答对了！+2分 / Correct! +2 points. '+q[3]}else{bs[i].classList.add('wrong');el('feedback').textContent='💡 看绿色的正确答案。/ The green answer is correct. '+q[3]}el('nextBtn').textContent=qIndex===4?'看成绩 / See my score →':'下一题 / Next question →';el('nextBtn').classList.remove('hide')}
 function nextQuestion(){if(qIndex<4){qIndex++;renderQuestion()}else finishQuiz()}
 function finishQuiz(){
- el('quizArea').classList.add('hide');el('finishArea').classList.remove('hide');
- const oral=quizOral;const points=readingPoints+oral;
- if(!saved){
-  const p=getProfile();p.total+=points;p.runs++;
-  p.history.push({id:currentLesson.id,title:currentLesson.title,oral:oral,quiz:readingPoints,score:points,date:new Date().toISOString(),source:'V4 学生朗读自评'});
-  if(p.history.length>200)p.history=p.history.slice(-200);
-  saved=true;persist();updateProfileUI();
- }
- const lines=[`朗读自评：${oral}/10 分（语音和清晰度 ${selfPron}/5；语调和流利程度 ${selfFlow}/5）`,`阅读理解：${readingPoints}/10 分`];
- el('resultBreakdown').replaceChildren();lines.forEach(t=>{const p=document.createElement('p');p.textContent=t;el('resultBreakdown').append(p)});
- el('finalScore').textContent=`${points} / 20 分`;
- el('resultMessage').textContent='朗读部分来自你的自我评估，理解题由系统自动评分。两部分成绩已合并记录。';
- el('saveScoreLabel').textContent=`✅ 已自动累计，本代号总积分 ${getProfile().total} 分`;
- el('awards').textContent=getProfile().total>=500?'🏆 恭喜解锁500分：坚持大师！':getProfile().total>=100?'🥇 已解锁100分：阅读小达人！继续向500分前进。':'🎯 达到100分解锁“阅读小达人”，500分解锁“坚持大师”。';
- el('saveStatus').textContent='可以重复挑战积累积分。记录只保存在当前浏览器和此学生代号下。';
- el('finishArea').scrollIntoView({behavior:'smooth',block:'start'})
+ el('quizArea').classList.add('hide');el('finishArea').classList.remove('hide');const total=quizOral+quizPoints;const p=currentProfile();const prev=p.total;
+ if(!saved){p.total+=total;p.runs++;p.history.push({id:currentLesson.id,title:currentLesson.title,oral:quizOral,quiz:quizPoints,score:total,date:new Date().toISOString(),source:'Reading self-check V5'});p.history=p.history.slice(-200);saved=true;persist();updateProfileUI()}
+ const stars=total>=17?3:total>=12?2:total>=7?1:0;el('finalStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);el('finalScore').textContent=`${total} / 20`;
+ const root=el('resultBreakdown');root.replaceChildren();for(const [cn,en,n] of [['朗读自评','Reading self-check',quizOral],['阅读理解','Reading quiz',quizPoints]]){const div=document.createElement('div');const title=document.createElement('div');title.textContent=cn+' / '+en;const val=document.createElement('strong');val.textContent=n+' / 10';div.append(title,val);root.append(div)}
+ setBilingual('resultMessage','分数已加到你的总积分。','Your score has been added to your total.');
+ el('saveScoreLabel').textContent=`🏅 总积分 / Total points: ${p.total}`;
+ let achievement='';if(prev<500&&p.total>=500)achievement='🏆 500分！你是坚持大师！ / 500 points! Reading Champion!';else if(prev<100&&p.total>=100)achievement='🥇 100分！你是阅读小达人！ / 100 points! Reading Star!';
+ el('awardMessage').textContent=achievement;el('awardMessage').classList.toggle('hide',!achievement);
+ setBilingual('saveStatus','每玩完一关，积分就会自动保存到这台设备的浏览器。','Your points are saved in this browser after each level.');
+ el('finishArea').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function resetProgress(){if(!confirm('确定清除「'+active+'」在本浏览器中的积分和挑战记录吗？此操作无法撤销。'))return;db.players[active]=defaultProfile();persist();updateProfileUI();el('notify').textContent='已清除此学生代号在本设备中的成绩。'}
-el('grade3').onclick=()=>chooseGrade(3);el('grade4').onclick=()=>chooseGrade(4);el('resetBtn').onclick=resetProgress;el('backBtn').onclick=()=>{stopTTS(true);setView('home')};el('setPlayerBtn').onclick=switchPlayer;el('readAllBtn').onclick=()=>startTTS(true);el('readPartBtn').onclick=()=>startTTS(false);el('pauseReadBtn').onclick=toggleTTSPause;el('stopReadBtn').onclick=()=>stopTTS(false);el('exportBtn').onclick=downloadScores;el('selfPron').onchange=updateSelfScore;el('selfFlow').onchange=updateSelfScore;el('startQuizBtn').onclick=startQuiz;el('nextBtn').onclick=nextQuestion;el('tryAgainBtn').onclick=()=>openLesson(currentLesson.id);el('finishBackBtn').onclick=()=>setView('home');
-load();chooseGrade(3);initTTS();
-
+function resetProgress(){if(!confirm('真的要清除这个用户名的成绩吗？不能找回。\nClear this username\'s scores? This cannot be undone.'))return;db.players[active]=profileDefault();persist();updateProfileUI();el('notify').textContent='成绩已清除。/ Scores cleared.'}
+el('playerInput').addEventListener('change',saveUsername);
+el('playerInput').addEventListener('keydown',e=>{if(e.key==='Enter')el('playerInput').blur()});
+document.querySelectorAll('[data-grade]').forEach(b=>b.onclick=()=>chooseGrade(Number(b.dataset.grade)));
+el('resetBtn').onclick=resetProgress;el('exportBtn').onclick=downloadScores;
+el('backBtn').onclick=()=>{stopTTS(true);setView('home')};
+el('readAllBtn').onclick=()=>startTTS(true);el('readPartBtn').onclick=()=>startTTS(false);el('pauseReadBtn').onclick=pauseTTS;el('stopReadBtn').onclick=()=>stopTTS(false);
+el('selfPron').onchange=updateSelfScore;el('selfFlow').onchange=updateSelfScore;
+el('startQuizBtn').onclick=startQuiz;el('nextBtn').onclick=nextQuestion;
+el('tryAgainBtn').onclick=()=>openLesson(currentLesson.id);el('finishBackBtn').onclick=()=>{stopTTS(true);setView('home')};
+load();chooseGrade(4);renderFullRubric();initTTS();
 </script>
 </body>
 </html>
