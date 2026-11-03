@@ -594,12 +594,12 @@ select{
 .hero-note{min-width:0;max-width:none;z-index:1}
 .hero .hero-art{display:none}
 .hero .hero-star{opacity:.28}
-.hero .player-stats{display:grid;grid-template-columns:minmax(142px,1.22fr) minmax(98px,.86fr) minmax(98px,.86fr);gap:8px;margin:0;z-index:1;min-width:0}
-.hero .player-form,.hero .score-tile{min-width:0;border:1.5px solid #ffffffa8;box-shadow:0 4px 12px #3d3e6d24;padding:10px 10px 11px;border-radius:14px;align-items:center}
+.hero .player-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;z-index:1;min-width:0}
+.hero .player-form,.hero .score-tile{min-width:0;border:1.5px solid #ffffffa8;box-shadow:0 4px 12px #3d3e6d24;padding:10px 12px 11px;border-radius:14px;align-items:center}
 .hero .player-form{align-items:flex-start}
 .hero .username-inline{width:100%}
 .hero .username-inline label{font-size:14px;line-height:1.3}
-.hero .username-inline input{width:100%;max-width:155px;min-height:35px;padding:6px 8px}
+.hero .username-inline input{width:100%;max-width:none;min-width:0;min-height:35px;padding:6px 8px}
 .hero .score-tile{gap:1px}
 .hero .score-tile>div[aria-hidden]{font-size:21px;line-height:1.2}
 .hero .score-tile strong{font-size:26px;line-height:1.16}
@@ -614,26 +614,26 @@ select{
 .level-card .art{display:none}
 @media(max-width:920px){
  .hero{grid-template-columns:minmax(0,1fr);gap:13px;padding:18px}
- .hero .player-stats{max-width:600px;grid-template-columns:minmax(150px,1.3fr) repeat(2,minmax(108px,1fr))}
+ .hero .player-stats{max-width:600px;grid-template-columns:repeat(3,minmax(0,1fr))}
  .hero .hero-note h1{font-size:28px}
 }
 @media(max-width:580px){
  .hero{grid-template-columns:1fr;gap:12px;padding:17px 14px 17px}
  .hero .player-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
  .hero .player-form{grid-column:1/-1;min-height:0}
- .hero .username-inline{flex-direction:row;align-items:center;gap:10px}
- .hero .username-inline input{width:148px;max-width:calc(100% - 100px)}
+ .hero .username-inline{flex-direction:column;align-items:flex-start;gap:5px}
+ .hero .username-inline input{width:100%;max-width:none;min-width:0}
  .hero .score-tile{padding:8px}
  .hero .score-tile strong{font-size:25px}
  .hero .hero-note h1{font-size:27px}
 }
 
 
-/* Reading type size: 16-point, not 16 CSS pixels, in both places where a story is shown. */
+/* Reading passages use 18-point type in both reading and quiz reference views. */
 #storyBox, #storyBox p, #quizStoryBox, #quizStoryBox p,
 .story, .story p, .quiz-active .quiz-reference .story,
 .quiz-active .quiz-reference .story p {
-  font-size:16pt !important;
+  font-size:18pt !important;
   line-height:1.7;
 }
 .hero .username-inline input{
