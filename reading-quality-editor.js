@@ -178,8 +178,10 @@ window.polishReadingBank=function(data,raw,ctx){
    if(patch.some(p=>!hasOnly(p,allowed)))throw Error("Editorial patch outside grade: "+x.id+" "+patch.map(p=>invalid(p,allowed)).join(""));
    x.story=patch.slice();
   }else if(!r){
-   // Original seven edited lessons already have coherent, complete endings.
+   // The seven original stories already concluded coherently; drop earlier duplicate conclusions.
    x.story=x.story.map(p=>normalize(p,allowed));
+   x.story[2]=x.story[2].replace(/(?:小[\u4e00-\u9fff]{1,2}|志强|建华|他|她)想了想，明白了：[^。]+。$/,"")
+    .replace(/。”。$/,"。”");
   }else{
    x.story=x.story.map(p=>normalize(p,allowed));
    const name=extractName(x.story);
