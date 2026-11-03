@@ -198,6 +198,29 @@ main{padding:10px 16px 26px}
 @media(max-width:800px){.quiz-layout{grid-template-columns:1fr;display:block}.quiz-reference{position:sticky;top:0;z-index:2;max-height:33vh;padding:7px 9px;box-shadow:0 5px 12px #395d9521}.quiz-reference h4{margin-bottom:2px}.quiz-reference .story{font-size:.97rem;line-height:1.58;padding:4px 6px}.quiz-reference .story p{margin-bottom:4px}.quiz-questions{margin-top:10px}}
 @media(max-width:580px){main{padding:8px 10px 23px}.hero{padding:15px 14px 17px;border-radius:0 0 19px 19px}.hero h1{font-size:1.83rem}.hero-art{font-size:2.6rem;top:23px;right:12px}.panel{padding:11px;border-radius:15px}.player-stats{grid-template-columns:1fr 1fr;gap:7px}.player-form{grid-column:1/-1}.score-tile{padding:8px}.grade-tabs button{padding:8px 5px;min-width:0}.lesson-grid{grid-template-columns:1fr}.howto-grid{grid-template-columns:repeat(2,1fr)}.quest-section{padding:9px}.control-row .action{min-width:calc(50% - 5px);flex:1}.quiz-active .hero{display:none}.quiz-reference{max-height:32vh}}
 
+
+/* Chinese uses locally installed Kaiti when available; Latin uses Arial. */
+body,button,input,select{
+  font-family:Arial,"KaiTi","楷体","STKaiti","Kaiti SC","DFKai-SB","BiauKai",serif;
+}
+.en,:lang(en){
+  font-family:Arial,sans-serif;
+}
+/* Bilingual prompts share a line when there is room. */
+.en{
+  display:inline-block;
+  vertical-align:baseline;
+  margin:0 0 0 .28em;
+}
+.player-form label .en{display:inline;margin-left:.3em}
+.mini-hint strong{font-family:Arial,sans-serif;margin:0}
+.history-actions{display:flex;flex-direction:column;gap:7px;min-width:155px;align-items:stretch}
+.history-actions .action{width:100%;font-size:.9rem;padding:8px 11px}
+@media(max-width:580px){
+ .history-actions{min-width:135px}
+ .history-actions .action{font-size:.8rem;padding:8px 9px}
+}
+
 </style>
 </head>
 <body>
@@ -223,8 +246,8 @@ main{padding:10px 16px 26px}
   <div class="grade-tabs" id="gradeTabs" role="group" aria-label="选择年级 Choose a level"><button type="button" data-grade="4" aria-pressed="true">小四 <span class="en" lang="en">P4</span></button><button type="button" data-grade="5" aria-pressed="false">小五 <span class="en" lang="en">P5</span></button><button type="button" data-grade="6" aria-pressed="false">小六 <span class="en" lang="en">P6</span></button></div>
   <div id="lessonList" class="lesson-grid"></div><p id="notify" class="small" role="status" aria-live="polite"></p>
  </section>
- <section class="panel mini-help"><details class="wide-help"><summary>🎒 怎么玩？ / How to play</summary><div class="howto-grid"><div class="howstep">📖 读短文 <span class="en" lang="en">Read</span></div><div class="howstep">🔊 可听范读 <span class="en" lang="en">Listen (optional)</span></div><div class="howstep">✍️ 自己打分 <span class="en" lang="en">Self-check</span></div><div class="howstep">🎯 回答5题 <span class="en" lang="en">Answer 5 questions</span></div></div><p class="small">每篇只计第一次成绩。<span class="en" lang="en">Only your first score counts.</span></p><button class="action soft" id="resetBtn" type="button">清除成绩 / Clear scores</button></details></section>
- <section class="panel" aria-labelledby="historyTitle"><div class="panel-head"><h2 id="historyTitle" class="section-title">📘 我的成绩 <span class="en" lang="en">My scores</span></h2><button class="action alt" id="exportBtn" type="button">📥 保存 / Save CSV</button></div><div id="historyList" class="history-list"></div></section>
+ <section class="panel mini-help"><details class="wide-help"><summary>🎒 怎么玩？ / How to play</summary><div class="howto-grid"><div class="howstep">📖 读短文 <span class="en" lang="en">Read</span></div><div class="howstep">🔊 可听范读 <span class="en" lang="en">Listen (optional)</span></div><div class="howstep">✍️ 自己打分 <span class="en" lang="en">Self-check</span></div><div class="howstep">🎯 回答5题 <span class="en" lang="en">Answer 5 questions</span></div></div><p class="small">每篇只计第一次成绩。<span class="en" lang="en">Only your first score counts.</span></p></details></section>
+ <section class="panel" aria-labelledby="historyTitle"><div class="panel-head"><h2 id="historyTitle" class="section-title">📘 我的成绩 <span class="en" lang="en">My scores</span></h2><div class="history-actions"><button class="action soft" id="resetBtn" type="button">清除成绩 / Clear scores</button><button class="action alt" id="exportBtn" type="button">📥 保存 / Save CSV</button></div></div><div id="historyList" class="history-list"></div></section>
 </section>
 <section id="playView" class="panel hide" aria-label="挑战页面 Game level">
  <div class="quest-nav"><button id="backBtn" class="action soft" type="button">← 选关 / Back to levels</button></div>
@@ -423,7 +446,7 @@ function finishQuiz(){
  el('awardMessage').textContent=achievement;el('awardMessage').classList.toggle('hide',!achievement);
  el('finishArea').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function resetProgress(){if(!saveUsername())return;if(!confirm('真的要清除这个用户名的成绩吗？不能找回。\nClear this username\'s scores? This cannot be undone.'))return;db.players[active]=profileDefault();persist();updateProfileUI();el('notify').textContent='成绩已清除。/ Scores cleared.'}
+function resetProgress(){if(!saveUsername())return;if(!confirm('真的要清除这个用户名的成绩吗？不能找回。\nClear this username\'s scores? This cannot be undone.'))return;db.players[active]=profileDefault();persist();updateProfileUI();el('notify').replaceChildren()}
 el('playerInput').addEventListener('change',saveUsername);
 el('playerInput').addEventListener('keydown',e=>{if(e.key==='Enter')el('playerInput').blur()});
 document.querySelectorAll('[data-grade]').forEach(b=>b.onclick=()=>chooseGrade(Number(b.dataset.grade)));
