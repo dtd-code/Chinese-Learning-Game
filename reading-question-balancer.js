@@ -42,7 +42,7 @@ function findHero(l){
 }
 function moralFromStory(l){
  const last=l.story[2];
- let m=last.match(/(?:明白了[:：]|知道[，：]|学会了[，：]|想[:：])([^。！？]+)[。！？]\s*$/);
+ let m=last.match(/(?:明白了[:：]|知道[，：]?|学会了[，：]?|想[:：])([^。！？]+)[。！？]\s*$/);
  if(m)return m[1].trim();
  m=last.match(/([^。！？]{5,25})[。！？]\s*$/);
  return m?.[1]||l.questions[4][1][l.questions[4][2]];
@@ -97,7 +97,7 @@ function contextualVariants(text,l,allow){
 }
 
 function generateOptions(correct,type,l,pool,allow,seed){
- const variants=contextualVariants(correct,l,allow);
+ const variants=type==="moral"?[]:contextualVariants(correct,l,allow);
  let candidates=pool.filter(p=>p.grade===l.grade&&p.id!==l.id)
   .map(p=>p[type]).filter(s=>s&&s!==correct&&inVocab(s,allow)&&!l.story.join("").includes(s));
  const fallback=fallbackPool(correct,type,l,allow);
