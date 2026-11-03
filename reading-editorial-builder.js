@@ -155,6 +155,8 @@ function optionPool(meta,all,key,allowed){
  for(const item of options){
   if(pick.length===2)break;
   if(pick.some(x=>x.text===item.text))continue;
+  const allLengths=[words(exact),...pick.map(x=>words(x.text)),words(item.text)];
+  if(Math.max(...allLengths)-Math.min(...allLengths)>4)continue;
   pick.push(item);
  }
  return {correct:exact,wrong:pick.map(x=>x.text)};
