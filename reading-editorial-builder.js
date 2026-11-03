@@ -67,7 +67,7 @@ function userMeta(raw,i,compiled,custom,approved){
 const intro=[
  a=>"在"+a.place+"，"+a.who+"和"+a.friend+"准备开始一天的活动。"+a.goal+"。"+a.who+"笑着说：“我们一起做吧！”",
  a=>"这一天，"+a.who+"和"+a.friend+"来到"+a.place+"。"+a.goal+"。两人都想把事情做好。",
- a=>a.who+"和"+a.friend+"在"+a.place+"。"+a.goal+"。"+a.who+"认真做好准备，心里很期待。",
+ a=>a.who+"和"+a.friend+"在"+a.place+"。"+a.goal+"。"+a.who+"认真做好准备，心里很高兴。",
  a=>"有一天，"+a.who+"和"+a.friend+"来到"+a.place+"。"+a.goal+"。"+a.who+"看着眼前的东西，想把这件事做好。",
  a=>"那天，"+a.who+"和"+a.friend+"在"+a.place+"。"+a.goal+"。"+a.who+"很开心，还对"+a.friend+"笑了笑。",
  a=>"这次活动在"+a.place+"举行。"+a.who+"和"+a.friend+"都在场。"+a.goal+"。两人准备开始做事。"
@@ -81,11 +81,11 @@ const turns=[
  a=>"不久，"+a.issue+"。"+a.who+a.feeling+"。"+a.friend+"轻声说：“有问题，我们就一起想办法。”"
 ];
 const closure=[
- a=>a.who+"想了想，决定"+a.act+"。"+a.result+"。"+a.who+"松了一口气，明白了： "+a.learned+"。",
+ a=>a.who+"想了想，决定"+a.act+"。"+a.result+"。"+a.who+"开心地笑了，明白了： "+a.learned+"。",
  a=>a.who+"没有放弃，决定"+a.act+"。"+a.result+"。"+a.who+"脸上有了笑容，也明白了： "+a.learned+"。",
- a=>a.who+"先让自己冷静下来，再"+a.act+"。"+a.result+"。"+a.who+"心里很高兴，知道"+a.learned+"。",
+ a=>a.who+"想了一会儿，决定"+a.act+"。"+a.result+"。"+a.who+"心里很高兴，知道"+a.learned+"。",
  a=>a.who+"想出了一个办法："+a.act+"。"+a.result+"。后来，"+a.who+"明白了： "+a.learned+"。",
- a=>"想清楚后，"+a.who+"决定"+a.act+"。"+a.result+"。"+a.who+"笑着对"+a.friend+"说：“我知道了，"+a.learned+"。”",
+ a=>"想了一会儿，"+a.who+"决定"+a.act+"。"+a.result+"。"+a.who+"笑着对"+a.friend+"说：“我知道了，"+a.learned+"。”",
  a=>a.who+"说：“我们一起想办法吧！”然后，"+a.who+"决定"+a.act+"。"+a.result+"。这件事让"+a.who+"明白了： "+a.learned+"。"
 ];
 function fixGrammar(s){
