@@ -4,6 +4,22 @@
 const HAN=/[\u3400-\u9fff]/u;
 const NAMES=["小华","小文","小安","小乐","小林","志强","建华","小雨","小美","小红","小青","小月","丽华","美华","小花","小晴","志文","子安","小山","小平"];
 const REPL=[
+["换频道","换电视节目"],["不肯交出遥控器","不想让大家看新闻"],["不肯交出电视","不想让大家看新闻"],
+["争输赢","争第一"],["输赢","第一名"],["攥紧书包带","拿好书包"],["走廊","学校里"],["移向","拿给"],
+["家人之间","一家人"],["相框","相片"],["珍爱的","很喜欢的"],["隐瞒","不告诉别人"],
+["零用钱","自己的钱"],["修理","做好"],["并拿出","还拿出"],["勇于","敢"],["可贵","很重要"],
+["温柔","轻轻"],["针筒","针"],["节奏","声音"],["眼眶","眼睛"],["旋律","音乐"],["乐曲","音乐"],
+["邀请","请"],["谨慎","小心"],["挡住","放在"],["营造","让"],["友善","友好"],
+["胡姬园","花园"],["国花胡姬","花"],["孙悟空","美猴王"],["改编","改了"],["扮演","演"],
+["下唇","嘴"],["逞强","一个人做"],["凌乱","很乱"],["位置","地方"],["窘得连忙挠头","心里有点怕"],
+["确认","看一看"],["解释","说一说"],["体验","去做"],["如何","怎么"],["距离","远近"],
+["碰歪","碰倒"],["沮丧","难过"],["立刻","马上"],["失而复得","找回来了"],["瓶掉在地上","瓶在地上"],
+["唯一的空座位","一个空座位"],["犹豫","想了想"],["是否","能不能"],
+["示范","教"],["错误","错"],["海报","画"],["寻找","找"],["恢复","回到"],
+["珍贵","很重要"],["回忆","想起"],["话筒","要说话的东西"],
+["条例","办法"],["安排","准备"],["材料","东西"],["节目","活动"],["颁奖","给奖"],
+["珍惜","爱惜"],["一枚","一个"],["计划","要做的事"],["屏幕","电脑"],
+["核对","查一查"],["研究","学习"],["步骤","方法"],["收到","拿到"],
 ["网络平台","网上"],["智能手机","手机"],["社区","组屋"],["聊天群","同学们"],["电邮","信"],["华乐团","华乐团"],
 ["遥控器","电视"],["约定","想法"],["调味料","盐"],["华乐音乐会","音乐会"],["心理","心里"],
 ["心有余悸","有点怕"],["好奇","想知道"],["认真","用心"],["建议","想法"],["及时","马上"],
@@ -43,14 +59,14 @@ const COMMON_PROBLEM=[
 ];
 const COMMON_ACTION=[
 "请同学一起想办法","请老师帮忙","先想一想，再慢慢做",
-"问问大家的想法","把事情说清楚","和朋友一起把事情做好"
+"问问大家的想法","告诉别人自己的想法","和朋友一起把事情做好"
 ];
 const COMMON_OUTCOME=[
 "大家把这件事做好了","同学们都很开心","老师看了也很开心",
 "朋友笑着说谢谢","大家都明白了","这件事有了好结果"
 ];
 const COMMON_LESSON=[
-"有问题时要先想办法","做事要有耐心","朋友要互相帮助",
+"有问题时要先想办法","做事要慢慢来","朋友要互相帮助",
 "做错事要说对不起","不懂的时候要问老师","要关心别人的感受"
 ];
 function gradesFor(l){
@@ -70,23 +86,23 @@ function taughtSet(l,fullRead,allWritten,base3){
 }
 function isTaught(s,allowed){return [...String(s)].every(c=>!HAN.test(c)||allowed.has(c))}
 function unknown(s,allowed){return [...new Set([...String(s)].filter(c=>HAN.test(c)&&!allowed.has(c)))].join("")}
-function replacePhrases(s){
+function replacePhrases(s,allowed){
  let out=String(s);
- for(const [a,b] of REPL)if(out.includes(a))out=out.split(a).join(b);
+ for(const [a,b] of REPL)if(out.includes(a)&&!isTaught(a,allowed)&&isTaught(b,allowed))out=out.split(a).join(b);
  return out;
 }
 function safePart(s, fallback,allowed){
- const clean=replacePhrases(s);
+ const clean=replacePhrases(s,allowed);
  return isTaught(clean,allowed)?clean:fallback;
 }
-function nameFor(raw,i,allowed){const chosen=NAMES[i%NAMES.length];return isTaught(chosen,allowed)?chosen:"小华"}
+function nameFor(raw,i,allowed){if(/^(妈妈|爸爸|爷爷|奶奶|外婆|外公|哥哥|姐姐|弟弟|妹妹|阿姨|老师|表弟|同桌|祖父|祖母)$/.test(raw)&&isTaught(raw,allowed))return raw;const chosen=NAMES[i%NAMES.length];return isTaught(chosen,allowed)?chosen:"小华"}
 function rename(text,sourceName,targetName){
  if(!sourceName||sourceName===targetName)return String(text);
  return String(text).split(sourceName).join(targetName);
 }
 function safePlace(s,allowed,i){
  const fallbacks=["学校","家里","公园","学校课室","学校图书馆","组屋楼下"];
- const original=replacePhrases(s);
+ const original=replacePhrases(s,allowed);
  if(isTaught(original,allowed))return original;
  const candidates=[
   ["学校","学校"],["图书","图书馆"],["食堂","食堂"],["家","家里"],
@@ -101,7 +117,7 @@ function safePlace(s,allowed,i){
  return fallbacks[i%fallbacks.length];
 }
 function safeTitle(s,allowed,i,wordList){
- const cand=replacePhrases(s);
+ const cand=replacePhrases(s,allowed);
  if(isTaught(cand,allowed))return cand;
  const w=String(wordList||"").split("、").find(w=>w.length>1&&isTaught(w,allowed));
  if(w&&isTaught(w+"的故事",allowed))return w+"的故事";
@@ -109,7 +125,7 @@ function safeTitle(s,allowed,i,wordList){
  return t[i%t.length];
 }
 function safeFocus(str,allowed){
- const out=String(str).split("、").map(x=>replacePhrases(x)).filter(x=>x&&isTaught(x,allowed));
+ const out=String(str).split("、").map(x=>replacePhrases(x,allowed)).filter(x=>x&&isTaught(x,allowed));
  return [...new Set(out)].slice(0,12);
 }
 function fieldAspects(raw,allowed,i){
@@ -146,7 +162,7 @@ function paragraphSet(a,i){
  const close=[
  w+"想了想，决定"+a.act+"。"+f+"说：“我来帮你！”最后，"+a.result+"。"+w+"开心地笑了，也明白了： "+a.learned+"。",
  w+"抬起头，对"+f+"说：“我们一起"+a.act+"吧。”他们慢慢做好了事情。后来，"+a.result+"。"+w+"想： "+a.learned+"。",
- w+"没有一直难过，而是决定"+a.act+"。"+f+"也来帮忙。最后，"+a.result+"。"+w+"笑着说：“我学会了，"+a.learned+"。”",
+ w+"没有一直难过，决定"+a.act+"。"+f+"也来帮忙。最后，"+a.result+"。"+w+"笑着说：“我学会了，"+a.learned+"。”",
  "想了一会儿，"+w+"决定"+a.act+"。"+f+"跟着一起做。后来，"+a.result+"。"+w+"明白了： "+a.learned+"。",
  w+"对"+f+"说：“我们先"+a.act+"。”两人慢慢做好了事情。最后，"+a.result+"。"+w+"心里很高兴，知道"+a.learned+"。",
  w+"决定"+a.act+"。"+f+"也来帮忙，两人没有再吵。后来，"+a.result+"。"+w+"开心地说：“"+a.learned+"。”"
@@ -175,9 +191,9 @@ const originalOverride={
  story:[
  "星期三，小华负责在食堂值日。下课后，同学们排队买饭。小华看见大家有说有笑，心里十分开心。",
  "这时，一个同学走到队伍前面，想先买饭。小华有点生气，却没有大声喊。他走过去，轻轻地说：“请你排队，大家都在等。”",
- "那个同学听了，脸红了。他低下头说：“对不起，我以后会注意。”小华笑着说：“没关系。”他明白了，负责值日要有耐心，也要尊重别人。"
+ "那个同学听了，脸红了。他低下头说：“对不起，我以后会注意。”小华笑着说：“没关系。”他明白了，负责值日要慢慢说话，也要尊重别人。"
  ],
- a:["食堂","在食堂值日","一个同学走到队伍前面，想先买饭","请同学排队","负责值日要有耐心，也要尊重别人"]
+ a:["食堂","在食堂值日","一个同学走到队伍前面，想先买饭","请同学排队","负责值日要慢慢说话，也要尊重别人"]
 },
 "p4-2":{
  title:"最后一棒",
@@ -192,7 +208,7 @@ const originalOverride={
  title:"一声谢谢",
  story:[
  "星期六中午，建华和妈妈到熟食中心吃午饭。天气很热，建华排队排了好一会儿，心里有点不耐烦。",
- "买到饭后，建华看见一个老人拿着很多东西，想找个地方坐下。他没有马上让位子，还想：“我也很累呀。”妈妈轻轻地说：“我们应该尊重老人。”",
+ "买到饭后，建华看见一个老人拿着很多东西，想找个地方坐下。他没有马上让位子，还想：“我也很累呢。”妈妈轻轻地说：“我们应该尊重老人。”",
  "建华听了，脸红了。他站起来，请老人坐下。老人笑着说：“谢谢你。”建华也笑了。他知道，对别人有礼貌，大家都会很开心。"
  ],
  a:["熟食中心","和妈妈吃午饭","老人拿着很多东西，找不到地方坐下","站起来，请老人坐下","对别人有礼貌很重要"]
@@ -211,9 +227,9 @@ const originalOverride={
  story:[
  "小雨喜欢画画，也喜欢在网上分享自己的画。有一天，有同学在她的画下面留言，嘲笑她画得不好。小雨看了，心里很难过。",
  "朋友小文发现小雨不开心，走过去轻轻地问：“你怎么了？”小雨把事情说给她听。小文说：“你可以告诉老师，不要自己一个人难过。”",
- "小雨鼓起勇气，把网上的留言告诉老师。老师帮助她和那位同学说清楚。后来，那位同学知道自己做错了，向小雨说对不起。小雨重新开心地画画，也懂得了遇到烦恼可以找人帮忙。"
+ "小雨鼓起勇气，把网上的留言告诉老师。老师帮助她和那位同学说清楚。后来，那位同学知道自己做错了，向小雨说对不起。小雨重新开心地画画，也懂得了有烦恼时可以找人帮忙。"
  ],
- a:["网上","分享自己的画","有人留言嘲笑小雨","告诉老师，请老师帮忙","遇到烦恼可以找人帮忙"]
+ a:["网上","分享自己的画","有人留言嘲笑小雨","告诉老师，请老师帮忙","有烦恼时可以找人帮忙"]
 },
 "p6-1":{
  title:"一步一步向目标前进",
