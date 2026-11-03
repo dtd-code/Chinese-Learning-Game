@@ -588,6 +588,46 @@ select{
 .page-tab[aria-pressed=true]{background:linear-gradient(120deg,#586fc9,#8076d3);color:white;border-color:transparent;box-shadow:0 3px 0 #dbd7f7}
 .page-tab:focus-visible{outline:3px solid #e17f16;outline-offset:2px}
 
+
+/* Title and score cards in the same hero row */
+.hero{display:grid;grid-template-columns:minmax(0,.95fr) minmax(390px,1.05fr);align-items:center;gap:16px;padding:18px 23px 20px}
+.hero-note{min-width:0;max-width:none;z-index:1}
+.hero .hero-art{display:none}
+.hero .hero-star{opacity:.28}
+.hero .player-stats{display:grid;grid-template-columns:minmax(142px,1.22fr) minmax(98px,.86fr) minmax(98px,.86fr);gap:8px;margin:0;z-index:1;min-width:0}
+.hero .player-form,.hero .score-tile{min-width:0;border:1.5px solid #ffffffa8;box-shadow:0 4px 12px #3d3e6d24;padding:10px 10px 11px;border-radius:14px;align-items:center}
+.hero .player-form{align-items:flex-start}
+.hero .username-inline{width:100%}
+.hero .username-inline label{font-size:14px;line-height:1.3}
+.hero .username-inline input{width:100%;max-width:155px;min-height:35px;padding:6px 8px}
+.hero .score-tile{gap:1px}
+.hero .score-tile>div[aria-hidden]{font-size:21px;line-height:1.2}
+.hero .score-tile strong{font-size:26px;line-height:1.16}
+.hero .score-tile span{font-size:14px;line-height:1.28;text-align:center}
+.hero .score-tile small{font-size:12px;line-height:1.22;text-align:center}
+.hero .hero-note h1{font-size:30px}
+.hero .hero-note .english{font-size:13px}
+.hero .subline{font-size:14px}
+.is-playing .hero{display:block}
+.is-playing .hero .player-stats{display:none}
+.level-card .pill{order:-1;align-self:flex-start;font-size:14px;margin:0 0 2px}
+.level-card .art{display:none}
+@media(max-width:920px){
+ .hero{grid-template-columns:minmax(0,1fr);gap:13px;padding:18px}
+ .hero .player-stats{max-width:600px;grid-template-columns:minmax(150px,1.3fr) repeat(2,minmax(108px,1fr))}
+ .hero .hero-note h1{font-size:28px}
+}
+@media(max-width:580px){
+ .hero{grid-template-columns:1fr;gap:12px;padding:17px 14px 17px}
+ .hero .player-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .hero .player-form{grid-column:1/-1;min-height:0}
+ .hero .username-inline{flex-direction:row;align-items:center;gap:10px}
+ .hero .username-inline input{width:148px;max-width:calc(100% - 100px)}
+ .hero .score-tile{padding:8px}
+ .hero .score-tile strong{font-size:25px}
+ .hero .hero-note h1{font-size:27px}
+}
+
 </style>
 </head>
 <body>
@@ -599,15 +639,15 @@ select{
   <div class="subline">每关最高20分 | 朗读自评10分+阅读理解10分</div>
   <p class="english" lang="en">Up to 20 points per level | Reading self-check: 10 + Reading quiz: 10</p>
  </div>
- <span class="hero-star" aria-hidden="true">✦</span><span class="hero-star b" aria-hidden="true">★</span><span class="hero-art" aria-hidden="true">📚🐼</span>
-</header>
-<main>
-<section id="homeView">
  <section class="player-stats" aria-label="用户名和积分 Username and scores">
   <div class="player-form"><div class="username-inline"><label for="playerInput">👤 用户名 <span class="en" lang="en">Username</span></label><input id="playerInput" maxlength="24" type="text" autocomplete="off"></div><p id="nameError" class="name-error hide" role="alert"></p></div>
   <div class="score-tile first"><div aria-hidden="true">🏅</div><strong id="totalPoints">0</strong><span>我的总积分</span><small lang="en">My total points</small></div>
   <div class="score-tile second"><div aria-hidden="true">🎯</div><strong id="runCount">0</strong><span>已计分关卡</span><small lang="en">Levels counted</small></div>
  </section>
+ <span class="hero-star" aria-hidden="true">✦</span><span class="hero-star b" aria-hidden="true">★</span><span class="hero-art" aria-hidden="true">📚🐼</span>
+</header>
+<main>
+<section id="homeView">
  <section class="panel" aria-labelledby="levelsTitle">
   <div class="panel-head"><h2 id="levelsTitle" class="section-title">🗺️ 选年级 / Choose grade</h2></div>
   <div class="grade-tabs" id="gradeTabs" role="group" aria-label="选择年级 Choose a level"><button type="button" data-grade="4" aria-pressed="true">小四 <span class="en" lang="en">P4</span></button><button type="button" data-grade="5" aria-pressed="false">小五 <span class="en" lang="en">P5</span></button><button type="button" data-grade="6" aria-pressed="false">小六 <span class="en" lang="en">P6</span></button></div>
@@ -744,7 +784,6 @@ function downloadScores(){
  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='Chinese_Reading_Challenge_Scores.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),300);
 }
 function chooseGrade(n){grade=n;gradePage=0;document.querySelectorAll('[data-grade]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.grade)===n)));renderCards()}
-const icons=['🎒','🌱','🫶','🏕️','🎨','🏃','🏙️'];
 function renderCards(){
  const root=el('lessonList');root.replaceChildren();
  const all=LESSONS.filter(l=>l.grade===grade).sort((a,b)=>{
@@ -767,13 +806,12 @@ function renderCards(){
  all.slice(gradePage*10,(gradePage+1)*10).forEach((item,localI)=>{
  const i=gradePage*10+localI;
  const card=document.createElement('article');card.className='level-card';
- const art=document.createElement('div');art.className='art';art.setAttribute('aria-hidden','true');art.textContent=({4:['🧹','🏃','🤝'],5:['🏕️','🎨'],6:['🏃‍♂️','🏙️']}[grade]||icons)[i]||'📚';
  const tag=document.createElement('div');tag.className='tag';tag.textContent=item.unit;
  const h=document.createElement('h3');h.textContent=item.title;
  const pill=document.createElement('span');pill.className='pill';pill.textContent=`第 ${i+1} 关 · Level ${i+1}`;
  const p=document.createElement('div');p.className='focus';p.textContent='重点词语 / Key words: '+item.focus.slice(0,4).join('、')+'…';
  const b=document.createElement('button');b.className='action';b.type='button';const done=currentProfile().history.some(h=>recordKey(h)==='lesson:'+item.id);if(done){b.classList.add('replay');const cn=document.createElement('span');cn.textContent='🔁 再玩一次（不加分）';const en=document.createElement('span');en.lang='en';en.className='level-replay-en';en.textContent='Replay (no extra points)';b.append(cn,en)}else b.textContent='🚀 开始挑战 / Play now';b.onclick=()=>openLesson(item.id);
- card.append(art,pill,tag,h,p,b);root.append(card)
+ card.append(pill,tag,h,p,b);root.append(card)
  });
 }
 function setView(view){el('homeView').classList.toggle('hide',view!=='home');el('playView').classList.toggle('hide',view!=='play');document.body.classList.toggle('is-playing',view==='play');window.scrollTo({top:0,behavior:'instant'})}
