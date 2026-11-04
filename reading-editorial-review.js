@@ -152,6 +152,7 @@ window.reviewReadingBank=function(bank,overrides,read,written,base){
     if(moral&&moral.length>=7&&moral.length<=25&&outside(moral,allow).length===0)answer=moral;
     question="哪句话最符合故事的道理？";
    }
+   if(k===4&&answer.length>25){const tail=answer.split(/[，,]/).pop().trim();if(tail.length>=7&&tail.length<=25&&outside(tail,allow).length===0)answer=tail;}
    if(k===3)question="面对问题，哪种做法最合适？";
    if(k===2)question="故事中主要发生了什么事？";
    if(k===1)question="故事开始时，他们想做什么？";
