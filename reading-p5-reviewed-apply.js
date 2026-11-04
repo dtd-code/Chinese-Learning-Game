@@ -9,7 +9,6 @@ if(expected.length!==40||Object.keys(updates).length!==40){
  console.error("P5 editorial review incomplete; original lesson bank left unchanged.");
  return;
 }
-const permutations=[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
 const prepared=[];
 for(let i=0;i<bank.length;i++){
  const old=bank[i],patch=updates[old.id];
@@ -28,10 +27,13 @@ for(let i=0;i<bank.length;i++){
   if(Math.max(...lens)-Math.min(...lens)>4){
    throw Error("P5 choices too different in length: "+old.id+" #"+(j+1));
   }
-  const code=Array.from(old.id).reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
-  const order=permutations[(code+j*7+i*11)%6];
-  const arranged=order.map(k=>answers[k]);
-  const answer=order.indexOf(correct);
+  const answer=(i+j*7+Math.floor(i/3)*j)%3;
+  const wrong=answers.filter((_,k)=>k!==correct);
+  if((i+j)%2)wrong.reverse();
+  const arranged=Array(3);
+  arranged[answer]=answers[correct];
+  let n=0;
+  for(let slot=0;slot<3;slot++)if(slot!==answer)arranged[slot]=wrong[n++];
   return [question,arranged,answer,"正确答案："+answers[correct]+"。请根据短文中的内容判断。"];
  });
  prepared.push({...old,story:patch.s||old.story,questions});
