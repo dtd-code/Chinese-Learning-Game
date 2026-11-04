@@ -149,7 +149,7 @@ window.reviewReadingBank=function(bank,overrides,read,written,base){
    }
    if(k===4){
     const moral=extractLesson(l);
-    if(moral&&moral.length>=7&&moral.length<=25&&outside(moral,allow).length===0)answer=moral;
+    if(moral&&moral.length>=7&&moral.length<=18&&outside(moral,allow).length===0)answer=moral;
     question="哪句话最符合故事的道理？";
    }
    if(k===4&&answer.length>25){const tail=answer.split(/[，,]/).pop().trim();if(tail.length>=7&&tail.length<=25&&outside(tail,allow).length===0)answer=tail;}
