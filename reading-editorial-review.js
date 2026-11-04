@@ -147,6 +147,7 @@ window.reviewReadingBank=function(bank,overrides,read,written,base){
     const em=inferEmotion(l,allow);
     if(em){question="主人公遇到问题时心里怎么样？";answer=em[0]}
    }
+   if(k===0&&l.id==="p6-ta6"){question="故事发生在哪里？";answer="学校礼堂";}
    if(k===4){
     const moral=extractLesson(l);
     if(moral&&moral.length>=7&&moral.length<=18&&outside(moral,allow).length===0)answer=moral;
@@ -159,7 +160,7 @@ window.reviewReadingBank=function(bank,overrides,read,written,base){
    if(outside(question,allow).length)question=qOriginal[k][0];
    const wrong=distractors(answer,qOriginal[k][1].filter((_,n)=>n!==qOriginal[k][2]),k,l,prepared,allow);
    const [choices,correct]=rotateChoices(answer,wrong,i*5+k);
-   const explanation="正确答案是："+answer+"。";
+   const explanation="答案是："+answer+"。";
    qq.push([question,choices,correct,explanation]);
   }
   const edited={...l,questions:qq};
