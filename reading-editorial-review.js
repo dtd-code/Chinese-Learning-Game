@@ -175,7 +175,9 @@ window.reviewReadingBank=function(bank,overrides,read,written,base){
    if(k===2)question="故事中主要发生了什么事？";
    if(k===1)question="故事开始时，他们想做什么？";
    if(outside(question,allow).length)question=qOriginal[k][0];
-   const wrong=distractors(answer,qOriginal[k][1].filter((_,n)=>n!==qOriginal[k][2]),k,l,prepared,allow);
+   const sp=k===0?window.READING_Q0_SPECIAL?.[l.id]:null;
+   if(sp){question=sp[0];answer=sp[1];}
+   const wrong=sp?[sp[2],sp[3]]:distractors(answer,qOriginal[k][1].filter((_,n)=>n!==qOriginal[k][2]),k,l,prepared,allow);
    const [choices,correct]=rotateChoices(answer,wrong,i*5+k);
    const explanation="答案是："+answer+"。";
    qq.push([question,choices,correct,explanation]);
