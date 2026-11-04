@@ -76,6 +76,10 @@ function rotateChoices(correct,wrong,i){
  let j=0;for(let n=0;n<3;n++)if(n!==idx)arr[n]=wrong[j++];
  return [arr,idx];
 }
+function topicMatch(a,b){
+ const words=["车资卡","招领","柜台","水壶","书包","巴士","司机","图书","阅读","书签","相片","照片","网上","网络","留言","消息","球","比赛","练习","跑步","运动","食物","食品","厨房","食堂","钱","奶奶","外婆","妈妈","爸爸","爷爷","朋友","动物","壁虎","小猫","鸟儿","海边","树","花","植物","雨伞","马路","地图","课室","舞台","表演","台词","读书","书本","学校","社区","居民","保护","安全","道歉","诚实","规则","学习"];
+ return words.filter(k=>a.includes(k)&&b.includes(k)).length;
+}
 function distractors(correct,original,index,l,all,allow){
  if(l.id==="p4-x06"&&index===3)return ["先把小芽搬到阴凉的地方","找同学帮忙把花盆搬走"];
  if(index===0){
@@ -117,9 +121,10 @@ function distractors(correct,original,index,l,all,allow){
  if(one)out.push(one);
  for(const {s} of scored){
   if(out.length===2)break;
-  if(!out.includes(s)&&scoreSimilarity(correct,s)<.77&&out.every(w=>scoreSimilarity(w,s)<.80))out.push(s);
+  if(topicMatch(correct,s)>0&&!out.includes(s)&&scoreSimilarity(correct,s)<.77&&out.every(w=>scoreSimilarity(w,s)<.80))out.push(s);
  }
  for(const alt of initial)if(out.length<2&&!out.includes(alt))out.push(alt);
+ for(const {s} of scored)if(out.length<2&&!out.includes(s)&&scoreSimilarity(correct,s)<.77)out.push(s);
  if(out.length!==2)throw Error("Not enough balanced alternatives for "+l.id+" q"+index+" correct="+correct);
  return out;
 }
