@@ -82,6 +82,10 @@ function topicMatch(a,b){
 }
 function distractors(correct,original,index,l,all,allow){
  if(l.id==="p4-x06"&&index===3)return ["先把小芽搬到阴凉的地方","找同学帮忙把花盆搬走"];
+ if(l.id==="p4-x24"&&index===3)return ["请朋友以后不要再参加比赛","只让朋友看奖牌，不去练习"];
+ if(l.id==="p5-x21"&&index===2)return ["小青在表演时说错了一句话","一位同学生病，不能参加表演"];
+ if(l.id==="p5-x21"&&index===3)return ["先请老师替子安上台表演","让子安一个人背完所有台词"];
+ if(l.id==="p5-x22"&&index===3)return ["先把相片给大家看，再找老师商量","只关心受伤同学，不管网上的相片"];
  if(index===0){
   const choices={
     "心里很担心":["心里很开心","心里很生气"],
