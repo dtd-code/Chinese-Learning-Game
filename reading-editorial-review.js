@@ -99,11 +99,11 @@ function distractors(correct,original,index,l,all,allow){
  }).sort((a,b)=>b.value-a.value);
  const out=[];
  // Keep a plausible original distractor but avoid always using only one-word substitution.
- const one=initial.find(x=>scoreSimilarity(x,correct)<.88)||initial[0];
+ const one=initial.find(x=>scoreSimilarity(x,correct)<.70)||initial.find(x=>scoreSimilarity(x,correct)<.77);
  if(one)out.push(one);
  for(const {s} of scored){
   if(out.length===2)break;
-  if(!out.includes(s)&&out.every(w=>scoreSimilarity(w,s)<.85))out.push(s);
+  if(!out.includes(s)&&scoreSimilarity(correct,s)<.77&&out.every(w=>scoreSimilarity(w,s)<.80))out.push(s);
  }
  for(const alt of initial)if(out.length<2&&!out.includes(alt))out.push(alt);
  if(out.length!==2)throw Error("Not enough balanced alternatives for "+l.id+" q"+index+" correct="+correct);
@@ -140,20 +140,23 @@ window.reviewReadingBank=function(bank,overrides,read,written,base){
  const out=prepared.map((l,i)=>{
   const allow=taughtSet(l,read,written,base);
   const qOriginal=l.questions;
+  const checkedFacts=window.READING_QUIZ_FACTS?.[l.id]||null;
   const qq=[];
   for(let k=0;k<5;k++){
    let question=qOriginal[k][0],answer=correctChoice(qOriginal[k]);
-   if(k===0&&/(心里|感受|怎么样)/.test(question)){
+   if(!checkedFacts&&k===0&&/(心里|感受|怎么样)/.test(question)){
     const em=inferEmotion(l,allow);
     if(em){question="主人公遇到问题时心里怎么样？";answer=em[0]}
    }
    if(k===0&&l.id==="p6-ta6"){question="故事发生在哪里？";answer="学校礼堂";}
-   if(k===4){
+   if(k===4&&!checkedFacts){
     const moral=extractLesson(l);
     if(moral&&moral.length>=7&&moral.length<=18&&outside(moral,allow).length===0)answer=moral;
     question="哪句话最符合故事的道理？";
    }
-   if(k===4&&answer.length>25){const tail=answer.split(/[，,]/).pop().trim();if(tail.length>=7&&tail.length<=25&&outside(tail,allow).length===0)answer=tail;}
+   if(k===4&&!checkedFacts&&answer.length>25){const tail=answer.split(/[，,]/).pop().trim();if(tail.length>=7&&tail.length<=25&&outside(tail,allow).length===0)answer=tail;}
+   if(checkedFacts){answer=checkedFacts[k];if(k===0)question="主人公遇到问题时心里怎么样？";}
+   if(k===4)question="哪句话最符合故事的道理？";
    if(k===3)question="面对问题，哪种做法最合适？";
    if(k===2)question="故事中主要发生了什么事？";
    if(k===1)question="故事开始时，他们想做什么？";
