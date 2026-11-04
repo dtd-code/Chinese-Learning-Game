@@ -77,6 +77,20 @@ function rotateChoices(correct,wrong,i){
  return [arr,idx];
 }
 function distractors(correct,original,index,l,all,allow){
+ if(l.id==="p4-x06"&&index===3)return ["先把小芽搬到阴凉的地方","找同学帮忙把花盆搬走"];
+ if(index===0){
+  const choices={
+    "心里很担心":["心里很开心","心里很生气"],
+    "心里很着急":["心里很开心","心里很轻松"],
+    "心里很难过":["心里很开心","心里很生气"],
+    "心里很生气":["心里很开心","心里很担心"],
+    "心里很紧张":["心里很开心","心里很轻松"],
+    "心里有点怕":["心里很开心","心里很高兴"]
+  };
+  const opts=choices[correct];
+  if(opts&&opts.every(v=>outside(v,allow).length===0))return opts;
+ }
+
  const range=correct.length<=9?2:correct.length<=18?3:4;
  const accepted=s=>s&&s!==correct&&outside(s,allow).length===0
   &&Math.abs(s.length-correct.length)<=range&&s.length>=3
